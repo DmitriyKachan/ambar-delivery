@@ -868,55 +868,62 @@
   <!-- ========================================================================= -->
   <!-- 8. МОДАЛЬНЕ ВІКНО КОНФІГУРАТОРА СТРАВИ (DISH CONFIGURATOR)                -->
   <!-- ========================================================================= -->
-  <div id="modal-backdrop" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4" onclick="closeDishConfigurator()">
-    <div id="dish-configurator-modal" class="hidden w-full max-w-2xl bg-[#18181c] border border-white/10 rounded-3xl overflow-hidden shadow-2xl modal-enter max-h-[90vh] flex flex-col" onclick="event.stopPropagation()">
+  <div id="modal-backdrop" class="hidden fixed inset-0 bg-black/75 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4" onclick="closeDishConfigurator()">
+    <div id="dish-configurator-modal" class="hidden w-full max-w-lg md:max-w-2xl bg-[#18181c] border border-white/15 rounded-3xl overflow-hidden shadow-2xl modal-enter max-h-[92vh] flex flex-col md:flex-row text-white" onclick="event.stopPropagation()">
       
-      <!-- Шапка модалки: повнорозмірне фото страви без обрізання та стискання -->
-      <div class="relative w-full max-h-[360px] sm:max-h-[420px] bg-[#101014] overflow-hidden shrink-0 flex items-center justify-center">
+      <!-- Ліва колонка: Фотографія страви -->
+      <div class="relative w-full md:w-[44%] h-44 sm:h-52 md:h-auto min-h-[170px] md:min-h-[300px] bg-[#101014] overflow-hidden shrink-0 flex items-center justify-center">
         <!-- Атмосферний м'який блюр страви на фоні -->
-        <img id="modal-dish-image-blur" src="" alt="" class="absolute inset-0 w-full h-full object-cover blur-2xl opacity-20 scale-110 pointer-events-none" />
+        <img id="modal-dish-image-blur" src="" alt="" class="absolute inset-0 w-full h-full object-cover blur-2xl opacity-25 scale-110 pointer-events-none" />
         
-        <!-- Оригінальна фотографія страви з сайту (без обрізання та деформації) -->
-        <img id="modal-dish-image" src="" alt="Страва" class="relative z-10 w-full max-h-[360px] sm:max-h-[420px] aspect-square object-contain mx-auto" />
+        <!-- Фотографія страви з сайту -->
+        <img id="modal-dish-image" src="" alt="Страва" class="relative z-10 w-full h-full max-h-[170px] sm:max-h-[200px] md:max-h-[270px] object-contain p-2.5 mx-auto transition-transform duration-300 hover:scale-105" />
         
-        <button onclick="closeDishConfigurator()" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/65 backdrop-blur-md text-white flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-lg cursor-pointer">
-          <span class="material-symbols-outlined text-lg">close</span>
+        <button onclick="closeDishConfigurator()" class="md:hidden absolute top-2.5 right-2.5 z-20 w-8 h-8 rounded-full bg-black/70 backdrop-blur-md text-white flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-lg cursor-pointer">
+          <span class="material-symbols-outlined text-base">close</span>
         </button>
       </div>
 
-      <!-- Тіло налаштування -->
-      <div class="p-6 overflow-y-auto space-y-6 flex-1 no-scrollbar">
-        <div>
-          <div class="flex items-center justify-between">
-            <h3 id="modal-dish-title" class="font-heading text-2xl font-extrabold text-white">Назва страви</h3>
-            <span id="modal-dish-weight" class="text-xs px-2.5 py-1 rounded-md bg-[#24242c] text-[#f59e0b] font-bold">500г</span>
+      <!-- Права колонка: Інформація, розмір та кнопка додавання -->
+      <div class="flex-1 flex flex-col justify-between p-4 sm:p-5 overflow-y-auto no-scrollbar space-y-3.5">
+        
+        <!-- Заголовок, вага та опис -->
+        <div class="space-y-1.5">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <h3 id="modal-dish-title" class="font-heading text-base sm:text-lg font-extrabold text-white leading-tight">Назва страви</h3>
+              <span id="modal-dish-weight" class="inline-block mt-1 text-[10px] px-2 py-0.5 rounded-md bg-[#24242c] text-[#f59e0b] font-bold">500г</span>
+            </div>
+            <button onclick="closeDishConfigurator()" class="hidden md:flex w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white items-center justify-center transition-all cursor-pointer shrink-0">
+              <span class="material-symbols-outlined text-base">close</span>
+            </button>
           </div>
-          <p id="modal-dish-desc" class="text-xs text-gray-400 mt-2 leading-relaxed">Опис страви...</p>
+          <p id="modal-dish-desc" class="text-xs text-gray-400 leading-relaxed max-h-20 overflow-y-auto pr-1">Опис страви...</p>
         </div>
 
-        <!-- Опції піци з оригінального сайту: 30 см або 41 см (тільки для піци) -->
-        <div id="modal-sizes-section" class="space-y-2">
-          <label id="modal-sizes-title" class="text-xs font-heading font-bold text-gray-300 uppercase tracking-wider block">Розмір піци</label>
-          <div id="modal-sizes-grid" class="grid grid-cols-2 gap-3">
-            <!-- Генерується через app.js: 30 см та 41 см -->
+        <!-- Опції розміру піци (30 см / 41 см) -->
+        <div id="modal-sizes-section" class="space-y-1.5 pt-0.5">
+          <label id="modal-sizes-title" class="text-[10px] font-heading font-bold text-gray-300 uppercase tracking-wider block">Розмір піци</label>
+          <div id="modal-sizes-grid" class="grid grid-cols-2 gap-2">
+            <!-- Генерується через app.js -->
           </div>
         </div>
 
-      </div>
+        <!-- Нижня панель: лічильник та кнопка «Додати до кошика» -->
+        <div class="pt-3 border-t border-white/10 flex items-center gap-2.5">
+          <div class="flex items-center gap-1.5 bg-[#202026] rounded-xl p-1 border border-white/10 shrink-0">
+            <button onclick="changeModalQty(-1)" class="w-7 h-7 rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 font-bold active:scale-95 cursor-pointer">−</button>
+            <span id="modal-qty-count" class="font-heading font-bold text-xs sm:text-sm text-white px-1 min-w-[16px] text-center">1</span>
+            <button onclick="changeModalQty(1)" class="w-7 h-7 rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 font-bold active:scale-95 cursor-pointer">+</button>
+          </div>
 
-      <!-- Футер модалки з лічильником та кнопкою -->
-      <div class="p-5 bg-[#141418] border-t border-white/10 flex items-center justify-between gap-4">
-        <div class="flex items-center gap-3 bg-[#202026] rounded-full p-1.5 border border-white/10">
-          <button onclick="changeModalQty(-1)" class="w-8 h-8 rounded-full flex items-center justify-center text-white hover:bg-white/10 font-bold active:scale-95">−</button>
-          <span id="modal-qty-count" class="font-heading font-bold text-sm text-white px-2">1</span>
-          <button onclick="changeModalQty(1)" class="w-8 h-8 rounded-full flex items-center justify-center text-white hover:bg-white/10 font-bold active:scale-95">+</button>
+          <button onclick="addConfiguredItemToCart()" class="flex-1 py-3 btn-amber font-heading text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg active:scale-98 transition-all cursor-pointer">
+            <span>Додати до кошика</span>
+            <span>•</span>
+            <span id="modal-add-btn-price">265 ₴</span>
+          </button>
         </div>
 
-        <button onclick="addConfiguredItemToCart()" class="flex-1 py-3.5 btn-amber font-heading text-xs sm:text-sm font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg">
-          <span>Додати до кошика</span>
-          <span>•</span>
-          <span id="modal-add-btn-price">265 ₴</span>
-        </button>
       </div>
 
     </div>

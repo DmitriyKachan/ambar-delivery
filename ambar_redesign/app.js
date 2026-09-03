@@ -394,15 +394,17 @@ function renderConfiguratorModal() {
         <button 
           type="button"
           onclick="selectModalSize('${size.name}', ${size.price})"
-          class="p-4 rounded-2xl border transition-all text-center flex flex-col items-center justify-between relative cursor-pointer ${
+          class="p-2.5 sm:p-3 rounded-xl border transition-all text-left flex items-center justify-between relative cursor-pointer ${
             isSelected 
-              ? "border-primary-amber bg-primary-amber/20 text-white font-bold ring-2 ring-primary-amber shadow-lg shadow-amber-500/20" 
-              : "border-white/10 bg-[#202026] text-gray-400 hover:text-white hover:border-white/20"
+              ? "border-[#f59e0b] bg-[#f59e0b]/15 text-white font-bold ring-1 ring-[#f59e0b] shadow-md shadow-amber-500/10" 
+              : "border-white/10 bg-[#202026] text-gray-300 hover:text-white hover:border-white/20"
           }"
         >
-          ${isSelected ? `<span class="material-symbols-outlined text-primary-amber text-base absolute top-2 right-2">check_circle</span>` : ""}
-          <span class="text-sm font-bold text-white">${size.name}</span>
-          <span class="text-sm font-extrabold text-primary-amber mt-2">${size.price} ₴</span>
+          <div class="flex items-center gap-1.5 min-w-0">
+            <span class="material-symbols-outlined text-sm ${isSelected ? "text-[#f59e0b]" : "text-gray-500"}">${isSelected ? "radio_button_checked" : "radio_button_unchecked"}</span>
+            <span class="text-xs font-bold text-white truncate">${size.name}</span>
+          </div>
+          <span class="text-xs font-extrabold text-[#f59e0b] shrink-0 ml-1.5">${size.price} ₴</span>
         </button>
       `;
     }).join("");
