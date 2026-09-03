@@ -238,6 +238,25 @@ function loadMoreItems() {
 }
 
 // 4. КАТЕГОРІЇ ТА ФІЛЬТРАЦІЯ
+function scrollToMenu(categoryKey) {
+  if (categoryKey) {
+    setCategory(categoryKey);
+  }
+  
+  // Плавна прокрутка до каталогу страв з урахуванням висоти закріпленого хедера
+  const target = document.getElementById("menu-categories-nav") || document.getElementById("food-grid-container");
+  if (target) {
+    const headerOffset = 78;
+    const elementPosition = target.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+      top: Math.max(0, offsetPosition),
+      behavior: "smooth"
+    });
+  }
+}
+
 function setCategory(categoryKey) {
   AppState.currentCategory = categoryKey;
   AppState.visibleLimit = 24; // скидаємо ліміт при переході
@@ -246,18 +265,16 @@ function setCategory(categoryKey) {
     const cat = btn.getAttribute("data-cat");
     if (cat === categoryKey) {
       btn.classList.add("active");
+      // Горизонтально центруємо активну категорію в панелі
+      try {
+        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      } catch(e) {}
     } else {
       btn.classList.remove("active");
     }
   });
 
   renderMenuGrid();
-
-  // Плавний скрол до каталогу, якщо користувач внизу
-  const grid = document.getElementById("food-grid-container");
-  if (grid && window.scrollY > 600) {
-    grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
 }
 
 function handleSearch(query) {

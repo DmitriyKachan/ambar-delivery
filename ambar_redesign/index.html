@@ -240,7 +240,7 @@
     <section class="grid grid-cols-1 md:grid-cols-3 gap-5">
       
       <!-- Головний банер: Мангал тиждень -->
-      <div class="md:col-span-2 rounded-3xl overflow-hidden relative group cursor-pointer border border-white/10 min-h-[260px] sm:min-h-[340px] p-6 sm:p-8 flex flex-col justify-end shadow-2xl" onclick="setCategory('mangal')">
+      <div class="md:col-span-2 rounded-3xl overflow-hidden relative group cursor-pointer border border-white/10 min-h-[260px] sm:min-h-[340px] p-6 sm:p-8 flex flex-col justify-end shadow-2xl" onclick="scrollToMenu('mangal')">
         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('assets/banner_grill_steaks.jpg');"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-[#121214] via-[#121214]/65 to-transparent"></div>
         
@@ -249,7 +249,7 @@
           <h2 class="font-heading text-2xl sm:text-4xl font-extrabold text-white leading-tight">Шашлик, Стейки & Гриль</h2>
           <p class="text-[#f59e0b] font-heading text-xl sm:text-2xl font-bold mt-1">Знижка -20% за промокодом GRILL20</p>
           <div class="mt-4 flex items-center gap-3">
-            <button class="px-6 py-2.5 btn-amber text-xs font-bold uppercase tracking-wider">Переглянути меню</button>
+            <button type="button" onclick="event.stopPropagation(); scrollToMenu('mangal')" class="px-6 py-2.5 btn-amber text-xs font-bold uppercase tracking-wider active:scale-95 transition-all shadow-lg cursor-pointer">Переглянути меню</button>
             <span class="text-xs text-gray-300 font-medium">Свинячий ошийок, реберця, люля-кебаб</span>
           </div>
         </div>
@@ -259,7 +259,7 @@
       <div class="flex flex-col gap-5">
         
         <!-- Піца 1+1 -->
-        <div class="flex-1 rounded-3xl overflow-hidden relative group cursor-pointer border border-white/10 p-6 flex flex-col justify-end min-h-[155px]" onclick="setCategory('pizza')">
+        <div class="flex-1 rounded-3xl overflow-hidden relative group cursor-pointer border border-white/10 p-6 flex flex-col justify-end min-h-[155px]" onclick="scrollToMenu('pizza')">
           <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('assets/banner_artisan_pizza.jpg');"></div>
           <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"></div>
           <div class="relative z-10">
@@ -270,7 +270,7 @@
         </div>
 
         <!-- Крильця & Бургери -->
-        <div class="flex-1 rounded-3xl overflow-hidden relative group cursor-pointer border border-white/10 p-6 flex flex-col justify-end min-h-[155px]" onclick="setCategory('burgers')">
+        <div class="flex-1 rounded-3xl overflow-hidden relative group cursor-pointer border border-white/10 p-6 flex flex-col justify-end min-h-[155px]" onclick="scrollToMenu('burgers')">
           <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('assets/banner_wings_burgers.jpg');"></div>
           <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"></div>
           <div class="relative z-10">
@@ -287,7 +287,7 @@
     <!-- ======================================================================= -->
     <!-- 3. ЗАЛИПАЮЧЕ МЕНЮ КАТЕГОРІЙ (ВСІ КАТЕГОРІЇ АМБАР + УЛЮБЛЕНЕ)              -->
     <!-- ======================================================================= -->
-    <nav class="sticky top-20 z-40 bg-[#121214]/95 backdrop-blur-xl py-3 border-b border-white/10 -mx-4 sm:-mx-8 px-4 sm:px-8">
+    <nav id="menu-categories-nav" class="sticky top-20 z-40 bg-[#121214]/95 backdrop-blur-xl py-3 border-b border-white/10 -mx-4 sm:-mx-8 px-4 sm:px-8">
       <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
         
         <button data-cat="all" onclick="setCategory('all')" class="category-pill active shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
