@@ -3264,7 +3264,7 @@ function renderAdminOrders() {
             </div>
           </div>
 
-          <div>
+          <div class="space-y-1">
             <span class="text-[10px] text-gray-400 block">${isPickup ? "Спосіб отримання:" : "Адреса доставки:"}</span>
             <span class="font-medium text-gray-200 mt-0.5 block leading-tight">
               ${isPickup 
@@ -3272,6 +3272,28 @@ function renderAdminOrders() {
                 : `📍 ${escapeHtml(o.address)}`
               }
             </span>
+
+            <!-- Швидкі кнопки навігатора для кур'єра -->
+            <div class="flex items-center gap-1.5 pt-1 flex-wrap">
+              <a 
+                href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Запоріжжя, ' + (isPickup ? 'вул. Олександрівська, 88' : (o.address || '')))}" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-400 hover:bg-blue-500 hover:text-white font-bold text-[10px] transition-all inline-flex items-center gap-1 cursor-pointer border border-blue-500/30 shadow-sm"
+                title="Відкрити адресу в Google Maps для навігації"
+              >
+                <span>🗺️ Google Maps</span>
+              </a>
+              <a 
+                href="https://waze.com/ul?q=${encodeURIComponent('Запоріжжя, ' + (isPickup ? 'вул. Олександрівська, 88' : (o.address || '')))}&navigate=yes" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="px-2 py-0.5 rounded-md bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500 hover:text-black font-bold text-[10px] transition-all inline-flex items-center gap-1 cursor-pointer border border-cyan-500/30 shadow-sm"
+                title="Відкрити навігатор Waze та прокласти маршрут"
+              >
+                <span>🚙 Waze</span>
+              </a>
+            </div>
           </div>
 
           <div>
