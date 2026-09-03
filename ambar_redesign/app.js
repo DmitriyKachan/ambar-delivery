@@ -941,6 +941,8 @@ function setOrderType(type) {
   const badge = document.getElementById("order-type-badge");
   const deliveryAddressBlock = document.getElementById("delivery-address-block");
   const pickupInfoBox = document.getElementById("pickup-info-box");
+  const paymentOptionsDelivery = document.getElementById("payment-options-delivery");
+  const paymentOptionsPickup = document.getElementById("payment-options-pickup");
 
   if (AppState.orderType === "pickup") {
     if (btnPickup) {
@@ -955,6 +957,14 @@ function setOrderType(type) {
     }
     if (deliveryAddressBlock) deliveryAddressBlock.classList.add("hidden");
     if (pickupInfoBox) pickupInfoBox.classList.remove("hidden");
+
+    // Перемикаємо методи оплати для самовивозу
+    if (paymentOptionsDelivery) paymentOptionsDelivery.classList.add("hidden");
+    if (paymentOptionsPickup) {
+      paymentOptionsPickup.classList.remove("hidden");
+      const firstPickupRadio = paymentOptionsPickup.querySelector('input[type="radio"]');
+      if (firstPickupRadio) firstPickupRadio.checked = true;
+    }
   } else {
     if (btnDelivery) {
       btnDelivery.className = "py-2 rounded-lg bg-[#f59e0b] text-black transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-sm font-bold";
@@ -968,6 +978,14 @@ function setOrderType(type) {
     }
     if (deliveryAddressBlock) deliveryAddressBlock.classList.remove("hidden");
     if (pickupInfoBox) pickupInfoBox.classList.add("hidden");
+
+    // Перемикаємо методи оплати для кур'єрської доставки
+    if (paymentOptionsPickup) paymentOptionsPickup.classList.add("hidden");
+    if (paymentOptionsDelivery) {
+      paymentOptionsDelivery.classList.remove("hidden");
+      const firstDelivRadio = paymentOptionsDelivery.querySelector('input[type="radio"]');
+      if (firstDelivRadio) firstDelivRadio.checked = true;
+    }
   }
 
   saveState();
@@ -3333,27 +3351,29 @@ function renderAdminOrders() {
               }
             </span>
 
-            <!-- Швидкі кнопки навігатора для кур'єра -->
-            <div class="flex items-center gap-1.5 pt-1 flex-wrap">
-              <a 
-                href="${googleMapsUrl}" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-400 hover:bg-blue-500 hover:text-white font-bold text-[10px] transition-all inline-flex items-center gap-1 cursor-pointer border border-blue-500/30 shadow-sm"
-                title="Відкрити адресу в Google Maps для навігації"
-              >
-                <span>🗺️ Google Maps</span>
-              </a>
-              <a 
-                href="${wazeUrl}" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="px-2 py-0.5 rounded-md bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500 hover:text-black font-bold text-[10px] transition-all inline-flex items-center gap-1 cursor-pointer border border-cyan-500/30 shadow-sm"
-                title="Відкрити навігатор Waze та прокласти маршрут"
-              >
-                <span>🚙 Waze</span>
-              </a>
-            </div>
+            <!-- Швидкі кнопки навігатора для кур'єра (тільки для доставки, не для самовивозу) -->
+            ${!isPickup ? `
+              <div class="flex items-center gap-1.5 pt-1 flex-wrap">
+                <a 
+                  href="${googleMapsUrl}" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-400 hover:bg-blue-500 hover:text-white font-bold text-[10px] transition-all inline-flex items-center gap-1 cursor-pointer border border-blue-500/30 shadow-sm"
+                  title="Відкрити адресу в Google Maps для навігації"
+                >
+                  <span>🗺️ Google Maps</span>
+                </a>
+                <a 
+                  href="${wazeUrl}" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="px-2 py-0.5 rounded-md bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500 hover:text-black font-bold text-[10px] transition-all inline-flex items-center gap-1 cursor-pointer border border-cyan-500/30 shadow-sm"
+                  title="Відкрити навігатор Waze та прокласти маршрут"
+                >
+                  <span>🚙 Waze</span>
+                </a>
+              </div>
+            ` : ""}
           </div>
 
           <div>

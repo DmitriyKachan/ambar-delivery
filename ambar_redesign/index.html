@@ -741,19 +741,34 @@
         <!-- Оплата та промокод -->
         <div class="p-4 rounded-2xl bg-[#18181c] border border-white/5 space-y-3">
           <label class="text-xs font-heading font-bold text-gray-300 uppercase tracking-wider block">2. Спосіб оплати</label>
-          <div class="space-y-2 text-xs">
-            <label class="flex items-center gap-2 p-2.5 rounded-xl bg-[#22222a] border border-white/10 cursor-pointer">
-              <input type="radio" name="payment_method" value="Готівкою кур'єру" checked class="accent-[#f59e0b]" />
-              <span>Готівкою кур'єру</span>
-            </label>
-            <label class="flex items-center gap-2 p-2.5 rounded-xl bg-[#22222a] border border-white/10 cursor-pointer">
-              <input type="radio" name="payment_method" value="Карткою при отриманні" class="accent-[#f59e0b]" />
-              <span>Терміналом кур'єру при отриманні</span>
-            </label>
-            <label class="flex items-center gap-2 p-2.5 rounded-xl bg-[#22222a] border border-white/10 cursor-pointer">
-              <input type="radio" name="payment_method" value="Онлайн (Apple Pay / Google Pay)" class="accent-[#f59e0b]" />
-              <span>Онлайн оплата (Apple Pay / Google Pay)</span>
-            </label>
+          <div id="payment-methods-container" class="space-y-2 text-xs">
+            <!-- Варіанти для кур'єрської доставки -->
+            <div id="payment-options-delivery" class="space-y-2">
+              <label class="flex items-center gap-2 p-2.5 rounded-xl bg-[#22222a] border border-white/10 cursor-pointer hover:border-white/20 transition-colors">
+                <input type="radio" name="payment_method" value="Готівкою кур'єру" checked class="accent-[#f59e0b]" />
+                <span class="text-gray-200">Готівкою кур'єру</span>
+              </label>
+              <label class="flex items-center gap-2 p-2.5 rounded-xl bg-[#22222a] border border-white/10 cursor-pointer hover:border-white/20 transition-colors">
+                <input type="radio" name="payment_method" value="Терміналом кур'єру при отриманні" class="accent-[#f59e0b]" />
+                <span class="text-gray-200">Терміналом кур'єру при отриманні</span>
+              </label>
+              <label class="flex items-center gap-2 p-2.5 rounded-xl bg-[#22222a] border border-white/10 cursor-pointer hover:border-white/20 transition-colors">
+                <input type="radio" name="payment_method" value="Онлайн (Apple Pay / Google Pay)" class="accent-[#f59e0b]" />
+                <span class="text-gray-200">Онлайн оплата (Apple Pay / Google Pay / Картка)</span>
+              </label>
+            </div>
+
+            <!-- Варіанти для самовивозу з ресторану -->
+            <div id="payment-options-pickup" class="hidden space-y-2">
+              <label class="flex items-center gap-2 p-2.5 rounded-xl bg-[#22222a] border border-white/10 cursor-pointer hover:border-white/20 transition-colors">
+                <input type="radio" name="payment_method" value="Оплата в закладі (готівкою або карткою на касі)" class="accent-[#f59e0b]" />
+                <span class="text-gray-200">Оплата в закладі (готівкою або карткою на касі)</span>
+              </label>
+              <label class="flex items-center gap-2 p-2.5 rounded-xl bg-[#22222a] border border-white/10 cursor-pointer hover:border-white/20 transition-colors">
+                <input type="radio" name="payment_method" value="Онлайн (Apple Pay / Google Pay)" class="accent-[#f59e0b]" />
+                <span class="text-gray-200">Онлайн оплата (Apple Pay / Google Pay / Картка)</span>
+              </label>
+            </div>
           </div>
 
           <!-- Промокод (без підказок або варіантів) -->
