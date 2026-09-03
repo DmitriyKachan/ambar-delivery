@@ -2330,7 +2330,13 @@ function renderCabinetOrders() {
     });
   }
 
-  let hasChanges = false;
+  // Очищаємо старі тестові або видалені замовлення, яких немає у глобальній базі даних
+  if (globalOrders.length > 0) {
+    const prevCount = CabinetState.orders.length;
+    CabinetState.orders = CabinetState.orders.filter(co => globalOrderMap.has(co.id));
+    if (CabinetState.orders.length !== prevCount) hasChanges = true;
+  }
+
   CabinetState.orders.forEach(o => {
     const liveO = globalOrderMap.get(o.id);
     if (liveO && liveO.status && (o.status !== liveO.status || o.statusUpdatedAt !== liveO.statusUpdatedAt)) {
@@ -2549,7 +2555,13 @@ function renderCabinetBookings() {
     });
   }
 
-  let hasChanges = false;
+  // Очищаємо старі або видалені бронювання, яких немає у глобальній базі даних
+  if (globalBookings.length > 0) {
+    const prevCount = CabinetState.bookings.length;
+    CabinetState.bookings = CabinetState.bookings.filter(cb => globalBookingMap.has(cb.id));
+    if (CabinetState.bookings.length !== prevCount) hasChanges = true;
+  }
+
   CabinetState.bookings.forEach(b => {
     const liveB = globalBookingMap.get(b.id);
     if (liveB && liveB.status && (b.status !== liveB.status || b.statusUpdatedAt !== liveB.statusUpdatedAt)) {
