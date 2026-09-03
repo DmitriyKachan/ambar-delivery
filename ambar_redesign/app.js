@@ -2253,12 +2253,6 @@ function updateCabinetUI() {
 }
 
 function openCabinetModal() {
-  // Якщо клієнт ще не увійшов за номером телефону - відкриваємо вікно входу
-  if (!CabinetState.user.phone) {
-    openClientAuthModal();
-    return;
-  }
-
   const modal = document.getElementById("user-cabinet-modal");
   const backdrop = document.getElementById("user-cabinet-backdrop");
   if (modal && backdrop) {
@@ -2269,7 +2263,9 @@ function openCabinetModal() {
     modal.classList.remove("hidden");
 
     // Миттєво підтягуємо найновіші статуси з хмари
-    syncOrdersAndBookingsWithCloud(false);
+    if (typeof syncOrdersAndBookingsWithCloud === "function") {
+      syncOrdersAndBookingsWithCloud(false);
+    }
   }
 }
 
@@ -2308,6 +2304,8 @@ function renderCabinetOrders() {
   const container = document.getElementById("cabinet-orders-list");
   if (!container) return;
 
+  let hasChanges = false;
+
   // Завжди підтягуємо найсвіжіші статуси з глобального сховища замовлень (хмари)
   const globalOrders = getGlobalOrders();
   const globalOrderMap = new Map(globalOrders.map(o => [o.id, o]));
@@ -2325,6 +2323,7 @@ function renderCabinetOrders() {
       if (oPhoneDigits.includes(userMatchKey)) {
         if (!CabinetState.orders.some(co => co.id === go.id)) {
           CabinetState.orders.push({ ...go });
+          hasChanges = true;
         }
       }
     });
@@ -2535,6 +2534,8 @@ function renderCabinetBookings() {
   const container = document.getElementById("cabinet-bookings-list");
   if (!container) return;
 
+  let hasChanges = false;
+
   const globalBookings = getGlobalBookings();
   const globalBookingMap = new Map(globalBookings.map(b => [b.id, b]));
 
@@ -2550,6 +2551,7 @@ function renderCabinetBookings() {
       if (bPhoneDigits.includes(userMatchKey)) {
         if (!CabinetState.bookings.some(cb => cb.id === gb.id)) {
           CabinetState.bookings.push({ ...gb });
+          hasChanges = true;
         }
       }
     });
