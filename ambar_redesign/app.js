@@ -16,6 +16,18 @@ function escapeHtml(str) {
     .replace(/'/g, "&#39;");
 }
 
+function decodeHtml(str) {
+  if (str === null || str === undefined) return "";
+  return String(str)
+    .replace(/&amp;/g, "&")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&#39;/g, "'")
+    .replace(/&apos;/g, "'");
+}
+
 // 1. БАЗА ДАНИХ СТРАВ
 const MENU_ITEMS = (typeof FULL_AMBAR_MENU !== "undefined" && Array.isArray(FULL_AMBAR_MENU)) 
   ? FULL_AMBAR_MENU 
@@ -28,9 +40,11 @@ const AppState = {
   searchQuery: "",
   cart: [],
   favorites: [],
+  orderType: "delivery", // "delivery" або "pickup" (самовивіз)
   selectedDistrict: "voznesenovsky",
   promoCode: "",
   discountPercent: 0,
+  bonusesToUse: 0, // кількість бонусів (₴) для списання на поточне замовлення
   cutleryIncluded: true,
   configuringItem: null,
   visibleLimit: 24, // для плавного завантаження каталогу
@@ -344,8 +358,8 @@ function renderConfiguratorModal() {
 
   const currentPrice = calculateConfiguredPrice();
 
-  document.getElementById("modal-dish-title").textContent = item.name;
-  document.getElementById("modal-dish-desc").textContent = item.description;
+  document.getElementById("modal-dish-title").textContent = decodeHtml(item.name);
+  document.getElementById("modal-dish-desc").textContent = decodeHtml(item.description);
   
   const fallbackImg = "assets/original_logo_sq.png";
   const imgEl = document.getElementById("modal-dish-image");
@@ -560,6 +574,7 @@ function renderCartDrawer() {
   const itemsContainer = document.getElementById("drawer-cart-items");
   const emptyState = document.getElementById("drawer-empty-cart");
   const checkoutSection = document.getElementById("drawer-checkout-section");
+  const recContainer = document.getElementById("drawer-cart-recommendations");
 
   if (!itemsContainer) return;
 
@@ -567,6 +582,7 @@ function renderCartDrawer() {
     emptyState.classList.remove("hidden");
     itemsContainer.innerHTML = "";
     checkoutSection.classList.add("hidden");
+    if (recContainer) recContainer.classList.add("hidden");
     return;
   }
 
@@ -611,7 +627,272 @@ function renderCartDrawer() {
     `;
   }).join("");
 
+  renderCartRecommendations();
   recalculateOrderTotals();
+}
+
+// -------------------------------------------------------------------------
+// РОЗУМНІ РЕКОМЕНДАЦІЇ ДОДАТКОВИХ СТРАВ У КОШИКУ З ОРИГІНАЛЬНОГО МЕНЮ «АМБАР»
+// -------------------------------------------------------------------------
+// РОЗУМНІ РЕКОМЕНДАЦІЇ СТРАВ ТА ОХОЛОДЖЕНИХ НАПОЇВ У КОШИКУ «АМБАР»
+// -------------------------------------------------------------------------
+function getCartDishRecommendations(cart) {
+  if (!cart || cart.length === 0) return [];
+
+  const itemsList = (typeof MENU_ITEMS !== "undefined" && Array.isArray(MENU_ITEMS) && MENU_ITEMS.length > 0)
+    ? MENU_ITEMS 
+    : ((typeof FULL_AMBAR_MENU !== "undefined" && Array.isArray(FULL_AMBAR_MENU)) ? FULL_AMBAR_MENU : []);
+  if (!itemsList || itemsList.length === 0) return [];
+
+  const inCartIds = new Set(cart.map(c => String(c.id)));
+  const inCartNames = new Set(cart.map(c => (c.name || "").toLowerCase().trim()));
+  const inCartCategories = new Set(cart.map(c => c.category));
+
+  // Пріоритет споріднених категорій страв (без напоїв)
+  let targetCategories = [];
+  if (inCartCategories.has("mangal") || inCartCategories.has("burgers")) {
+    targetCategories = ["zakuski", "salaty", "deserty", "pizza"];
+  } else if (inCartCategories.has("pizza")) {
+    targetCategories = ["zakuski", "salaty", "deserty", "mangal"];
+  } else if (inCartCategories.has("sushi") || inCartCategories.has("setu")) {
+    targetCategories = ["sushi", "wok", "zakuski", "deserty"];
+  } else if (inCartCategories.has("wok") || inCartCategories.has("supov")) {
+    targetCategories = ["salaty", "zakuski", "pizza", "deserty"];
+  } else {
+    targetCategories = ["zakuski", "pizza", "salaty", "deserty", "mangal"];
+  }
+
+  // Фірмові улюблені страви гостей «Амбар»
+  const popularFavorites = [
+    "Сырные наггетсы", "Куриные наггетсы", "Картофель по-селянски",
+    "Салат Цезарь с курицей и беконом", "Салат Цезарь с креветками",
+    "Чизкейк Дубайский шоколад", "Торт Три шоколада", "Фисташко-малиновый торт",
+    "Пицца BBQ", "Пицца  гавайская", "Стейк из индейки гриль", "Паста Карбонара"
+  ];
+
+  const dishes = [];
+  const addedIds = new Set();
+  const addedNames = new Set();
+
+  for (const cat of targetCategories) {
+    if (dishes.length >= 2) break;
+
+    const catDishes = itemsList.filter(d => 
+      d.category === cat && 
+      d.category !== "napitki" &&
+      !inCartIds.has(String(d.id)) && 
+      !addedIds.has(String(d.id)) &&
+      !inCartNames.has(d.name.toLowerCase().trim()) &&
+      !addedNames.has(d.name.toLowerCase().trim())
+    );
+
+    if (catDishes.length > 0) {
+      let best = catDishes.find(d => popularFavorites.some(name => d.name.includes(name)));
+      if (!best) best = catDishes.find(d => d.badge && d.badge.length > 0);
+      if (!best) best = catDishes[0];
+
+      dishes.push(best);
+      addedIds.add(String(best.id));
+      addedNames.add(best.name.toLowerCase().trim());
+    }
+  }
+
+  if (dishes.length < 2) {
+    const remaining = itemsList.filter(d => 
+      d.category !== "napitki" &&
+      !inCartIds.has(String(d.id)) && 
+      !addedIds.has(String(d.id)) &&
+      !inCartNames.has(d.name.toLowerCase().trim()) &&
+      !addedNames.has(d.name.toLowerCase().trim()) &&
+      (d.badge || popularFavorites.some(name => d.name.includes(name)))
+    );
+    for (const d of remaining) {
+      if (dishes.length >= 2) break;
+      dishes.push(d);
+      addedIds.add(String(d.id));
+      addedNames.add(d.name.toLowerCase().trim());
+    }
+  }
+
+  return dishes.slice(0, 2);
+}
+
+function getCartDrinkRecommendations(cart) {
+  if (!cart || cart.length === 0) return [];
+
+  const itemsList = (typeof MENU_ITEMS !== "undefined" && Array.isArray(MENU_ITEMS) && MENU_ITEMS.length > 0)
+    ? MENU_ITEMS 
+    : ((typeof FULL_AMBAR_MENU !== "undefined" && Array.isArray(FULL_AMBAR_MENU)) ? FULL_AMBAR_MENU : []);
+  if (!itemsList || itemsList.length === 0) return [];
+
+  const inCartIds = new Set(cart.map(c => String(c.id)));
+  const inCartNames = new Set(cart.map(c => (c.name || "").toLowerCase().trim()));
+
+  // Всі прохолодні напої ресторану «Амбар»
+  const availableDrinks = itemsList.filter(d => 
+    (d.category === "napitki" || (d.categoryName && d.categoryName.toLowerCase().includes("напої"))) && 
+    !inCartIds.has(String(d.id)) &&
+    !inCartNames.has(d.name.toLowerCase().trim())
+  );
+
+  // Пріоритетний порядок популярних напоїв ресторану
+  const popularDrinksPriority = [
+    "Фанта апельсин 0.500",
+    "Спрайт 0.500",
+    "Сок Rich яблочный",
+    "Сок Rich вишня нектар",
+    "Сок Rich экзотик",
+    "Сок Rich томатный",
+    "Пиво  Сarlsberg Non-Alcoholis",
+    "Пиво Corona Extra 0,33л.",
+    "Пиво Pilsner Craft",
+    "Пиво Ополье Жигулевское"
+  ];
+
+  const sortedDrinks = [...availableDrinks].sort((a, b) => {
+    const idxA = popularDrinksPriority.findIndex(name => a.name.includes(name));
+    const idxB = popularDrinksPriority.findIndex(name => b.name.includes(name));
+    const scoreA = idxA !== -1 ? idxA : 999;
+    const scoreB = idxB !== -1 ? idxB : 999;
+    return scoreA - scoreB;
+  });
+
+  return sortedDrinks.slice(0, 2);
+}
+
+function renderCartRecommendations() {
+  const recContainer = document.getElementById("drawer-cart-recommendations");
+  const dishesListContainer = document.getElementById("drawer-recommendations-list");
+  const drinksListContainer = document.getElementById("drawer-drinks-recommendations-list");
+  const dishesSection = document.getElementById("drawer-dishes-recommendations-section");
+  const drinksSection = document.getElementById("drawer-drinks-recommendations-section");
+
+  if (!recContainer) return;
+
+  if (AppState.cart.length === 0) {
+    recContainer.classList.add("hidden");
+    if (dishesListContainer) dishesListContainer.innerHTML = "";
+    if (drinksListContainer) drinksListContainer.innerHTML = "";
+    return;
+  }
+
+  const dishes = getCartDishRecommendations(AppState.cart);
+  const drinks = getCartDrinkRecommendations(AppState.cart);
+
+  if (dishes.length === 0 && drinks.length === 0) {
+    recContainer.classList.add("hidden");
+    return;
+  }
+
+  recContainer.classList.remove("hidden");
+
+  // 1. Блок страв
+  if (dishesListContainer && dishesSection) {
+    if (dishes.length > 0) {
+      dishesSection.classList.remove("hidden");
+      dishesListContainer.innerHTML = dishes.map(dish => {
+        const isPizza = dish.category === "pizza";
+        return `
+          <div class="p-2.5 rounded-2xl bg-[#181820] border border-white/5 hover:border-[#f59e0b]/30 flex flex-col justify-between transition-all group shadow-sm">
+            <div>
+              <div 
+                class="relative w-full h-24 rounded-xl overflow-hidden mb-2 bg-[#121216] cursor-pointer"
+                onclick="openDishConfigurator('${escapeHtml(dish.id)}')"
+                title="Детальніше про страву"
+              >
+                <img 
+                  src="${escapeHtml(dish.image || 'assets/original_logo_sq.png')}" 
+                  alt="${escapeHtml(dish.name)}" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                  onerror="this.src='assets/original_logo_sq.png';" 
+                />
+                ${dish.badge ? `<span class="absolute top-1.5 left-1.5 text-[9px] font-bold bg-[#f59e0b] text-black px-1.5 py-0.5 rounded-md shadow-sm">${escapeHtml(dish.badge)}</span>` : ""}
+              </div>
+              
+              <h5 
+                class="font-heading text-xs font-bold text-white line-clamp-1 group-hover:text-[#f59e0b] transition-colors cursor-pointer"
+                onclick="openDishConfigurator('${escapeHtml(dish.id)}')"
+                title="${escapeHtml(dish.name)}"
+              >
+                ${escapeHtml(dish.name)}
+              </h5>
+              <p class="text-[10px] text-gray-400 truncate mt-0.5">${dish.weight ? escapeHtml(dish.weight) : (isPizza ? '30 см / 41 см' : 'Страва ресторану')}</p>
+            </div>
+
+            <div class="flex items-center justify-between gap-1 mt-2.5 pt-2 border-t border-white/5">
+              <span class="font-heading font-extrabold text-xs text-[#f59e0b] whitespace-nowrap">${dish.price} ₴</span>
+              <button 
+                type="button"
+                onclick="quickAddToCart('${escapeHtml(dish.id)}')"
+                class="px-2.5 py-1 rounded-lg bg-[#f59e0b] hover:bg-[#fbbf24] active:scale-95 text-black font-heading font-bold text-[10px] transition-all flex items-center gap-0.5 cursor-pointer shadow-sm whitespace-nowrap"
+                title="Додати страву до замовлення"
+              >
+                <span class="material-symbols-outlined text-xs">add</span>
+                <span>+ Додати</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    } else {
+      dishesSection.classList.add("hidden");
+    }
+  }
+
+  // 2. Блок охолоджених напоїв
+  if (drinksListContainer && drinksSection) {
+    if (drinks.length > 0) {
+      drinksSection.classList.remove("hidden");
+      drinksListContainer.innerHTML = drinks.map(drink => {
+        return `
+          <div class="p-2.5 rounded-2xl bg-[#181820] border border-white/5 hover:border-[#f59e0b]/30 flex flex-col justify-between transition-all group shadow-sm">
+            <div>
+              <div 
+                class="relative w-full h-24 rounded-xl overflow-hidden mb-2 bg-[#121216] flex items-center justify-center cursor-pointer"
+                onclick="quickAddToCart('${escapeHtml(drink.id)}')"
+                title="Додати ${escapeHtml(drink.name)} до замовлення"
+              >
+                <img 
+                  src="${escapeHtml(drink.image || 'assets/original_logo_sq.png')}" 
+                  alt="${escapeHtml(drink.name)}" 
+                  class="w-full h-full object-contain p-1.5 group-hover:scale-110 transition-transform duration-300" 
+                  onerror="this.src='assets/original_logo_sq.png';" 
+                />
+                ${drink.badge ? `<span class="absolute top-1.5 left-1.5 text-[9px] font-bold bg-[#f59e0b] text-black px-1.5 py-0.5 rounded-md shadow-sm">${escapeHtml(drink.badge)}</span>` : ""}
+                <span class="absolute bottom-1 right-1.5 text-[9px] font-bold bg-black/70 text-gray-300 px-1.5 py-0.5 rounded-md backdrop-blur-sm">
+                  ${escapeHtml(drink.weight || "0.5 л")}
+                </span>
+              </div>
+              
+              <h5 
+                class="font-heading text-xs font-bold text-white line-clamp-1 group-hover:text-[#f59e0b] transition-colors cursor-pointer"
+                onclick="quickAddToCart('${escapeHtml(drink.id)}')"
+                title="${escapeHtml(drink.name)}"
+              >
+                ${escapeHtml(drink.name)}
+              </h5>
+              <p class="text-[10px] text-gray-400 truncate mt-0.5">Охолоджений напій</p>
+            </div>
+
+            <div class="flex items-center justify-between gap-1 mt-2 pt-2 border-t border-white/5">
+              <span class="font-heading font-extrabold text-xs text-[#f59e0b] whitespace-nowrap">${drink.price} ₴</span>
+              <button 
+                type="button"
+                onclick="quickAddToCart('${escapeHtml(drink.id)}')"
+                class="px-2.5 py-1 rounded-lg bg-[#f59e0b] hover:bg-[#fbbf24] active:scale-95 text-black font-heading font-bold text-[10px] transition-all flex items-center gap-0.5 cursor-pointer shadow-sm whitespace-nowrap"
+                title="Додати напій до замовлення"
+              >
+                <span class="material-symbols-outlined text-xs">add</span>
+                <span>+ Напій</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    } else {
+      drinksSection.classList.add("hidden");
+    }
+  }
 }
 
 function changeCartItemQty(cartId, delta) {
@@ -633,36 +914,148 @@ function removeCartItem(cartId) {
   updateCartUI();
 }
 
+function setOrderType(type) {
+  AppState.orderType = (type === "pickup") ? "pickup" : "delivery";
+
+  const btnDelivery = document.getElementById("btn-order-type-delivery");
+  const btnPickup = document.getElementById("btn-order-type-pickup");
+  const badge = document.getElementById("order-type-badge");
+  const deliveryAddressBlock = document.getElementById("delivery-address-block");
+  const pickupInfoBox = document.getElementById("pickup-info-box");
+
+  if (AppState.orderType === "pickup") {
+    if (btnPickup) {
+      btnPickup.className = "py-2 rounded-lg bg-[#f59e0b] text-black transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-sm font-bold";
+    }
+    if (btnDelivery) {
+      btnDelivery.className = "py-2 rounded-lg text-gray-400 hover:text-white transition-all flex items-center justify-center gap-1.5 cursor-pointer font-bold";
+    }
+    if (badge) {
+      badge.textContent = "🏪 Самовивіз";
+      badge.className = "text-[10px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 rounded-full";
+    }
+    if (deliveryAddressBlock) deliveryAddressBlock.classList.add("hidden");
+    if (pickupInfoBox) pickupInfoBox.classList.remove("hidden");
+  } else {
+    if (btnDelivery) {
+      btnDelivery.className = "py-2 rounded-lg bg-[#f59e0b] text-black transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-sm font-bold";
+    }
+    if (btnPickup) {
+      btnPickup.className = "py-2 rounded-lg text-gray-400 hover:text-white transition-all flex items-center justify-center gap-1.5 cursor-pointer font-bold";
+    }
+    if (badge) {
+      badge.textContent = "🛵 Доставка";
+      badge.className = "text-[10px] font-bold text-sky-400 bg-sky-500/10 border border-sky-500/30 px-2.5 py-0.5 rounded-full";
+    }
+    if (deliveryAddressBlock) deliveryAddressBlock.classList.remove("hidden");
+    if (pickupInfoBox) pickupInfoBox.classList.add("hidden");
+  }
+
+  saveState();
+  recalculateOrderTotals();
+}
+
 function recalculateOrderTotals() {
+  const isPickup = AppState.orderType === "pickup";
   const subtotal = AppState.cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   const districtInfo = AppState.districts[AppState.selectedDistrict] || AppState.districts.voznesenovsky;
   
   const isFreeDelivery = subtotal >= districtInfo.minFree;
-  const deliveryFee = isFreeDelivery ? 0 : districtInfo.fee;
+  const deliveryFee = isPickup ? 0 : (isFreeDelivery ? 0 : districtInfo.fee);
 
+  // Знижка за промокодом
   const discountAmount = Math.round(subtotal * (AppState.discountPercent / 100));
-  const finalTotal = Math.max(0, subtotal - discountAmount + deliveryFee);
+  const foodTotalAfterPromo = Math.max(0, subtotal - discountAmount);
+
+  // Бонусний рахунок користувача (закриття дір: тільки валідні невід'ємні цілі числа)
+  const userAvailableBonuses = (typeof CabinetState !== "undefined" && CabinetState.user && typeof CabinetState.user.bonuses === "number")
+    ? Math.max(0, Math.floor(CabinetState.user.bonuses))
+    : 0;
+
+  // Максимум бонусів, які можна списати:
+  // Бонуси покривають до 100% вартості страв (foodTotalAfterPromo), але не покривають платну доставку
+  const maxBonusesAllowed = Math.min(userAvailableBonuses, foodTotalAfterPromo);
+
+  // Валідація кількості бонусів до списання
+  if (typeof AppState.bonusesToUse !== "number" || isNaN(AppState.bonusesToUse) || AppState.bonusesToUse < 0) {
+    AppState.bonusesToUse = 0;
+  }
+  if (AppState.bonusesToUse > maxBonusesAllowed) {
+    AppState.bonusesToUse = maxBonusesAllowed;
+  }
+
+  const bonusesUsed = AppState.bonusesToUse;
+
+  // Фінальна сума до сплати
+  const finalTotal = Math.max(0, foodTotalAfterPromo - bonusesUsed + deliveryFee);
+
+  // Прогнозований 5% кешбек нараховується лише на реально сплачену грошима суму страв
+  const payableFoodAmount = Math.max(0, foodTotalAfterPromo - bonusesUsed);
+  const projectedCashback = Math.round(payableFoodAmount * 0.05);
 
   const subtotalEl = document.getElementById("summary-subtotal");
   const deliveryEl = document.getElementById("summary-delivery");
   const discountRow = document.getElementById("summary-discount-row");
   const discountValEl = document.getElementById("summary-discount-value");
+  const bonusRow = document.getElementById("summary-bonus-row");
+  const bonusValEl = document.getElementById("summary-bonus-value");
   const totalEl = document.getElementById("summary-total");
   const freeThresholdEl = document.getElementById("free-delivery-threshold");
   const zoneNameEl = document.getElementById("detected-zone-name");
   const zoneTariffEl = document.getElementById("detected-zone-tariff");
+
+  // Оновлення блоку бонусів
+  const bonusBalanceEl = document.getElementById("checkout-available-bonuses");
+  const bonusMaxEl = document.getElementById("checkout-max-bonuses");
+  const bonusInputEl = document.getElementById("checkout-bonus-input");
+  const projectedCashbackEl = document.getElementById("checkout-projected-cashback");
+  const toggleBonusBtn = document.getElementById("btn-toggle-bonuses");
+
+  if (bonusBalanceEl) bonusBalanceEl.textContent = userAvailableBonuses;
+  if (bonusMaxEl) bonusMaxEl.textContent = `${maxBonusesAllowed} ₴`;
+  if (projectedCashbackEl) projectedCashbackEl.textContent = `+${projectedCashback} ₴`;
+
+  if (bonusInputEl && !bonusInputEl.matches(":focus")) {
+    bonusInputEl.value = bonusesUsed > 0 ? bonusesUsed : "";
+  }
+
+  if (bonusRow && bonusValEl) {
+    if (bonusesUsed > 0) {
+      bonusRow.classList.remove("hidden");
+      bonusValEl.textContent = `-${bonusesUsed} ₴`;
+    } else {
+      bonusRow.classList.add("hidden");
+    }
+  }
+
+  if (toggleBonusBtn) {
+    if (bonusesUsed > 0) {
+      toggleBonusBtn.innerHTML = `<span>Списано ${bonusesUsed} ₴</span><span class="material-symbols-outlined text-xs">check</span>`;
+      toggleBonusBtn.className = "px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-400 font-heading font-bold text-xs transition-all cursor-pointer border border-emerald-500/30 shadow-sm shrink-0 flex items-center gap-1";
+    } else {
+      toggleBonusBtn.innerHTML = `<span>Списати</span><span class="material-symbols-outlined text-xs">redeem</span>`;
+      toggleBonusBtn.className = "px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500 hover:text-black text-[#f59e0b] font-heading font-bold text-xs transition-all cursor-pointer border border-amber-500/30 shadow-sm shrink-0 flex items-center gap-1";
+    }
+  }
 
   if (zoneNameEl) zoneNameEl.textContent = districtInfo.name;
   if (zoneTariffEl) zoneTariffEl.textContent = `від ${districtInfo.minFree} ₴ безкоштовно`;
 
   if (subtotalEl) subtotalEl.textContent = `${subtotal} ₴`;
   if (deliveryEl) {
-    deliveryEl.textContent = isFreeDelivery ? "Безкоштовно" : `${deliveryFee} ₴`;
-    deliveryEl.className = isFreeDelivery ? "font-bold text-emerald-400" : "font-bold text-white";
+    if (isPickup) {
+      deliveryEl.textContent = "0 ₴ (Самовивіз)";
+      deliveryEl.className = "font-bold text-emerald-400";
+    } else {
+      deliveryEl.textContent = isFreeDelivery ? "Безкоштовно" : `${deliveryFee} ₴`;
+      deliveryEl.className = isFreeDelivery ? "font-bold text-emerald-400" : "font-bold text-white";
+    }
   }
 
   if (freeThresholdEl) {
-    if (isFreeDelivery) {
+    if (isPickup) {
+      freeThresholdEl.innerHTML = `<span class="text-emerald-400 font-semibold">🏪 Самовивіз з ресторану — безкоштовно (вул. Олександрівська, 88)</span>`;
+    } else if (isFreeDelivery) {
       freeThresholdEl.innerHTML = `<span class="text-emerald-400 font-semibold">🎉 Безкоштовна доставка активна для вашої зони!</span>`;
     } else {
       const remaining = districtInfo.minFree - subtotal;
@@ -682,7 +1075,80 @@ function recalculateOrderTotals() {
   if (totalEl) totalEl.textContent = `${finalTotal} ₴`;
   
   const orderBtn = document.getElementById("submit-order-btn");
-  if (orderBtn) orderBtn.textContent = `Підтвердити замовлення • ${finalTotal} ₴`;
+  if (orderBtn) {
+    orderBtn.textContent = isPickup 
+      ? `Оформити самовивіз • ${finalTotal} ₴` 
+      : `Підтвердити замовлення • ${finalTotal} ₴`;
+  }
+}
+
+function toggleBonusSpending() {
+  const block = document.getElementById("checkout-bonus-input-block");
+  if (!block) return;
+
+  const userBonuses = (typeof CabinetState !== "undefined" && CabinetState.user && CabinetState.user.bonuses) || 0;
+  if (userBonuses <= 0) {
+    showToast("У вас поки немає бонусів. За це замовлення ви отримаєте 5% кешбеку!");
+    return;
+  }
+
+  const isHidden = block.classList.contains("hidden");
+  if (isHidden) {
+    block.classList.remove("hidden");
+    if (AppState.bonusesToUse === 0) {
+      useMaxBonuses();
+    }
+  } else {
+    if (AppState.bonusesToUse > 0) {
+      AppState.bonusesToUse = 0;
+      recalculateOrderTotals();
+      showToast("Списання бонусів скасовано");
+    }
+    block.classList.add("hidden");
+  }
+}
+
+function handleBonusInput(val) {
+  let num = parseInt(val, 10);
+  if (isNaN(num) || num < 0) num = 0;
+
+  const subtotal = AppState.cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  const discountAmount = Math.round(subtotal * (AppState.discountPercent / 100));
+  const foodTotal = Math.max(0, subtotal - discountAmount);
+  const userBonuses = (typeof CabinetState !== "undefined" && CabinetState.user && CabinetState.user.bonuses) || 0;
+  const maxAllowed = Math.min(Math.floor(userBonuses), foodTotal);
+
+  if (num > maxAllowed) {
+    num = maxAllowed;
+    const inp = document.getElementById("checkout-bonus-input");
+    if (inp) inp.value = num;
+  }
+
+  AppState.bonusesToUse = num;
+  recalculateOrderTotals();
+}
+
+function useMaxBonuses() {
+  const subtotal = AppState.cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+  const discountAmount = Math.round(subtotal * (AppState.discountPercent / 100));
+  const foodTotal = Math.max(0, subtotal - discountAmount);
+  const userBonuses = (typeof CabinetState !== "undefined" && CabinetState.user && CabinetState.user.bonuses) || 0;
+  const maxAllowed = Math.min(Math.floor(userBonuses), foodTotal);
+
+  if (maxAllowed <= 0) {
+    showToast("Немає доступних бонусів для списання");
+    return;
+  }
+
+  AppState.bonusesToUse = maxAllowed;
+  const inp = document.getElementById("checkout-bonus-input");
+  if (inp) inp.value = maxAllowed;
+  
+  const block = document.getElementById("checkout-bonus-input-block");
+  if (block) block.classList.remove("hidden");
+
+  recalculateOrderTotals();
+  showToast(`Застосовано списання ${maxAllowed} ₴ бонусів! 🎉`);
 }
 
 // 7.1 ПОВНИЙ ДОВІДНИК АДРЕС ТА АВТОМАТИЧНЕ РОЗПІЗНАВАННЯ ЗОНИ ДОСТАВКИ (ЗАПОРІЖЖЯ)
@@ -1070,6 +1536,32 @@ function openCartDrawer() {
 
     // Автоматичне підставлення збережених даних клієнта
     if (typeof CabinetState !== "undefined" && CabinetState.user) {
+      const nameInput = document.getElementById("order-name");
+      const nameBadge = document.getElementById("order-name-from-profile");
+      if (nameInput) {
+        if (CabinetState.user.name && !nameInput.value.trim()) {
+          nameInput.value = CabinetState.user.name;
+          if (nameBadge) nameBadge.classList.remove("hidden");
+        } else if (CabinetState.user.name && nameInput.value.trim() === CabinetState.user.name) {
+          if (nameBadge) nameBadge.classList.remove("hidden");
+        } else if (!CabinetState.user.name && nameBadge) {
+          nameBadge.classList.add("hidden");
+        }
+      }
+
+      const phoneInput = document.getElementById("order-phone");
+      const phoneBadge = document.getElementById("order-phone-from-profile");
+      if (phoneInput) {
+        if (CabinetState.user.phone && !phoneInput.value.trim()) {
+          phoneInput.value = CabinetState.user.phone;
+          if (phoneBadge) phoneBadge.classList.remove("hidden");
+        } else if (CabinetState.user.phone && phoneInput.value.trim() === CabinetState.user.phone) {
+          if (phoneBadge) phoneBadge.classList.remove("hidden");
+        } else if (!CabinetState.user.phone && phoneBadge) {
+          phoneBadge.classList.add("hidden");
+        }
+      }
+
       const addrInput = document.getElementById("order-address");
       if (addrInput && !addrInput.value.trim() && CabinetState.user.address) {
         addrInput.value = CabinetState.user.address;
@@ -1088,10 +1580,6 @@ function openCartDrawer() {
       const aptInput = document.getElementById("order-apt");
       if (aptInput && !aptInput.value.trim() && CabinetState.user.apt) {
         aptInput.value = CabinetState.user.apt;
-      }
-      const phoneInput = document.getElementById("order-phone");
-      if (phoneInput && !phoneInput.value.trim() && CabinetState.user.phone) {
-        phoneInput.value = CabinetState.user.phone;
       }
     }
   }
@@ -1115,46 +1603,73 @@ function submitFinalOrder(event) {
   event.preventDefault();
   if (AppState.cart.length === 0) return;
 
+  const isPickup = AppState.orderType === "pickup";
+  const customerName = document.getElementById("order-name")?.value.trim() || (CabinetState.user?.name ? CabinetState.user.name : "Гість");
   const phone = document.getElementById("order-phone")?.value.trim() || "Не вказано";
-  const addressStreet = document.getElementById("order-address")?.value.trim() || "Вказано при підтвердженні";
-  const entrance = document.getElementById("order-entrance")?.value.trim() || "";
-  const floor = document.getElementById("order-floor")?.value.trim() || "";
-  const apt = document.getElementById("order-apt")?.value.trim() || "";
 
-  let fullDetailedAddress = addressStreet;
-  const extraParts = [];
-  if (entrance) extraParts.push(`під'їзд ${entrance}`);
-  if (floor) extraParts.push(`поверх ${floor}`);
-  if (apt) extraParts.push(`кв./офіс ${apt}`);
-  if (extraParts.length > 0 && addressStreet !== "Вказано при підтвердженні") {
-    fullDetailedAddress += `, ${extraParts.join(", ")}`;
+  let addressStreet = "Вказано при підтвердженні";
+  let fullDetailedAddress = "Самовивіз із ресторану (вул. Олександрівська, 88)";
+  let districtName = "Самовивіз";
+  let entrance = "";
+  let floor = "";
+  let apt = "";
+
+  if (!isPickup) {
+    addressStreet = document.getElementById("order-address")?.value.trim() || "Вказано при підтвердженні";
+    entrance = document.getElementById("order-entrance")?.value.trim() || "";
+    floor = document.getElementById("order-floor")?.value.trim() || "";
+    apt = document.getElementById("order-apt")?.value.trim() || "";
+    districtName = AppState.districts[AppState.selectedDistrict]?.name || "Запоріжжя";
+
+    fullDetailedAddress = addressStreet;
+    const extraParts = [];
+    if (entrance) extraParts.push(`під'їзд ${entrance}`);
+    if (floor) extraParts.push(`поверх ${floor}`);
+    if (apt) extraParts.push(`кв./офіс ${apt}`);
+    if (extraParts.length > 0 && addressStreet !== "Вказано при підтвердженні") {
+      fullDetailedAddress += `, ${extraParts.join(", ")}`;
+    }
   }
 
-  const paymentMethod = document.querySelector('input[name="payment_method"]:checked')?.value || "Готівкою кур'єру";
+  const paymentMethod = document.querySelector('input[name="payment_method"]:checked')?.value || (isPickup ? "Оплата при отриманні в кафе" : "Готівкою кур'єру");
   
   const deliveryType = document.querySelector('input[name="delivery_time"]:checked')?.value || "asap";
-  let deliveryTime = "Якнайшвидше (35-45 хв)";
+  let deliveryTime = isPickup ? "Якнайшвидше (готовність ~20–30 хв)" : "Якнайшвидше (35-45 хв)";
   if (deliveryType === "exact") {
     const dateVal = document.getElementById("exact-delivery-date")?.value || "Сьогодні";
     const timeVal = document.getElementById("exact-delivery-time")?.value || "19:00";
-    deliveryTime = `На точний час: ${dateVal}, о ${timeVal}`;
+    deliveryTime = isPickup ? `Самовивіз на час: ${dateVal}, о ${timeVal}` : `На точний час: ${dateVal}, о ${timeVal}`;
   }
 
   const orderNum = `AB-${Math.floor(100000 + Math.random() * 900000)}`;
-  const districtName = AppState.districts[AppState.selectedDistrict].name;
 
-  // Розрахунок сум
+  // Розрахунок сум з урахуванням знижки та бонусів
   const subtotal = AppState.cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const district = AppState.districts[AppState.selectedDistrict] || AppState.districts.voznesenovsky;
   const isFreeDelivery = subtotal >= district.minFree;
-  const deliveryFee = isFreeDelivery ? 0 : district.fee;
+  const deliveryFee = isPickup ? 0 : (isFreeDelivery ? 0 : district.fee);
   const discountAmount = Math.round((subtotal * AppState.discountPercent) / 100);
-  const finalTotal = subtotal + deliveryFee - discountAmount;
+  const foodTotal = Math.max(0, subtotal - discountAmount);
+
+  // Валідація та списання бонусів (закриття дір: строга перевірка наявного балансу)
+  const currentAvailableBonuses = (typeof CabinetState !== "undefined" && CabinetState.user && typeof CabinetState.user.bonuses === "number")
+    ? Math.max(0, Math.floor(CabinetState.user.bonuses))
+    : 0;
+  const bonusesUsed = Math.min(Math.max(0, Math.floor(AppState.bonusesToUse || 0)), Math.min(currentAvailableBonuses, foodTotal));
+  
+  const payableFood = Math.max(0, foodTotal - bonusesUsed);
+  const finalTotal = Math.max(0, payableFood + deliveryFee);
+
+  // 5% кешбек нараховується ТІЛЬКИ на реально сплачену грошима суму страв
+  const earnedBonus = Math.round(payableFood * 0.05);
 
   // Автоматичний запис замовлення в Особистий кабінет
   if (typeof CabinetState !== "undefined") {
     const orderRecord = {
       id: orderNum,
+      orderType: isPickup ? "pickup" : "delivery",
+      customerName: customerName,
+      name: customerName,
       date: new Date().toLocaleString("uk-UA", { day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" }),
       timestamp: Date.now(),
       items: AppState.cart.map(c => ({
@@ -1168,6 +1683,8 @@ function submitFinalOrder(event) {
       subtotal: subtotal,
       deliveryFee: deliveryFee,
       discountAmount: discountAmount,
+      bonusesUsed: bonusesUsed,
+      bonusesEarned: earnedBonus,
       total: finalTotal,
       district: districtName,
       address: fullDetailedAddress,
@@ -1184,32 +1701,62 @@ function submitFinalOrder(event) {
     if (typeof addGlobalOrder === "function") {
       addGlobalOrder(orderRecord);
     }
+    if (typeof broadcastEvent === "function") {
+      broadcastEvent({
+        type: "NEW_ORDER",
+        order: orderRecord
+      });
+    }
 
-    // 5% кешбеку на бонусний рахунок
-    const earnedBonus = Math.round(finalTotal * 0.05);
-    CabinetState.user.bonuses = (CabinetState.user.bonuses || 0) + earnedBonus;
+    // Списання бонусів та нарахування нового кешбеку
+    CabinetState.user.bonuses = Math.max(0, currentAvailableBonuses - bonusesUsed) + earnedBonus;
 
-    // Збереження телефону та адреси в профілі клієнта
-    if (!CabinetState.user.phone && phone && phone !== "Не вказано") {
+    // Оновлення та збереження актуальних даних клієнта в локальній базі даних
+    if (customerName && customerName !== "Гість") {
+      CabinetState.user.name = customerName;
+    }
+    if (phone && phone !== "Не вказано") {
       CabinetState.user.phone = phone;
     }
-    if (!CabinetState.user.address && addressStreet && addressStreet !== "Вказано при підтвердженні") {
+    if (!isPickup && addressStreet && addressStreet !== "Вказано при підтвердженні") {
       CabinetState.user.address = addressStreet;
+      if (entrance) CabinetState.user.entrance = entrance;
+      if (floor) CabinetState.user.floor = floor;
+      if (apt) CabinetState.user.apt = apt;
     }
-    if (!CabinetState.user.entrance && entrance) CabinetState.user.entrance = entrance;
-    if (!CabinetState.user.floor && floor) CabinetState.user.floor = floor;
-    if (!CabinetState.user.apt && apt) CabinetState.user.apt = apt;
 
     saveCabinetState();
     updateCabinetUI();
   }
 
   document.getElementById("success-order-id").textContent = orderNum;
-  document.getElementById("success-address").textContent = `${districtName}, ${fullDetailedAddress}`;
+  const successNameEl = document.getElementById("success-name");
+  if (successNameEl) successNameEl.textContent = customerName;
+  document.getElementById("success-address").textContent = isPickup 
+    ? "🏪 Самовивіз: м. Запоріжжя, вул. Олександрівська, 88 (кафе «Амбар»)"
+    : `${districtName}, ${fullDetailedAddress}`;
   document.getElementById("success-phone").textContent = phone;
   document.getElementById("success-time").textContent = deliveryTime;
   document.getElementById("success-payment").textContent = paymentMethod;
 
+  // Відображення деталей бонусів в модалці успіху
+  const successBonusRow = document.getElementById("success-bonuses-row");
+  const successBonusText = document.getElementById("success-bonuses-text");
+  if (successBonusRow && successBonusText) {
+    if (bonusesUsed > 0 || earnedBonus > 0) {
+      successBonusRow.classList.remove("hidden");
+      successBonusRow.classList.add("flex");
+      const parts = [];
+      if (bonusesUsed > 0) parts.push(`Списано: -${bonusesUsed} ₴`);
+      if (earnedBonus > 0) parts.push(`Нараховано кешбек: +${earnedBonus} ₴`);
+      successBonusText.textContent = parts.join(" • ");
+    } else {
+      successBonusRow.classList.add("hidden");
+      successBonusRow.classList.remove("flex");
+    }
+  }
+
+  AppState.bonusesToUse = 0;
   AppState.cart = [];
   saveState();
   updateCartUI();
@@ -1234,6 +1781,31 @@ function openTableBookingModal() {
     const today = new Date().toISOString().split("T")[0];
     dateInput.value = today;
     dateInput.min = today;
+  }
+
+  // Автоматичне підставлення даних із збереженого профілю клієнта
+  if (typeof CabinetState !== "undefined" && CabinetState.user) {
+    const nameInput = document.getElementById("booking-name");
+    const nameBadge = document.getElementById("booking-name-from-profile");
+    if (nameInput) {
+      if (CabinetState.user.name && CabinetState.user.name.trim()) {
+        nameInput.value = CabinetState.user.name.trim();
+        if (nameBadge) nameBadge.classList.remove("hidden");
+      } else {
+        if (nameBadge) nameBadge.classList.add("hidden");
+      }
+    }
+
+    const phoneInput = document.getElementById("booking-phone");
+    const phoneBadge = document.getElementById("booking-phone-from-profile");
+    if (phoneInput) {
+      if (CabinetState.user.phone && CabinetState.user.phone.trim()) {
+        phoneInput.value = CabinetState.user.phone.trim();
+        if (phoneBadge) phoneBadge.classList.remove("hidden");
+      } else {
+        if (phoneBadge) phoneBadge.classList.add("hidden");
+      }
+    }
   }
 
   if (modal && backdrop) {
@@ -1266,8 +1838,8 @@ function setBookingTimeQuick(timeStr) {
 
 function submitTableBooking(event) {
   event.preventDefault();
-  const name = document.getElementById("booking-name")?.value || "Гість";
-  const phone = document.getElementById("booking-phone")?.value || "";
+  const name = document.getElementById("booking-name")?.value.trim() || "Гість";
+  const phone = document.getElementById("booking-phone")?.value.trim() || "";
   const guests = document.getElementById("booking-guests")?.value || "2 персони";
   const rawDate = document.getElementById("booking-date")?.value || "";
   let displayDate = rawDate;
@@ -1297,8 +1869,32 @@ function submitTableBooking(event) {
     if (typeof addGlobalBooking === "function") {
       addGlobalBooking(bookingRecord);
     }
-    saveCabinetState();
-    updateCabinetUI();
+    if (typeof broadcastEvent === "function") {
+      broadcastEvent({
+        type: "NEW_BOOKING",
+        booking: bookingRecord
+      });
+    }
+
+    // Якщо в профілі ще не збережено ім'я чи номер, зберігаємо їх автоматично
+    if (CabinetState.user) {
+      let updated = false;
+      if (!CabinetState.user.name && name && name !== "Гість") {
+        CabinetState.user.name = name;
+        updated = true;
+      }
+      if (!CabinetState.user.phone && phone) {
+        CabinetState.user.phone = phone;
+        updated = true;
+      }
+      if (updated) {
+        saveCabinetState();
+        updateCabinetUI();
+      }
+    } else {
+      saveCabinetState();
+      updateCabinetUI();
+    }
   }
 
   // Безпечний рендеринг у модальне вікно (XSS-захищений)
@@ -1578,43 +2174,103 @@ function renderCabinetOrders() {
     return;
   }
 
-  container.innerHTML = CabinetState.orders.map(order => `
-    <div class="p-4 rounded-2xl bg-[#1e1e26] border border-white/5 space-y-3 transition-all hover:border-white/10">
-      <div class="flex items-center justify-between">
-        <div>
-          <span class="font-heading font-extrabold text-sm text-white">#${escapeHtml(order.id)}</span>
-          <span class="text-[11px] text-gray-400 block">${escapeHtml(order.date)}</span>
-        </div>
-        <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/10 text-[#f59e0b] border border-amber-500/20">
-          ${escapeHtml(order.status)}
-        </span>
-      </div>
+  container.innerHTML = CabinetState.orders.map(order => {
+    const isPickup = order.orderType === "pickup" || (order.address && order.address.includes("Самовивіз")) || (order.district && order.district.includes("Самовивіз"));
+    const st = order.status || "Готується 👨‍🍳";
 
-      <!-- Список страв -->
-      <div class="divide-y divide-white/5 text-xs bg-[#242430] p-3 rounded-xl space-y-1">
-        ${order.items.map(it => `
-          <div class="py-1 flex justify-between items-center text-gray-300">
-            <div class="flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#f59e0b]"></span>
-              <span>${escapeHtml(it.name)} ${it.selectedSize ? `(${escapeHtml(it.selectedSize.label || it.selectedSize.size)})` : ""} × ${it.quantity}</span>
+    let statusBadgeHtml = "";
+    let statusNoticeHtml = "";
+
+    if (isPickup) {
+      if (st.includes("Готується")) {
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span><span>👨‍🍳 Готується на кухні</span></span>`;
+        statusNoticeHtml = `<div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200/90 flex items-center gap-2"><span class="material-symbols-outlined text-base text-[#f59e0b]">schedule</span><span>Орієнтовний час готовності: <b>~20–30 хв</b>. Чекаємо на вас у кафе «Амбар»!</span></div>`;
+      } else if (st.includes("Готовий") || st.includes("видачі") || st.includes("дорозі") || st.includes("очікує")) {
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5 shadow-sm"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span><span>🥡 Готово до видачі в кафе!</span></span>`;
+        statusNoticeHtml = `<div class="p-2.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-[11px] text-emerald-200 flex items-center gap-2"><span class="material-symbols-outlined text-base text-emerald-400">storefront</span><span>Замовлення запаковано! Заберіть за адресою: <b>м. Запоріжжя, вул. Олександрівська, 88</b></span></div>`;
+      } else if (st.includes("Видано") || st.includes("Доставлено")) {
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1"><span>✅ Видано в кафе</span></span>`;
+        statusNoticeHtml = `<div class="p-2 rounded-xl bg-white/5 text-[11px] text-gray-400 flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-emerald-400">check_circle</span><span>Замовлення успішно отримано. Смачного!</span></div>`;
+      } else if (st.includes("Скасовано")) {
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20"><span>❌ Скасовано</span></span>`;
+      } else {
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/20">${escapeHtml(order.status)}</span>`;
+      }
+    } else {
+      // Доставка кур'єром
+      if (st.includes("Готується")) {
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span><span>👨‍🍳 Готується на кухні</span></span>`;
+      } else if (st.includes("Готовий") || st.includes("очікує")) {
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-sky-500/15 text-sky-300 border border-sky-500/30 flex items-center gap-1"><span>🥡 Очікує передачі кур'єру</span></span>`;
+      } else if (st.includes("дорозі")) {
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span><span>🛵 Кур'єр вже в дорозі</span></span>`;
+        statusNoticeHtml = `<div class="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-[11px] text-purple-200 flex items-center gap-2"><span class="material-symbols-outlined text-base text-purple-400">moped</span><span>Кур'єр прямує за адресою: <b>${escapeHtml(order.address)}</b></span></div>`;
+      } else if (st.includes("Доставлено") || st.includes("Видано")) {
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1"><span>✅ Успішно доставлено</span></span>`;
+      } else if (st.includes("Скасовано")) {
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20"><span>❌ Скасовано</span></span>`;
+      } else {
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/20">${escapeHtml(order.status)}</span>`;
+      }
+    }
+
+    return `
+      <div class="p-4 rounded-2xl bg-[#1e1e26] border border-white/5 space-y-3 transition-all hover:border-white/10">
+        <div class="flex items-center justify-between gap-2 flex-wrap">
+          <div class="flex items-center gap-2">
+            <div>
+              <span class="font-heading font-extrabold text-sm text-white">#${escapeHtml(order.id)}</span>
+              <span class="text-[11px] text-gray-400 block">${escapeHtml(order.date)}</span>
             </div>
-            <span class="font-semibold text-white shrink-0">${it.price * it.quantity} ₴</span>
+            ${isPickup ? `
+              <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-500/20 text-[#f59e0b] border border-[#f59e0b]/40 flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs">storefront</span>
+                <span>САМОВИВІЗ</span>
+              </span>
+            ` : `
+              <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-sky-500/20 text-sky-400 border border-sky-500/30 flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs">moped</span>
+                <span>ДОСТАВКА</span>
+              </span>
+            `}
           </div>
-        `).join("")}
-      </div>
-
-      <div class="pt-2 border-t border-white/5 flex items-center justify-between">
-        <div class="min-w-0 pr-2">
-          <span class="text-[11px] text-gray-400 block truncate">📍 ${escapeHtml(order.address)}</span>
-          <span class="text-xs font-heading font-bold text-[#f59e0b]">Разом: ${order.total} ₴</span>
+          <div>
+            ${statusBadgeHtml}
+          </div>
         </div>
-        <button onclick="repeatOrder('${escapeHtml(order.id)}')" class="px-3.5 py-2 rounded-xl bg-[#282834] hover:bg-[#f59e0b] hover:text-black text-gray-200 text-xs font-heading font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95 shrink-0 cursor-pointer">
-          <span class="material-symbols-outlined text-sm">replay</span>
-          <span>Повторити</span>
-        </button>
+
+        ${statusNoticeHtml}
+
+        <!-- Список страв -->
+        <div class="divide-y divide-white/5 text-xs bg-[#242430] p-3 rounded-xl space-y-1">
+          ${order.items.map(it => `
+            <div class="py-1 flex justify-between items-center text-gray-300">
+              <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#f59e0b]"></span>
+                <span>${escapeHtml(it.name)} ${it.selectedSize ? `(${escapeHtml(it.selectedSize.label || it.selectedSize.size)})` : ""} × ${it.quantity}</span>
+              </div>
+              <span class="font-semibold text-white shrink-0">${it.price * it.quantity} ₴</span>
+            </div>
+          `).join("")}
+        </div>
+
+        <div class="pt-2 border-t border-white/5 flex items-center justify-between">
+          <div class="min-w-0 pr-2">
+            <span class="text-[11px] text-gray-400 block truncate">${isPickup ? "🏪 Самовивіз: вул. Олександрівська, 88 (кафе «Амбар»)" : `📍 ${escapeHtml(order.address)}`}</span>
+            <div class="flex items-center gap-2 flex-wrap mt-0.5">
+              <span class="text-xs font-heading font-bold text-[#f59e0b]">Разом: ${order.total} ₴</span>
+              ${order.bonusesUsed > 0 ? `<span class="text-[10px] text-amber-400 font-bold bg-amber-500/15 px-1.5 py-0.5 rounded border border-amber-500/30">Бонуси: -${order.bonusesUsed} ₴</span>` : ""}
+              ${order.bonusesEarned > 0 ? `<span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/15 px-1.5 py-0.5 rounded border border-emerald-500/30">🎁 +${order.bonusesEarned} ₴ кешбек</span>` : ""}
+            </div>
+          </div>
+          <button onclick="repeatOrder('${escapeHtml(order.id)}')" class="px-3.5 py-2 rounded-xl bg-[#282834] hover:bg-[#f59e0b] hover:text-black text-gray-200 text-xs font-heading font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95 shrink-0 cursor-pointer">
+            <span class="material-symbols-outlined text-sm">replay</span>
+            <span>Повторити</span>
+          </button>
+        </div>
       </div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 }
 
 function repeatOrder(orderId) {
@@ -1685,21 +2341,35 @@ function renderCabinetBookings() {
     return;
   }
 
-  container.innerHTML = CabinetState.bookings.map(b => `
-    <div class="p-4 rounded-2xl bg-[#1e1e26] border border-white/5 space-y-2">
-      <div class="flex items-center justify-between">
-        <span class="font-heading font-bold text-xs text-white">Бронь #${escapeHtml(b.id)}</span>
-        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-          ${escapeHtml(b.status)}
-        </span>
+  container.innerHTML = CabinetState.bookings.map(b => {
+    const st = b.status || "Очікує ⏳";
+    let statusClass = "bg-amber-500/10 text-amber-400 border-amber-500/20";
+    if (st.includes("Підтверджено")) {
+      statusClass = "bg-sky-500/10 text-sky-400 border-sky-500/20";
+    } else if (st.includes("прийшли") || st.includes("в залі")) {
+      statusClass = "bg-purple-500/10 text-purple-400 border-purple-500/20";
+    } else if (st.includes("пішли") || st.includes("вільний") || st.includes("завершено")) {
+      statusClass = "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+    } else if (st.includes("Скасовано")) {
+      statusClass = "bg-rose-500/10 text-rose-400 border-rose-500/20";
+    }
+
+    return `
+      <div class="p-4 rounded-2xl bg-[#1e1e26] border border-white/5 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="font-heading font-bold text-xs text-white">Бронь #${escapeHtml(b.id)}</span>
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-bold border ${statusClass}">
+            ${escapeHtml(b.status)}
+          </span>
+        </div>
+        <div class="text-xs text-gray-300 space-y-1">
+          <p>📅 <b>${escapeHtml(b.date)} о ${escapeHtml(b.time)}</b></p>
+          <p>👥 ${escapeHtml(b.guests)} • 🏛️ ${escapeHtml(b.hall)}</p>
+          <p class="text-[11px] text-gray-400">Ім'я: ${escapeHtml(b.name)} ${b.phone ? `(${escapeHtml(b.phone)})` : ""}</p>
+        </div>
       </div>
-      <div class="text-xs text-gray-300 space-y-1">
-        <p>📅 <b>${escapeHtml(b.date)} о ${escapeHtml(b.time)}</b></p>
-        <p>👥 ${escapeHtml(b.guests)} • 🏛️ ${escapeHtml(b.hall)}</p>
-        <p class="text-[11px] text-gray-400">Ім'я: ${escapeHtml(b.name)} ${b.phone ? `(${escapeHtml(b.phone)})` : ""}</p>
-      </div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 }
 
 function resetCabinetSession() {
@@ -1726,17 +2396,14 @@ function openClientAuthModal() {
   const modal = document.getElementById("client-auth-modal");
   const backdrop = document.getElementById("client-auth-backdrop");
   if (modal && backdrop) {
-    document.getElementById("auth-step-phone")?.classList.remove("hidden");
-    document.getElementById("auth-step-code")?.classList.add("hidden");
-    document.getElementById("auth-code-error")?.classList.add("hidden");
-    
     const phoneInput = document.getElementById("auth-phone-input");
+    const nameInput = document.getElementById("auth-name-input");
     if (phoneInput && !phoneInput.value && CabinetState.user.phone) {
       phoneInput.value = CabinetState.user.phone;
     }
-    
-    const otpInput = document.getElementById("auth-otp-input");
-    if (otpInput) otpInput.value = "";
+    if (nameInput && !nameInput.value && CabinetState.user.name) {
+      nameInput.value = CabinetState.user.name;
+    }
 
     backdrop.classList.remove("hidden");
     modal.classList.remove("hidden");
@@ -1750,11 +2417,11 @@ function closeClientAuthModal() {
   if (modal && backdrop) {
     modal.classList.add("hidden");
     backdrop.classList.add("hidden");
-    dismissSmsBanner();
   }
 }
 
-function requestSmsCode() {
+function submitInstantAuth(event) {
+  if (event) event.preventDefault();
   const phoneInp = document.getElementById("auth-phone-input");
   const nameInp = document.getElementById("auth-name-input");
   const phoneVal = phoneInp ? phoneInp.value.trim() : "";
@@ -1768,122 +2435,66 @@ function requestSmsCode() {
     return;
   }
 
-  authPendingPhone = phoneVal;
-  authPendingName = nameVal;
-
-  // Генеруємо 4-значний код
-  authCurrentCode = String(Math.floor(1000 + Math.random() * 9000));
-
-  // Показуємо спливаюче SMS-повідомлення (імітація вхідного SMS)
-  const smsBanner = document.getElementById("sms-sim-banner");
-  const smsCodeEl = document.getElementById("sms-sim-code");
-  if (smsBanner && smsCodeEl) {
-    smsCodeEl.textContent = authCurrentCode;
-    smsBanner.classList.remove("hidden");
+  CabinetState.user.phone = phoneVal;
+  if (nameVal) {
+    CabinetState.user.name = nameVal;
   }
 
-  // Переходимо до кроку 2 (введення коду)
-  document.getElementById("auth-step-phone")?.classList.add("hidden");
-  document.getElementById("auth-step-code")?.classList.remove("hidden");
-  document.getElementById("auth-code-error")?.classList.add("hidden");
+  // Прив'язка попередніх замовлень та адреси за цим номером
+  const allOrders = getGlobalOrders();
+  const matchKey = digits.slice(-9);
+  const matchingOrders = allOrders.filter(o => o && o.phone && o.phone.replace(/\D/g, "").includes(matchKey));
   
-  const targetPhoneEl = document.getElementById("auth-code-phone-target");
-  if (targetPhoneEl) targetPhoneEl.textContent = authPendingPhone;
+  matchingOrders.forEach(mo => {
+    if (!CabinetState.orders.some(co => co.id === mo.id)) {
+      CabinetState.orders.push(mo);
+    }
+    // Автоматично підтягуємо збережену адресу, якщо ще немає
+    if (!CabinetState.user.address && mo.address && !mo.address.includes("Самовивіз")) {
+      CabinetState.user.address = mo.address;
+      if (mo.entrance) CabinetState.user.entrance = mo.entrance;
+      if (mo.floor) CabinetState.user.floor = mo.floor;
+      if (mo.apt) CabinetState.user.apt = mo.apt;
+    }
+    if (!CabinetState.user.name && mo.customerName && mo.customerName !== "Гість") {
+      CabinetState.user.name = mo.customerName;
+    }
+  });
 
-  const otpInput = document.getElementById("auth-otp-input");
-  if (otpInput) {
-    otpInput.value = "";
-    setTimeout(() => otpInput.focus(), 80);
+  // Прив'язка броней столиків за цим номером
+  const allBookings = getGlobalBookings();
+  const matchingBookings = allBookings.filter(b => b && b.phone && b.phone.replace(/\D/g, "").includes(matchKey));
+  matchingBookings.forEach(mb => {
+    if (!CabinetState.bookings.some(cb => cb.id === mb.id)) {
+      CabinetState.bookings.push(mb);
+    }
+    if (!CabinetState.user.name && mb.name && mb.name !== "Гість") {
+      CabinetState.user.name = mb.name;
+    }
+  });
+
+  // Синхронізація бонусів за історією замовлень при першому вході
+  let calculatedBonuses = 0;
+  matchingOrders.forEach(mo => {
+    if (mo.status && !mo.status.includes("Скасовано")) {
+      calculatedBonuses += (mo.bonusesEarned || Math.round((mo.total || 0) * 0.05));
+      calculatedBonuses -= (mo.bonusesUsed || 0);
+    }
+  });
+  if (calculatedBonuses > 0 && (!CabinetState.user.bonuses || CabinetState.user.bonuses === 0)) {
+    CabinetState.user.bonuses = Math.max(0, calculatedBonuses);
   }
 
-  startAuthTimer();
-  showToast(`SMS з кодом надіслано на ${authPendingPhone}`);
-}
-
-function dismissSmsBanner() {
-  const smsBanner = document.getElementById("sms-sim-banner");
-  if (smsBanner) smsBanner.classList.add("hidden");
-}
-
-function backToPhoneStep() {
-  document.getElementById("auth-step-code")?.classList.add("hidden");
-  document.getElementById("auth-step-phone")?.classList.remove("hidden");
-}
-
-function startAuthTimer() {
-  let sec = 30;
-  const resendBtn = document.getElementById("auth-resend-btn");
-  const secEl = document.getElementById("auth-timer-sec");
-  if (!resendBtn || !secEl) return;
-
-  resendBtn.disabled = true;
-  secEl.textContent = sec;
-
-  clearInterval(authTimerInterval);
-  authTimerInterval = setInterval(() => {
-    sec--;
-    secEl.textContent = sec;
-    if (sec <= 0) {
-      clearInterval(authTimerInterval);
-      resendBtn.disabled = false;
-      resendBtn.textContent = "Надіслати код повторно";
-    }
-  }, 1000);
-}
-
-function handleOtpInput(val) {
-  if (val.length === 4) {
-    verifySmsCode();
+  saveCabinetState();
+  updateCabinetUI();
+  if (typeof recalculateOrderTotals === "function") {
+    recalculateOrderTotals();
   }
-}
+  closeClientAuthModal();
 
-function verifySmsCode() {
-  const otpInput = document.getElementById("auth-otp-input");
-  const enteredCode = otpInput ? otpInput.value.trim() : "";
-  const errorEl = document.getElementById("auth-code-error");
-
-  // Перевірка коду (згенерований або тестовий 1234)
-  if (enteredCode === authCurrentCode || enteredCode === "1234") {
-    if (errorEl) errorEl.classList.add("hidden");
-
-    CabinetState.user.phone = authPendingPhone;
-    if (authPendingName) {
-      CabinetState.user.name = authPendingName;
-    }
-
-    // Прив'язка попередніх замовлень за цим номером
-    const allOrders = getGlobalOrders();
-    const phoneDigits = authPendingPhone.replace(/\D/g, "");
-    if (phoneDigits.length >= 9) {
-      const matchKey = phoneDigits.slice(-9);
-      const matchingOrders = allOrders.filter(o => o && o.phone && o.phone.replace(/\D/g, "").includes(matchKey));
-      matchingOrders.forEach(mo => {
-        if (!CabinetState.orders.some(co => co.id === mo.id)) {
-          CabinetState.orders.push(mo);
-        }
-      });
-    }
-
-    saveCabinetState();
-    updateCabinetUI();
-    closeClientAuthModal();
-
-    // Відкриваємо кабінет
-    const modal = document.getElementById("user-cabinet-modal");
-    const backdrop = document.getElementById("user-cabinet-backdrop");
-    if (modal && backdrop) {
-      renderCabinetOrders();
-      renderCabinetBookings();
-      backdrop.classList.remove("hidden");
-      modal.classList.remove("hidden");
-    }
-
-    showToast(`Ви успішно увійшли як ${CabinetState.user.name || authPendingPhone}!`);
-    dismissSmsBanner();
-  } else {
-    if (errorEl) errorEl.classList.remove("hidden");
-    if (otpInput) otpInput.focus();
-  }
+  // Відкриваємо особистий кабінет клієнта
+  openCabinetModal();
+  showToast(`Вітаємо, ${CabinetState.user.name || phoneVal}! Ви успішно увійшли 🎉`);
 }
 
 // =========================================================================
@@ -1891,6 +2502,138 @@ function verifySmsCode() {
 // =========================================================================
 const GLOBAL_ORDERS_KEY = "ambar_all_orders_v1";
 const GLOBAL_BOOKINGS_KEY = "ambar_all_bookings_v1";
+
+// =========================================================================
+// 15. ХМАРНА СИНХРОНІЗАЦІЯ В РЕАЛЬНОМУ ЧАСІ (CLOUD SYNC ENGINE)
+// =========================================================================
+const CLOUD_API_ENDPOINTS = [
+  "/api",
+  "/.netlify/functions"
+];
+
+let isAudioNotificationEnabled = localStorage.getItem("ambar_admin_sound") !== "false";
+let adminKnownOrderIds = new Set();
+let adminKnownBookingIds = new Set();
+let isInitialSyncDone = false;
+let cloudSyncInterval = null;
+
+// Аудіо-сигнал нового замовлення через Web Audio API (чистий ресторанний тритонний передзвін)
+function playNewOrderSound() {
+  if (!isAudioNotificationEnabled) return;
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    if (ctx.state === "suspended") {
+      ctx.resume();
+    }
+
+    const notes = [
+      { freq: 659.25, time: 0, dur: 0.25 },     // E5
+      { freq: 880.00, time: 0.12, dur: 0.3 },   // A5
+      { freq: 1318.51, time: 0.25, dur: 0.5 }   // E6
+    ];
+
+    notes.forEach(n => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(n.freq, ctx.currentTime + n.time);
+
+      gain.gain.setValueAtTime(0, ctx.currentTime + n.time);
+      gain.gain.linearRampToValueAtTime(0.25, ctx.currentTime + n.time + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + n.time + n.dur);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(ctx.currentTime + n.time);
+      osc.stop(ctx.currentTime + n.time + n.dur + 0.05);
+    });
+  } catch (e) {
+    console.warn("Audio chime error", e);
+  }
+}
+
+function toggleAdminSound() {
+  isAudioNotificationEnabled = !isAudioNotificationEnabled;
+  localStorage.setItem("ambar_admin_sound", isAudioNotificationEnabled ? "true" : "false");
+  const icon = document.getElementById("adm-sound-icon");
+  const btn = document.getElementById("adm-sound-toggle");
+  if (icon) {
+    icon.textContent = isAudioNotificationEnabled ? "volume_up" : "volume_off";
+  }
+  if (btn) {
+    btn.className = isAudioNotificationEnabled
+      ? "p-2 rounded-xl bg-white/5 hover:bg-white/10 text-[#f59e0b] border border-white/10 transition-colors flex items-center justify-center cursor-pointer"
+      : "p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-500 border border-white/10 transition-colors flex items-center justify-center cursor-pointer";
+  }
+  if (isAudioNotificationEnabled) {
+    playNewOrderSound();
+    showToast("🔔 Звукові сповіщення увімкнено");
+  } else {
+    showToast("🔇 Звукові сповіщення вимкнено");
+  }
+}
+
+const AmbarCloudSync = {
+  async request(endpoint, options = {}) {
+    for (const base of CLOUD_API_ENDPOINTS) {
+      try {
+        const url = `${base}${endpoint}`;
+        const res = await fetch(url, {
+          ...options,
+          headers: {
+            "Content-Type": "application/json",
+            ...(options.headers || {})
+          }
+        });
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch (e) {
+        // Пробуємо наступний ендпоінт
+      }
+    }
+    return null;
+  },
+
+  async fetchOrders() {
+    return await this.request("/orders");
+  },
+
+  async saveOrder(order) {
+    return await this.request("/orders", {
+      method: "POST",
+      body: JSON.stringify(order)
+    });
+  },
+
+  async updateOrder(order) {
+    return await this.request("/orders", {
+      method: "PUT",
+      body: JSON.stringify(order)
+    });
+  },
+
+  async fetchBookings() {
+    return await this.request("/bookings");
+  },
+
+  async saveBooking(booking) {
+    return await this.request("/bookings", {
+      method: "POST",
+      body: JSON.stringify(booking)
+    });
+  },
+
+  async updateBooking(booking) {
+    return await this.request("/bookings", {
+      method: "PUT",
+      body: JSON.stringify(booking)
+    });
+  }
+};
 
 function getGlobalOrders() {
   try {
@@ -1909,8 +2652,16 @@ function saveGlobalOrders(orders) {
 
 function addGlobalOrder(order) {
   const all = getGlobalOrders();
-  all.unshift(order);
+  const idx = all.findIndex(o => o.id === order.id);
+  if (idx >= 0) {
+    all[idx] = { ...all[idx], ...order };
+  } else {
+    all.unshift(order);
+  }
   saveGlobalOrders(all);
+
+  // Миттєва відправка на сервер (Cloud)
+  AmbarCloudSync.saveOrder(order);
 }
 
 function getGlobalBookings() {
@@ -1930,9 +2681,132 @@ function saveGlobalBookings(bookings) {
 
 function addGlobalBooking(booking) {
   const all = getGlobalBookings();
-  all.unshift(booking);
+  const idx = all.findIndex(b => b.id === booking.id);
+  if (idx >= 0) {
+    all[idx] = { ...all[idx], ...booking };
+  } else {
+    all.unshift(booking);
+  }
   saveGlobalBookings(all);
+
+  // Миттєва відправка на сервер (Cloud)
+  AmbarCloudSync.saveBooking(booking);
 }
+
+async function syncOrdersAndBookingsWithCloud(isUserAction = false) {
+  try {
+    const serverOrders = await AmbarCloudSync.fetchOrders();
+    const serverBookings = await AmbarCloudSync.fetchBookings();
+
+    let hasNewOrders = false;
+    let hasNewBookings = false;
+
+    if (Array.isArray(serverOrders)) {
+      const localOrders = getGlobalOrders();
+      const orderMap = new Map();
+
+      localOrders.forEach(o => { if (o && o.id) orderMap.set(o.id, o); });
+      serverOrders.forEach(o => {
+        if (o && o.id) {
+          if (isInitialSyncDone && !adminKnownOrderIds.has(o.id)) {
+            hasNewOrders = true;
+          }
+          orderMap.set(o.id, o);
+        }
+      });
+
+      const mergedOrders = Array.from(orderMap.values()).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+      saveGlobalOrders(mergedOrders);
+      mergedOrders.forEach(o => adminKnownOrderIds.add(o.id));
+    }
+
+    if (Array.isArray(serverBookings)) {
+      const localBookings = getGlobalBookings();
+      const bookingMap = new Map();
+
+      localBookings.forEach(b => { if (b && b.id) bookingMap.set(b.id, b); });
+      serverBookings.forEach(b => {
+        if (b && b.id) {
+          if (isInitialSyncDone && !adminKnownBookingIds.has(b.id)) {
+            hasNewBookings = true;
+          }
+          bookingMap.set(b.id, b);
+        }
+      });
+
+      const mergedBookings = Array.from(bookingMap.values());
+      saveGlobalBookings(mergedBookings);
+      mergedBookings.forEach(b => adminKnownBookingIds.add(b.id));
+    }
+
+    // Сповіщення при надходженні нового замовлення
+    if (hasNewOrders && isInitialSyncDone) {
+      playNewOrderSound();
+      if ("vibrate" in navigator) navigator.vibrate([200, 100, 200]);
+      showToast("🔔 Надійшло нове замовлення клієнта!");
+      document.title = "🔔 (НОВЕ ЗАМОВЛЕННЯ!) АМБАР";
+      setTimeout(() => {
+        document.title = "АМБАР — Ресторан & Гриль | Доставка їжі в Запоріжжі";
+      }, 8000);
+    }
+
+    isInitialSyncDone = true;
+
+    // Оновлюємо статус в шапці адмінки
+    const syncText = document.getElementById("adm-sync-text");
+    const syncInd = document.getElementById("adm-sync-indicator");
+    if (syncText) {
+      const now = new Date().toLocaleTimeString("uk-UA", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+      syncText.textContent = `Хмара: ${now}`;
+    }
+    if (syncInd) syncInd.classList.remove("hidden");
+
+    // Оновлення інтерфейсу адмінки якщо вона відкрита
+    if (sessionStorage.getItem("ambar_admin_logged") === "true") {
+      renderAdminDashboard();
+      const ordersTab = document.getElementById("adm-content-orders");
+      if (ordersTab && !ordersTab.classList.contains("hidden")) {
+        renderAdminOrders();
+      } else {
+        renderAdminBookings();
+      }
+    }
+
+    if (isUserAction) {
+      showToast("✅ Дані успішно синхронізовано з хмарою");
+    }
+  } catch (e) {
+    console.warn("Cloud sync error:", e);
+  }
+}
+
+function manualSyncAdmin() {
+  syncOrdersAndBookingsWithCloud(true);
+}
+
+function startCloudSyncLoop() {
+  if (cloudSyncInterval) clearInterval(cloudSyncInterval);
+  
+  // Початкове наповнення відомих ID з локального сховища
+  getGlobalOrders().forEach(o => { if (o && o.id) adminKnownOrderIds.add(o.id); });
+  getGlobalBookings().forEach(b => { if (b && b.id) adminKnownBookingIds.add(b.id); });
+
+  // Перший запуск синхронізації
+  syncOrdersAndBookingsWithCloud(false);
+
+  // Регулярне фонове опитування кожні 3.5 секунди
+  cloudSyncInterval = setInterval(() => {
+    syncOrdersAndBookingsWithCloud(false);
+  }, 3500);
+}
+
+// Миттєва синхронізація при поверненні на вкладку браузера
+window.addEventListener("focus", () => syncOrdersAndBookingsWithCloud(false));
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    syncOrdersAndBookingsWithCloud(false);
+  }
+});
 
 let currentAdminOrderFilter = "all";
 
@@ -2025,19 +2899,22 @@ function switchAdminTab(tab) {
   const bookingsTab = document.getElementById("adm-content-bookings");
   const btnOrders = document.getElementById("adm-tab-btn-orders");
   const btnBookings = document.getElementById("adm-tab-btn-bookings");
-  const filterBar = document.getElementById("adm-orders-filter-bar");
+  const ordersFilterBar = document.getElementById("adm-orders-filter-bar");
+  const bookingsFilterBar = document.getElementById("adm-bookings-filter-bar");
 
   if (tab === "orders") {
     ordersTab?.classList.remove("hidden");
     bookingsTab?.classList.add("hidden");
-    filterBar?.classList.remove("hidden");
+    ordersFilterBar?.classList.remove("hidden");
+    bookingsFilterBar?.classList.add("hidden");
     if (btnOrders) btnOrders.className = "px-5 py-2 rounded-xl bg-[#f59e0b] text-black font-bold transition-all flex items-center gap-1.5 shadow";
     if (btnBookings) btnBookings.className = "px-5 py-2 rounded-xl text-gray-400 hover:text-white transition-all flex items-center gap-1.5";
     renderAdminOrders();
   } else {
     ordersTab?.classList.add("hidden");
     bookingsTab?.classList.remove("hidden");
-    filterBar?.classList.add("hidden");
+    ordersFilterBar?.classList.add("hidden");
+    bookingsFilterBar?.classList.remove("hidden");
     if (btnBookings) btnBookings.className = "px-5 py-2 rounded-xl bg-[#f59e0b] text-black font-bold transition-all flex items-center gap-1.5 shadow";
     if (btnOrders) btnOrders.className = "px-5 py-2 rounded-xl text-gray-400 hover:text-white transition-all flex items-center gap-1.5";
     renderAdminBookings();
@@ -2048,12 +2925,26 @@ function setAdminOrderFilter(filter) {
   currentAdminOrderFilter = filter;
   document.querySelectorAll(".adm-filter-btn").forEach(btn => {
     if (btn.dataset.filter === filter) {
-      btn.className = "adm-filter-btn px-2.5 py-1 rounded-lg bg-white/15 text-[#f59e0b] font-bold";
+      btn.className = "adm-filter-btn px-2.5 py-1 rounded-lg bg-white/15 text-[#f59e0b] font-bold cursor-pointer";
     } else {
-      btn.className = "adm-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400";
+      btn.className = "adm-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer";
     }
   });
   renderAdminOrders();
+}
+
+let currentAdminBookingFilter = "all";
+
+function setAdminBookingFilter(filter) {
+  currentAdminBookingFilter = filter;
+  document.querySelectorAll(".adm-b-filter-btn").forEach(btn => {
+    if (btn.dataset.bfilter === filter) {
+      btn.className = "adm-b-filter-btn px-2.5 py-1 rounded-lg bg-white/15 text-[#f59e0b] font-bold cursor-pointer";
+    } else {
+      btn.className = "adm-b-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer";
+    }
+  });
+  renderAdminBookings();
 }
 
 function renderAdminDashboard() {
@@ -2085,11 +2976,11 @@ function renderAdminOrders() {
   if (currentAdminOrderFilter === "prep") {
     orders = orders.filter(o => o.status && o.status.includes("Готується"));
   } else if (currentAdminOrderFilter === "ready") {
-    orders = orders.filter(o => o.status && (o.status.includes("Готовий") || o.status.includes("очікує")));
+    orders = orders.filter(o => o.status && (o.status.includes("Готовий") || o.status.includes("очікує") || o.status.includes("видачі")));
   } else if (currentAdminOrderFilter === "deliv") {
     orders = orders.filter(o => o.status && o.status.includes("дорозі"));
   } else if (currentAdminOrderFilter === "done") {
-    orders = orders.filter(o => o.status && o.status.includes("Доставлено"));
+    orders = orders.filter(o => o.status && (o.status.includes("Доставлено") || o.status.includes("Видано")));
   }
 
   if (orders.length === 0) {
@@ -2104,61 +2995,130 @@ function renderAdminOrders() {
   }
 
   container.innerHTML = orders.map(o => {
-    const st = o.status || "Готується 👨‍🍳";
+    const isPickup = o.orderType === "pickup" || (o.address && o.address.includes("Самовивіз")) || (o.district && o.district.includes("Самовивіз"));
+    let st = o.status || "Готується 👨‍🍳";
+
+    // Автоматична нормалізація: якщо це самовивіз, виправляємо помилкові кур'єрські статуси
+    if (isPickup && (st.includes("дорозі") || st.includes("кур'єра"))) {
+      st = "Готовий до видачі в кафе 🥡";
+      o.status = st;
+      saveGlobalOrders(orders);
+    }
+
     let statusClass = "bg-amber-500/15 text-amber-400 border-amber-500/30";
     let nextStepBtn = "";
 
-    if (st.includes("Готується")) {
-      statusClass = "bg-amber-500/15 text-amber-400 border-amber-500/30";
-      nextStepBtn = `
-        <button 
-          onclick="changeOrderStatus('${escapeHtml(o.id)}', 'Готовий, очікує кур\\'єра 🥡')"
-          class="px-2.5 py-1.5 rounded-xl bg-sky-500/20 text-sky-300 hover:bg-sky-500 hover:text-black font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-sky-500/30"
-          title="Замовлення готове, очікує передачі кур'єру"
-        >
-          <span>➔ Готовий</span>
-          <span>🥡</span>
-        </button>
-      `;
-    } else if (st.includes("Готовий") || st.includes("очікує")) {
-      statusClass = "bg-sky-500/15 text-sky-400 border-sky-500/30";
-      nextStepBtn = `
-        <button 
-          onclick="changeOrderStatus('${escapeHtml(o.id)}', 'Кур\\'єр в дорозі 🛵')"
-          class="px-2.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-300 hover:bg-purple-500 hover:text-white font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-purple-500/30"
-          title="Передати замовлення кур'єру в дорогу"
-        >
-          <span>➔ В дорогу</span>
-          <span>🛵</span>
-        </button>
-      `;
-    } else if (st.includes("дорозі")) {
-      statusClass = "bg-purple-500/15 text-purple-400 border-purple-500/30";
-      nextStepBtn = `
-        <button 
-          onclick="changeOrderStatus('${escapeHtml(o.id)}', 'Доставлено ✅')"
-          class="px-2.5 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500 hover:text-black font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-emerald-500/30"
-          title="Позначити успішно доставленим клієнту"
-        >
-          <span>➔ Доставлено</span>
-          <span>✅</span>
-        </button>
-      `;
-    } else if (st.includes("Доставлено")) {
-      statusClass = "bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
-    } else if (st.includes("Скасовано")) {
-      statusClass = "bg-rose-500/15 text-rose-400 border-rose-500/30";
+    if (isPickup) {
+      // -------------------------------------------------------------
+      // ЛОГІКА СТАТУСІВ САМОВИВОЗУ
+      // -------------------------------------------------------------
+      if (st.includes("Готується")) {
+        statusClass = "bg-amber-500/15 text-amber-400 border-amber-500/30";
+        nextStepBtn = `
+          <button 
+            onclick="changeOrderStatus('${escapeHtml(o.id)}', 'Готовий до видачі в кафе 🥡')"
+            class="px-2.5 py-1.5 rounded-xl bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-black font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-amber-500/30 shadow-sm"
+            title="Замовлення зібрано, очікує видачі гостю в кафе"
+          >
+            <span>➔ До видачі</span>
+            <span>🥡</span>
+          </button>
+        `;
+      } else if (st.includes("Готовий") || st.includes("видачі") || st.includes("очікує")) {
+        statusClass = "bg-amber-500/20 text-[#f59e0b] border-[#f59e0b]/40";
+        nextStepBtn = `
+          <button 
+            onclick="changeOrderStatus('${escapeHtml(o.id)}', 'Видано гостю в кафе ✅')"
+            class="px-2.5 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500 hover:text-black font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-emerald-500/30 shadow-sm"
+            title="Замовлення передано клієнту в кафе"
+          >
+            <span>➔ Видано гостю</span>
+            <span>✅</span>
+          </button>
+        `;
+      } else if (st.includes("Видано") || st.includes("Доставлено")) {
+        statusClass = "bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
+        nextStepBtn = `
+          <span class="text-[10px] text-emerald-400 font-bold flex items-center gap-1 px-2 py-1 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
+            <span class="material-symbols-outlined text-xs">done_all</span>
+            <span>Видано гостю</span>
+          </span>
+        `;
+      } else if (st.includes("Скасовано")) {
+        statusClass = "bg-rose-500/15 text-rose-400 border-rose-500/30";
+      }
+    } else {
+      // -------------------------------------------------------------
+      // ЛОГІКА СТАТУСІВ ДОСТАВКИ КУР'ЄРОМ
+      // -------------------------------------------------------------
+      if (st.includes("Готується")) {
+        statusClass = "bg-amber-500/15 text-amber-400 border-amber-500/30";
+        nextStepBtn = `
+          <button 
+            onclick="changeOrderStatus('${escapeHtml(o.id)}', 'Готовий, очікує кур\\'єра 🥡')"
+            class="px-2.5 py-1.5 rounded-xl bg-sky-500/20 text-sky-300 hover:bg-sky-500 hover:text-black font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-sky-500/30 shadow-sm"
+            title="Замовлення готове, очікує передачі кур'єру"
+          >
+            <span>➔ Готовий</span>
+            <span>🥡</span>
+          </button>
+        `;
+      } else if (st.includes("Готовий") || st.includes("очікує")) {
+        statusClass = "bg-sky-500/15 text-sky-400 border-sky-500/30";
+        nextStepBtn = `
+          <button 
+            onclick="changeOrderStatus('${escapeHtml(o.id)}', 'Кур\\'єр в дорозі 🛵')"
+            class="px-2.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-300 hover:bg-purple-500 hover:text-white font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-purple-500/30 shadow-sm"
+            title="Передати замовлення кур'єру в дорогу"
+          >
+            <span>➔ В дорогу</span>
+            <span>🛵</span>
+          </button>
+        `;
+      } else if (st.includes("дорозі")) {
+        statusClass = "bg-purple-500/15 text-purple-400 border-purple-500/30";
+        nextStepBtn = `
+          <button 
+            onclick="changeOrderStatus('${escapeHtml(o.id)}', 'Доставлено ✅')"
+            class="px-2.5 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500 hover:text-black font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-emerald-500/30 shadow-sm"
+            title="Позначити успішно доставленим клієнту"
+          >
+            <span>➔ Доставлено</span>
+            <span>✅</span>
+          </button>
+        `;
+      } else if (st.includes("Доставлено") || st.includes("Видано")) {
+        statusClass = "bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
+        nextStepBtn = `
+          <span class="text-[10px] text-emerald-400 font-bold flex items-center gap-1 px-2 py-1 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
+            <span class="material-symbols-outlined text-xs">done_all</span>
+            <span>Доставлено</span>
+          </span>
+        `;
+      } else if (st.includes("Скасовано")) {
+        statusClass = "bg-rose-500/15 text-rose-400 border-rose-500/30";
+      }
     }
 
     return `
       <div class="p-4 rounded-2xl bg-[#1c1c24] border border-white/10 space-y-3">
         <!-- Заголовок замовлення -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-white/5">
-          <div class="flex items-center gap-2.5">
+          <div class="flex items-center gap-2 flex-wrap">
             <span class="font-heading font-extrabold text-sm text-[#f59e0b]">#${escapeHtml(o.id)}</span>
             <span class="text-xs text-gray-400">${escapeHtml(o.date)}</span>
             <span class="text-xs text-gray-500">•</span>
-            <span class="text-xs font-semibold text-white">${escapeHtml(o.district || "")}</span>
+            ${isPickup ? `
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-[#f59e0b] border border-[#f59e0b]/40 flex items-center gap-1 shadow-sm">
+                <span class="material-symbols-outlined text-xs">storefront</span>
+                <span>САМОВИВІЗ</span>
+              </span>
+            ` : `
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-sky-500/20 text-sky-400 border border-sky-500/30 flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs">moped</span>
+                <span>${escapeHtml(o.district || "Доставка")}</span>
+              </span>
+            `}
           </div>
           
           <div class="flex items-center gap-2 flex-wrap">
@@ -2169,11 +3129,17 @@ function renderAdminOrders() {
             <select 
               onchange="changeOrderStatus('${escapeHtml(o.id)}', this.value)" 
               class="px-3 py-1.5 rounded-xl border text-xs font-bold focus:outline-none focus:border-[#f59e0b] cursor-pointer transition-colors ${statusClass}"
+              title="Змінити статус замовлення вручну"
             >
-              <option value="Готується 👨‍🍳" class="bg-[#1c1c24] text-amber-400" ${st.includes("Готується") ? "selected" : ""}>👨‍🍳 Готується</option>
-              <option value="Готовий, очікує кур'єра 🥡" class="bg-[#1c1c24] text-sky-400" ${st.includes("Готовий") || st.includes("очікує") ? "selected" : ""}>🥡 Готовий, очікує кур'єра</option>
-              <option value="Кур'єр в дорозі 🛵" class="bg-[#1c1c24] text-purple-400" ${st.includes("дорозі") ? "selected" : ""}>🛵 Кур'єр в дорозі</option>
-              <option value="Доставлено ✅" class="bg-[#1c1c24] text-emerald-400" ${st.includes("Доставлено") ? "selected" : ""}>✅ Доставлено</option>
+              <option value="Готується 👨‍🍳" class="bg-[#1c1c24] text-amber-400" ${st.includes("Готується") ? "selected" : ""}>👨‍🍳 Готується на кухні</option>
+              ${isPickup ? `
+                <option value="Готовий до видачі в кафе 🥡" class="bg-[#1c1c24] text-amber-400" ${st.includes("Готовий") || st.includes("видачі") ? "selected" : ""}>🥡 Готовий до видачі в кафе</option>
+                <option value="Видано гостю в кафе ✅" class="bg-[#1c1c24] text-emerald-400" ${st.includes("Видано") || st.includes("Доставлено") ? "selected" : ""}>✅ Видано гостю в кафе</option>
+              ` : `
+                <option value="Готовий, очікує кур'єра 🥡" class="bg-[#1c1c24] text-sky-400" ${st.includes("Готовий") || st.includes("очікує") ? "selected" : ""}>🥡 Готовий, очікує кур'єра</option>
+                <option value="Кур'єр в дорозі 🛵" class="bg-[#1c1c24] text-purple-400" ${st.includes("дорозі") ? "selected" : ""}>🛵 Кур'єр в дорозі</option>
+                <option value="Доставлено ✅" class="bg-[#1c1c24] text-emerald-400" ${st.includes("Доставлено") ? "selected" : ""}>✅ Доставлено кур'єром</option>
+              `}
               <option value="Скасовано ❌" class="bg-[#1c1c24] text-rose-400" ${st.includes("Скасовано") ? "selected" : ""}>❌ Скасовано</option>
             </select>
 
@@ -2192,8 +3158,9 @@ function renderAdminOrders() {
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-[#242430] p-3 rounded-xl">
           <div>
             <span class="text-[10px] text-gray-400 block">Клієнт / Телефон:</span>
-            <div class="flex items-center gap-2 mt-0.5">
-              <span class="font-bold text-white">${escapeHtml(o.phone)}</span>
+            <div class="flex items-center gap-1.5 mt-0.5 flex-wrap">
+              <span class="font-bold text-white text-xs">${escapeHtml(o.customerName || o.name || "Гість")}</span>
+              <span class="text-gray-400 font-medium text-[11px]">(${escapeHtml(o.phone)})</span>
               <a href="tel:${escapeHtml(o.phone.replace(/[^0-9+]/g, ""))}" class="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 font-bold hover:bg-emerald-500/30 transition-colors inline-flex items-center gap-1 text-[10px]">
                 <span class="material-symbols-outlined text-xs">call</span>
                 <span>Дзвінок</span>
@@ -2202,8 +3169,13 @@ function renderAdminOrders() {
           </div>
 
           <div>
-            <span class="text-[10px] text-gray-400 block">Адреса доставки:</span>
-            <span class="font-medium text-gray-200 mt-0.5 block leading-tight">📍 ${escapeHtml(o.address)}</span>
+            <span class="text-[10px] text-gray-400 block">${isPickup ? "Спосіб отримання:" : "Адреса доставки:"}</span>
+            <span class="font-medium text-gray-200 mt-0.5 block leading-tight">
+              ${isPickup 
+                ? `<span class="inline-flex items-center gap-1 font-bold text-[#f59e0b]"><span class="material-symbols-outlined text-xs">storefront</span> САМОВИВІЗ:</span> вул. Олександрівська, 88 (кафе)` 
+                : `📍 ${escapeHtml(o.address)}`
+              }
+            </span>
           </div>
 
           <div>
@@ -2215,16 +3187,27 @@ function renderAdminOrders() {
 
         <!-- Деталізація страв та кнопка редагування замовлення -->
         <div class="space-y-1.5 text-xs">
-          <div class="flex items-center justify-between pb-1">
+          <div class="flex items-center justify-between pb-1 gap-2 flex-wrap">
             <span class="text-[10px] text-gray-400 uppercase tracking-wider block font-bold">Склад замовлення:</span>
-            <button 
-              onclick="openEditOrderModal('${escapeHtml(o.id)}')" 
-              class="px-2.5 py-1 rounded-lg bg-[#f59e0b]/15 text-[#f59e0b] hover:bg-[#f59e0b] hover:text-black font-bold text-[11px] transition-all flex items-center gap-1 cursor-pointer"
-              title="Додати страву з меню або змінити кількість"
-            >
-              <span class="material-symbols-outlined text-sm">edit_note</span>
-              <span>Змінити / Додати страву з меню</span>
-            </button>
+            ${isOrderEditable(st) ? `
+              <button 
+                onclick="openEditOrderModal('${escapeHtml(o.id)}')" 
+                class="px-2.5 py-1 rounded-lg bg-[#f59e0b]/15 text-[#f59e0b] hover:bg-[#f59e0b] hover:text-black font-bold text-[11px] transition-all flex items-center gap-1 cursor-pointer"
+                title="Додати страву з меню або змінити кількість (доступно, поки замовлення готується)"
+              >
+                <span class="material-symbols-outlined text-sm">edit_note</span>
+                <span>Змінити / Додати страву з меню</span>
+              </button>
+            ` : `
+              <button 
+                disabled
+                class="px-2.5 py-1 rounded-lg bg-white/5 text-gray-500 font-bold text-[11px] flex items-center gap-1 cursor-not-allowed opacity-60 border border-white/5 select-none"
+                title="Зміна замовлення недоступна: замовлення вже готове до видачі або передане кур'єру (статус: ${escapeHtml(st)})"
+              >
+                <span class="material-symbols-outlined text-sm">lock</span>
+                <span>Змінити / Додати страву з меню</span>
+              </button>
+            `}
           </div>
 
           <div class="divide-y divide-white/5 bg-[#1a1a24] p-2.5 rounded-xl border border-white/5">
@@ -2243,8 +3226,13 @@ function renderAdminOrders() {
         </div>
 
         <!-- Підсумок -->
-        <div class="pt-2 border-t border-white/5 flex items-center justify-between text-xs font-heading">
-          <span class="text-gray-400">Доставка: ${o.deliveryFee > 0 ? o.deliveryFee + " ₴" : "Безкоштовно"} ${o.discountAmount > 0 ? `• Знижка: -${o.discountAmount} ₴` : ""}</span>
+        <div class="pt-2 border-t border-white/5 flex items-center justify-between text-xs font-heading flex-wrap gap-2">
+          <div class="flex items-center gap-2 text-gray-400 flex-wrap">
+            <span>${isPickup ? "Самовивіз: 0 ₴" : `Доставка: ${o.deliveryFee > 0 ? o.deliveryFee + " ₴" : "Безкоштовно"}`}</span>
+            ${o.discountAmount > 0 ? `<span>• Промокод: -${o.discountAmount} ₴</span>` : ""}
+            ${o.bonusesUsed > 0 ? `<span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-[#f59e0b] border border-[#f59e0b]/30 font-bold text-[10px]">Бонуси: -${o.bonusesUsed} ₴</span>` : ""}
+            ${o.bonusesEarned > 0 ? `<span class="px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 font-bold text-[10px]">🎁 Кешбек: +${o.bonusesEarned} ₴</span>` : ""}
+          </div>
           <span class="font-extrabold text-sm text-[#f59e0b]">До оплати: ${o.total} ₴</span>
         </div>
       </div>
@@ -2260,10 +3248,30 @@ let editingOrderItems = [];
 let editOrderCurrentCategory = "all";
 let editOrderSearchQuery = "";
 
+// Перевірка: чи доступне редагування замовлення згідно з поточним статусом.
+// Доступно ТІЛЬКИ якщо замовлення ще не готове віддаватися кур'єру або гостю (готується).
+function isOrderEditable(orderOrStatus) {
+  if (!orderOrStatus) return true;
+  const st = (typeof orderOrStatus === "string") ? orderOrStatus : (orderOrStatus.status || "");
+  const isReadyOrBeyond = st.includes("Готовий") || 
+                          st.includes("очікує") || 
+                          st.includes("видачі") ||
+                          st.includes("Видано") ||
+                          st.includes("дорозі") || 
+                          st.includes("Доставлено") || 
+                          st.includes("Скасовано");
+  return !isReadyOrBeyond;
+}
+
 function openEditOrderModal(orderId) {
   const allOrders = getGlobalOrders();
   const order = allOrders.find(o => o.id === orderId);
   if (!order) return;
+
+  if (!isOrderEditable(order)) {
+    showToast(`⚠️ Зміна замовлення недоступна: статус «${order.status}» (вже готове для кур'єра або відправлено).`);
+    return;
+  }
 
   editingOrderId = orderId;
   editingOrderItems = JSON.parse(JSON.stringify(order.items || []));
@@ -2459,6 +3467,14 @@ function renderEditOrderMenuResults() {
 }
 
 function addDishToEditingOrder(dishId) {
+  if (editingOrderId) {
+    const allOrders = getGlobalOrders();
+    const order = allOrders.find(o => o.id === editingOrderId);
+    if (order && !isOrderEditable(order)) {
+      showToast("⚠️ Замовлення вже готове до видачі або в дорозі, додавання неможливе.");
+      return;
+    }
+  }
   const itemsList = (typeof MENU_ITEMS !== "undefined" && Array.isArray(MENU_ITEMS) && MENU_ITEMS.length > 0)
     ? MENU_ITEMS 
     : ((typeof FULL_AMBAR_MENU !== "undefined" && Array.isArray(FULL_AMBAR_MENU)) ? FULL_AMBAR_MENU : []);
@@ -2518,6 +3534,12 @@ function updateEditOrderSummary() {
 // Перемикання в режим додавання страв безпосередньо в основному меню сайту
 function switchToMainSiteOrderEdit() {
   if (!editingOrderId) return;
+  const allOrders = getGlobalOrders();
+  const order = allOrders.find(o => o.id === editingOrderId);
+  if (!order || !isOrderEditable(order)) {
+    showToast("⚠️ Редагування заблоковано: замовлення вже готове до видачі або в дорозі!");
+    return;
+  }
 
   // Приховуємо модалки редагування та адмінки
   const editModal = document.getElementById("admin-edit-order-modal");
@@ -2585,6 +3607,12 @@ function saveEditOrderChanges() {
   const order = allOrders.find(o => o.id === editingOrderId);
   if (!order) return;
 
+  if (!isOrderEditable(order)) {
+    alert("Неможливо зберегти зміни: замовлення вже готове до видачі або в дорозі!");
+    cancelMainSiteOrderEdit();
+    return;
+  }
+
   const newSubtotal = editingOrderItems.reduce((sum, it) => sum + (it.price * it.quantity), 0);
   const deliveryFee = order.deliveryFee || 0;
   const discountAmount = order.discountAmount || 0;
@@ -2595,6 +3623,11 @@ function saveEditOrderChanges() {
   order.total = newTotal;
 
   saveGlobalOrders(allOrders);
+
+  // Оновлюємо в хмарі
+  if (typeof AmbarCloudSync !== "undefined") {
+    AmbarCloudSync.updateOrder(order);
+  }
 
   // Також синхронізуємо зі станом клієнта
   if (typeof CabinetState !== "undefined" && Array.isArray(CabinetState.orders)) {
@@ -2617,6 +3650,13 @@ function saveEditOrderChanges() {
   closeEditOrderModal();
   openAdminDashboard();
   showToast(`Замовлення #${editingOrderId} оновлено! Нова сума: ${newTotal} ₴`);
+
+  if (typeof broadcastEvent === "function") {
+    broadcastEvent({
+      type: "ORDER_STATUS_CHANGED",
+      orderId: editingOrderId
+    });
+  }
 }
 
 function changeOrderStatus(orderId, newStatus) {
@@ -2625,21 +3665,57 @@ function changeOrderStatus(orderId, newStatus) {
   if (!order) return;
 
   order.status = newStatus;
+
+  // Керування бонусами при скасуванні/відновленні (закриття дір):
+  let bonusMsg = "";
+  if (newStatus.includes("Скасовано") && !order.bonusesRefunded) {
+    if (typeof CabinetState !== "undefined" && CabinetState.user) {
+      const refundAmount = order.bonusesUsed || 0;
+      const revokeAmount = order.bonusesEarned || 0;
+      CabinetState.user.bonuses = Math.max(0, (CabinetState.user.bonuses || 0) + refundAmount - revokeAmount);
+      order.bonusesRefunded = true;
+      if (refundAmount > 0) bonusMsg = ` Повернено ${refundAmount} ₴ списаних бонусів.`;
+    }
+  } else if (!newStatus.includes("Скасовано") && order.bonusesRefunded) {
+    // Якщо статус відновлено зі скасованого
+    if (typeof CabinetState !== "undefined" && CabinetState.user) {
+      const reDeduct = order.bonusesUsed || 0;
+      const reEarn = order.bonusesEarned || 0;
+      CabinetState.user.bonuses = Math.max(0, (CabinetState.user.bonuses || 0) - reDeduct) + reEarn;
+      order.bonusesRefunded = false;
+    }
+  }
+
   saveGlobalOrders(allOrders);
+
+  // Оновлюємо в хмарі
+  if (typeof AmbarCloudSync !== "undefined") {
+    AmbarCloudSync.updateOrder({ id: orderId, status: newStatus });
+  }
 
   // Оновлюємо в кабінеті клієнта, якщо замовлення присутнє там
   if (typeof CabinetState !== "undefined" && Array.isArray(CabinetState.orders)) {
     const userOrder = CabinetState.orders.find(o => o.id === orderId);
     if (userOrder) {
       userOrder.status = newStatus;
-      saveCabinetState();
-      updateCabinetUI();
-      renderCabinetOrders();
+      userOrder.bonusesRefunded = order.bonusesRefunded;
     }
+    saveCabinetState();
+    updateCabinetUI();
+    renderCabinetOrders();
   }
 
+  if (typeof broadcastEvent === "function") {
+    broadcastEvent({
+      type: "ORDER_STATUS_CHANGED",
+      orderId: orderId,
+      newStatus: newStatus
+    });
+  }
+
+  renderAdminDashboard();
   renderAdminOrders();
-  showToast(`Статус замовлення #${orderId} змінено на: ${newStatus}`);
+  showToast(`Статус замовлення #${orderId} змінено на: ${newStatus}.${bonusMsg}`);
 }
 
 function renderAdminBookings() {
@@ -2648,7 +3724,17 @@ function renderAdminBookings() {
 
   const bookings = getGlobalBookings();
 
-  if (bookings.length === 0) {
+  const filtered = bookings.filter(b => {
+    if (currentAdminBookingFilter === "all") return true;
+    const st = (b.status || "").toLowerCase();
+    if (currentAdminBookingFilter === "pending") return st.includes("очікує");
+    if (currentAdminBookingFilter === "confirmed") return st.includes("підтверджено");
+    if (currentAdminBookingFilter === "seated") return st.includes("прийшли") || st.includes("в залі");
+    if (currentAdminBookingFilter === "finished") return st.includes("пішли") || st.includes("вільний") || st.includes("завершено");
+    return true;
+  });
+
+  if (filtered.length === 0) {
     container.innerHTML = `
       <div class="p-8 text-center bg-[#1c1c24] rounded-2xl border border-white/5 space-y-2">
         <span class="material-symbols-outlined text-3xl text-gray-500">table_restaurant</span>
@@ -2659,39 +3745,140 @@ function renderAdminBookings() {
     return;
   }
 
-  container.innerHTML = bookings.map(b => `
-    <div class="p-4 rounded-2xl bg-[#1c1c24] border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-      <div class="space-y-1">
-        <div class="flex items-center gap-2">
-          <span class="font-heading font-bold text-white">#${escapeHtml(b.id)}</span>
-          <span class="text-gray-400">${escapeHtml(b.createdAt || "")}</span>
-        </div>
-        <p class="text-white font-semibold">📅 ${escapeHtml(b.date)} о ${escapeHtml(b.time)} • 🏛️ ${escapeHtml(b.hall)}</p>
-        <p class="text-gray-300">👥 Персони: <b>${escapeHtml(b.guests)}</b> • Гість: <b>${escapeHtml(b.name)}</b></p>
-        <div class="flex items-center gap-2 pt-0.5">
-          <span class="text-gray-400">${escapeHtml(b.phone)}</span>
-          ${b.phone ? `
-            <a href="tel:${escapeHtml(b.phone.replace(/[^0-9+]/g, ""))}" class="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 font-bold hover:bg-emerald-500/30 transition-colors inline-flex items-center gap-1 text-[10px]">
-              <span class="material-symbols-outlined text-xs">call</span>
-              <span>Дзвінок</span>
-            </a>
-          ` : ""}
-        </div>
-      </div>
+  container.innerHTML = filtered.map(b => {
+    const st = b.status || "Очікує ⏳";
+    let statusClass = "bg-amber-500/15 text-amber-300 border-amber-500/30";
+    let statusIcon = "hourglass_empty";
+    let statusLabel = "Очікує ⏳";
+    let nextStepBtn = "";
 
-      <div class="flex sm:flex-col items-center sm:items-end gap-2 shrink-0">
-        <select 
-          onchange="changeBookingStatus('${escapeHtml(b.id)}', this.value)"
-          class="px-3 py-1.5 rounded-xl bg-[#282834] border border-white/15 text-xs font-bold text-white focus:outline-none focus:border-[#f59e0b] cursor-pointer"
+    if (st.includes("Очікує")) {
+      statusClass = "bg-amber-500/15 text-amber-300 border-amber-500/30";
+      statusIcon = "hourglass_empty";
+      statusLabel = "Очікує ⏳";
+      nextStepBtn = `
+        <button 
+          onclick="changeBookingStatus('${escapeHtml(b.id)}', 'Підтверджено ✅')"
+          class="px-2.5 py-1.5 rounded-xl bg-sky-500/20 text-sky-300 hover:bg-sky-500 hover:text-black font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-sky-500/30 shadow-sm"
+          title="Підтвердити бронювання столика"
         >
-          <option value="Очікує ⏳" ${b.status && b.status.includes("Очікує") ? "selected" : ""}>⏳ Очікує</option>
-          <option value="Підтверджено ✅" ${b.status && b.status.includes("Підтверджено") ? "selected" : ""}>✅ Підтверджено</option>
-          <option value="Гості прийшли 🍷" ${b.status && b.status.includes("прийшли") ? "selected" : ""}>🍷 Гості прийшли</option>
-          <option value="Скасовано ❌" ${b.status && b.status.includes("Скасовано") ? "selected" : ""}>❌ Скасовано</option>
-        </select>
+          <span>➔ Підтвердити</span>
+          <span>✅</span>
+        </button>
+      `;
+    } else if (st.includes("Підтверджено")) {
+      statusClass = "bg-sky-500/15 text-sky-300 border-sky-500/30";
+      statusIcon = "check_circle";
+      statusLabel = "Підтверджено ✅";
+      nextStepBtn = `
+        <button 
+          onclick="changeBookingStatus('${escapeHtml(b.id)}', 'Гості прийшли 🍷')"
+          class="px-2.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-300 hover:bg-purple-500 hover:text-white font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-purple-500/30 shadow-sm"
+          title="Гості прийшли до ресторану та сіли за столик"
+        >
+          <span>➔ Гості прийшли</span>
+          <span>🍷</span>
+        </button>
+      `;
+    } else if (st.includes("прийшли") || st.includes("в залі")) {
+      statusClass = "bg-purple-500/15 text-purple-300 border-purple-500/30";
+      statusIcon = "wine_bar";
+      statusLabel = "Гості в залі 🍷";
+      nextStepBtn = `
+        <button 
+          onclick="changeBookingStatus('${escapeHtml(b.id)}', 'Гості пішли (стіл вільний) ✨')"
+          class="px-2.5 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500 hover:text-black font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-emerald-500/30 shadow-sm"
+          title="Гості пішли з закладу, столик звільнено та готовий до нових гостей"
+        >
+          <span>➔ Гості пішли (стіл вільний)</span>
+          <span>✨</span>
+        </button>
+      `;
+    } else if (st.includes("пішли") || st.includes("вільний") || st.includes("завершено")) {
+      statusClass = "bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
+      statusIcon = "event_available";
+      statusLabel = "Гості пішли (стіл вільний) ✨";
+      nextStepBtn = `
+        <span class="text-[10px] text-emerald-400 font-bold flex items-center gap-1 px-2 py-1 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
+          <span class="material-symbols-outlined text-xs">done_all</span>
+          <span>Стіл вільний ✨</span>
+        </span>
+      `;
+    } else if (st.includes("Скасовано")) {
+      statusClass = "bg-rose-500/15 text-rose-400 border-rose-500/30";
+      statusIcon = "cancel";
+      statusLabel = "Скасовано ❌";
+    }
+
+    return `
+      <div class="p-4 rounded-2xl bg-[#1c1c24] border border-white/10 space-y-3 transition-all hover:border-white/20">
+        <!-- Верхня панель картки -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-white/5">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="font-heading font-extrabold text-sm text-[#f59e0b]">#${escapeHtml(b.id)}</span>
+            <span class="text-xs text-gray-400">${escapeHtml(b.createdAt || "")}</span>
+            <span class="text-xs text-gray-500">•</span>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-[#f59e0b] border border-[#f59e0b]/30 flex items-center gap-1">
+              <span class="material-symbols-outlined text-xs">table_restaurant</span>
+              <span>${escapeHtml(b.hall || "Основний зал")}</span>
+            </span>
+          </div>
+
+          <!-- Кнопки швидкого переходу статусу + бейдж + випадаючий список -->
+          <div class="flex items-center gap-2 flex-wrap">
+            ${nextStepBtn}
+            
+            <span class="px-2.5 py-1 rounded-xl text-[11px] font-bold border ${statusClass} flex items-center gap-1 shadow-sm">
+              <span class="material-symbols-outlined text-xs">${statusIcon}</span>
+              <span>${statusLabel}</span>
+            </span>
+
+            <select 
+              onchange="changeBookingStatus('${escapeHtml(b.id)}', this.value)"
+              class="px-2.5 py-1 rounded-xl bg-[#282834] border border-white/15 text-xs font-bold text-white focus:outline-none focus:border-[#f59e0b] cursor-pointer"
+              title="Змінити статус бронювання вручну"
+            >
+              <option value="Очікує ⏳" ${st.includes("Очікує") ? "selected" : ""}>⏳ Очікує</option>
+              <option value="Підтверджено ✅" ${st.includes("Підтверджено") ? "selected" : ""}>✅ Підтверджено</option>
+              <option value="Гості прийшли 🍷" ${st.includes("прийшли") || st.includes("в залі") ? "selected" : ""}>🍷 Гості прийшли</option>
+              <option value="Гості пішли (стіл вільний) ✨" ${st.includes("пішли") || st.includes("вільний") ? "selected" : ""}>✨ Гості пішли (стіл вільний)</option>
+              <option value="Скасовано ❌" ${st.includes("Скасовано") ? "selected" : ""}>❌ Скасовано</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Інформація про бронювання та контакт гостя -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-base text-[#f59e0b]">calendar_today</span>
+              <span class="text-white font-bold text-sm">📅 ${escapeHtml(b.date)} о ${escapeHtml(b.time)}</span>
+            </div>
+            <div class="flex items-center gap-2 text-gray-300">
+              <span class="material-symbols-outlined text-base text-gray-400">group</span>
+              <span>Кількість гостей: <b class="text-white">${escapeHtml(b.guests)}</b></span>
+            </div>
+          </div>
+
+          <div class="space-y-1 sm:text-right">
+            <div class="flex sm:justify-end items-center gap-1.5">
+              <span class="material-symbols-outlined text-base text-[#f59e0b]">person</span>
+              <span class="text-white font-bold text-sm">${escapeHtml(b.name)}</span>
+            </div>
+            <div class="flex sm:justify-end items-center gap-2">
+              <span class="text-gray-300 font-mono">${escapeHtml(b.phone)}</span>
+              ${b.phone ? `
+                <a href="tel:${escapeHtml(b.phone.replace(/[^0-9+]/g, ""))}" class="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 font-bold hover:bg-emerald-500/30 transition-colors inline-flex items-center gap-1 text-[10px]">
+                  <span class="material-symbols-outlined text-xs">call</span>
+                  <span>Дзвінок</span>
+                </a>
+              ` : ""}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 }
 
 function changeBookingStatus(bookingId, newStatus) {
@@ -2702,6 +3889,11 @@ function changeBookingStatus(bookingId, newStatus) {
   booking.status = newStatus;
   saveGlobalBookings(allBookings);
 
+  // Оновлюємо в хмарі
+  if (typeof AmbarCloudSync !== "undefined") {
+    AmbarCloudSync.updateBooking({ id: bookingId, status: newStatus });
+  }
+
   // Оновлення в клієнтському кабінеті
   if (typeof CabinetState !== "undefined" && Array.isArray(CabinetState.bookings)) {
     const userB = CabinetState.bookings.find(b => b.id === bookingId);
@@ -2711,6 +3903,14 @@ function changeBookingStatus(bookingId, newStatus) {
       updateCabinetUI();
       renderCabinetBookings();
     }
+  }
+
+  if (typeof broadcastEvent === "function") {
+    broadcastEvent({
+      type: "BOOKING_STATUS_CHANGED",
+      bookingId: bookingId,
+      newStatus: newStatus
+    });
   }
 
   renderAdminBookings();
@@ -2728,18 +3928,21 @@ function printOrderReceipt(orderId) {
     return;
   }
 
+  const isPickup = o.orderType === "pickup" || (o.address && o.address.includes("Самовивіз")) || (o.district && o.district.includes("Самовивіз"));
+
   printWindow.document.write(`
     <!DOCTYPE html>
     <html>
     <head>
       <title>Чек замовлення #${escapeHtml(o.id)}</title>
       <style>
-        body { font-family: 'Courier New', monospace; padding: 20px; font-size: 13px; color: #000; line-height: 1.4; max-width: 320px; margin: 0 auto; }
+        body { font-family: monospace; padding: 15px; font-size: 12px; line-height: 1.4; color: #000; }
         .text-center { text-align: center; }
-        .divider { border-top: 1px dashed #000; margin: 10px 0; }
         .bold { font-weight: bold; }
+        .big { font-size: 16px; font-weight: bold; margin: 4px 0; }
+        .divider { border-top: 1px dashed #000; margin: 8px 0; }
         .flex { display: flex; justify-content: space-between; }
-        .big { font-size: 16px; font-weight: bold; }
+        .tag-pickup { display: inline-block; background: #000; color: #fff; padding: 2px 6px; font-size: 11px; font-weight: bold; border-radius: 4px; margin-bottom: 4px; }
       </style>
     </head>
     <body>
@@ -2748,14 +3951,14 @@ function printOrderReceipt(orderId) {
         <div>м. Запоріжжя, вул. Олександрівська, 88</div>
         <div>Тел: 067 613-00-88</div>
         <div class="divider"></div>
-        <div class="bold">ДОСТАВКА ЗАМОВЛЕННЯ</div>
+        ${isPickup ? `<div class="tag-pickup">🏪 САМОВИВІЗ З ЗАКЛАДУ</div><br/>` : `<div class="bold">🛵 ДОСТАВКА КУР'ЄРОМ</div>`}
         <div class="big">#${escapeHtml(o.id)}</div>
         <div>Дата: ${escapeHtml(o.date)}</div>
       </div>
       
       <div class="divider"></div>
-      <div><b>Клієнт:</b> ${escapeHtml(o.phone)}</div>
-      <div><b>Адреса:</b> ${escapeHtml(o.district || "")}, ${escapeHtml(o.address)}</div>
+      <div><b>Клієнт:</b> ${escapeHtml(o.customerName || o.name || "Гість")} (${escapeHtml(o.phone)})</div>
+      <div><b>${isPickup ? "Отримання:" : "Адреса:"}</b> ${isPickup ? "Самовивіз (вул. Олександрівська, 88)" : `${escapeHtml(o.district || "")}, ${escapeHtml(o.address)}`}</div>
       <div><b>Час:</b> ${escapeHtml(o.deliveryTime)}</div>
       <div><b>Оплата:</b> ${escapeHtml(o.paymentMethod)}</div>
 
@@ -2770,8 +3973,10 @@ function printOrderReceipt(orderId) {
 
       <div class="divider"></div>
       <div class="flex"><div>Сума:</div><div>${o.subtotal} ₴</div></div>
-      <div class="flex"><div>Доставка:</div><div>${o.deliveryFee} ₴</div></div>
-      ${o.discountAmount > 0 ? `<div class="flex"><div>Знижка:</div><div>-${o.discountAmount} ₴</div></div>` : ""}
+      <div class="flex"><div>${isPickup ? "Самовивіз:" : "Доставка:"}</div><div>${isPickup ? "0 ₴" : `${o.deliveryFee} ₴`}</div></div>
+      ${o.discountAmount > 0 ? `<div class="flex"><div>Знижка промокоду:</div><div>-${o.discountAmount} ₴</div></div>` : ""}
+      ${o.bonusesUsed > 0 ? `<div class="flex"><div>Списано бонусів:</div><div>-${o.bonusesUsed} ₴</div></div>` : ""}
+      ${o.bonusesEarned > 0 ? `<div class="flex"><div>Нараховано кешбек (5%):</div><div>+${o.bonusesEarned} ₴</div></div>` : ""}
       <div class="divider"></div>
       <div class="flex big"><div>ДО СПЛАТИ:</div><div>${o.total} ₴</div></div>
       <div class="divider"></div>
@@ -2786,6 +3991,113 @@ function printOrderReceipt(orderId) {
   printWindow.document.close();
 }
 
+// =========================================================================
+// 16. АСИНХРОННА РЕАЛЬНОГО ЧАСУ СИНХРОНІЗАЦІЯ (REAL-TIME ASYNC SYNC)
+// =========================================================================
+let realtimeChannel = null;
+try {
+  if (typeof BroadcastChannel !== "undefined") {
+    realtimeChannel = new BroadcastChannel("ambar_live_orders_channel");
+  }
+} catch(e) {}
+
+function broadcastEvent(payload) {
+  try {
+    if (realtimeChannel) {
+      realtimeChannel.postMessage(payload);
+    }
+  } catch(e) {}
+}
+
+function handleIncomingRealtimeEvent(data) {
+  if (!data || typeof data !== "object") return;
+
+  // 1. Коли клієнт робить нове замовлення
+  if (data.type === "NEW_ORDER") {
+    const adminModal = document.getElementById("admin-dashboard-modal");
+    const isAdminOpen = adminModal && !adminModal.classList.contains("hidden");
+
+    if (isAdminOpen) {
+      updateAdminDashboard();
+      playNewOrderSound();
+      const order = data.order || {};
+      const typeText = (order.orderType === "pickup" || (order.address && order.address.includes("Самовивіз"))) ? "Самовивіз" : "Доставка";
+      const nameText = order.customerName || order.name || "Гість";
+      showToast(`🔔 Нове замовлення #${order.id || ""} від ${nameText}! (${typeText} • ${order.total || 0} ₴)`);
+    }
+  }
+
+  // 2. Коли клієнт бронює столик
+  else if (data.type === "NEW_BOOKING") {
+    const adminModal = document.getElementById("admin-dashboard-modal");
+    const isAdminOpen = adminModal && !adminModal.classList.contains("hidden");
+
+    if (isAdminOpen) {
+      updateAdminDashboard();
+      playNewOrderSound();
+      const booking = data.booking || {};
+      showToast(`🍷 Нова бронь столика #${booking.id || ""} на ${booking.date || ""} (${booking.guests || 2} осіб)!`);
+    }
+  }
+
+  // 3. Коли адмін змінює статус замовлення, оновлюється кабінет у клієнта
+  else if (data.type === "ORDER_STATUS_CHANGED") {
+    if (typeof loadCabinetState === "function") {
+      loadCabinetState();
+      updateCabinetUI();
+      renderCabinetOrders();
+    }
+    const adminModal = document.getElementById("admin-dashboard-modal");
+    if (adminModal && !adminModal.classList.contains("hidden")) {
+      updateAdminDashboard();
+    }
+  }
+
+  // 4. Коли адмін змінює статус броні столика
+  else if (data.type === "BOOKING_STATUS_CHANGED") {
+    if (typeof loadCabinetState === "function") {
+      loadCabinetState();
+      updateCabinetUI();
+      renderCabinetBookings();
+    }
+    const adminModal = document.getElementById("admin-dashboard-modal");
+    if (adminModal && !adminModal.classList.contains("hidden")) {
+      renderAdminBookings();
+      renderAdminDashboard();
+    }
+  }
+}
+
+// Прослуховування подій між вкладками в реальному часі через BroadcastChannel
+if (realtimeChannel) {
+  realtimeChannel.onmessage = (event) => {
+    handleIncomingRealtimeEvent(event.data);
+  };
+}
+
+// Резервне прослуховування через подію 'storage' (гарантує синхронізацію в усіх браузерах)
+window.addEventListener("storage", (e) => {
+  if (e.key === GLOBAL_ORDERS_KEY && e.newValue) {
+    const adminModal = document.getElementById("admin-dashboard-modal");
+    if (adminModal && !adminModal.classList.contains("hidden")) {
+      updateAdminDashboard();
+      playNewOrderSound();
+      showToast("🔔 Список замовлень автоматично оновлено!");
+    }
+  } else if (e.key === GLOBAL_BOOKINGS_KEY && e.newValue) {
+    const adminModal = document.getElementById("admin-dashboard-modal");
+    if (adminModal && !adminModal.classList.contains("hidden")) {
+      updateAdminDashboard();
+      playNewOrderSound();
+      showToast("🍷 Нове бронювання столика надійшло!");
+    }
+  } else if (e.key === CABINET_STORAGE_KEY && e.newValue) {
+    loadCabinetState();
+    updateCabinetUI();
+    renderCabinetOrders();
+  }
+});
+
 // ІНІЦІАЛІЗАЦІЯ ПРИ ЗАВАНТАЖЕННІ
 document.addEventListener("DOMContentLoaded", () => {
   loadSavedState();
@@ -2795,4 +4107,30 @@ document.addEventListener("DOMContentLoaded", () => {
   renderMenuGrid();
   updateCartUI();
   checkAdminHash();
+  startCloudSyncLoop();
+
+  // Слухачі валідації в реальному часі для полів замовлення
+  const nameInput = document.getElementById("order-name");
+  const phoneInput = document.getElementById("order-phone");
+  const nameError = document.getElementById("order-name-error");
+  const phoneError = document.getElementById("order-phone-error");
+
+  if (nameInput) {
+    nameInput.addEventListener("input", () => {
+      if (nameInput.value.trim().length >= 2) {
+        nameInput.classList.remove("border-rose-500", "ring-1", "ring-rose-500");
+        if (nameError) nameError.classList.add("hidden");
+      }
+    });
+  }
+
+  if (phoneInput) {
+    phoneInput.addEventListener("input", () => {
+      const digits = phoneInput.value.replace(/\D/g, "");
+      if (digits.length >= 9) {
+        phoneInput.classList.remove("border-rose-500", "ring-1", "ring-rose-500");
+        if (phoneError) phoneError.classList.add("hidden");
+      }
+    });
+  }
 });

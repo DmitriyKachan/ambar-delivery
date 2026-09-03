@@ -1,0 +1,8 @@
+{
+  "name": "ambar-delivery",
+  "version": "2.0.0",
+  "type": "module",
+  "dependencies": {
+    "@netlify/blobs": "^8.0.0"
+  }
+}
