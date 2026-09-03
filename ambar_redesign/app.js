@@ -1822,6 +1822,19 @@ function submitFinalOrder(event) {
 
     saveCabinetState();
     updateCabinetUI();
+
+    // Зберігаємо оновлені бонуси та дані клієнта в центральну хмарну БД
+    if (phone && phone !== "Не вказано" && typeof AmbarCloudSync !== "undefined") {
+      AmbarCloudSync.saveUser({
+        phone: phone,
+        name: customerName,
+        bonuses: CabinetState.user.bonuses || 0,
+        address: CabinetState.user.address,
+        entrance: CabinetState.user.entrance,
+        floor: CabinetState.user.floor,
+        apt: CabinetState.user.apt
+      });
+    }
   }
 
   document.getElementById("success-order-id").textContent = orderNum;
@@ -2132,6 +2145,43 @@ function loadCabinetState() {
   } catch (e) {
     console.warn("Помилка завантаження кабінету:", e);
   }
+
+  // Якщо є збережений номер телефону, підтягуємо центральний профіль та бонуси з хмарної БД
+  if (CabinetState.user && CabinetState.user.phone) {
+    syncUserProfileWithCloud(CabinetState.user.phone);
+  }
+}
+
+async function syncUserProfileWithCloud(phone) {
+  if (!phone || typeof AmbarCloudSync === "undefined") return;
+  try {
+    const cloudUser = await AmbarCloudSync.fetchUser(phone);
+    if (cloudUser && typeof cloudUser === "object" && cloudUser.phone) {
+      let changed = false;
+      if (typeof cloudUser.bonuses === "number" && cloudUser.bonuses !== CabinetState.user.bonuses) {
+        CabinetState.user.bonuses = cloudUser.bonuses;
+        changed = true;
+      }
+      if (cloudUser.name && !CabinetState.user.name) {
+        CabinetState.user.name = cloudUser.name;
+        changed = true;
+      }
+      if (cloudUser.address && !CabinetState.user.address) {
+        CabinetState.user.address = cloudUser.address;
+        if (cloudUser.entrance) CabinetState.user.entrance = cloudUser.entrance;
+        if (cloudUser.floor) CabinetState.user.floor = cloudUser.floor;
+        if (cloudUser.apt) CabinetState.user.apt = cloudUser.apt;
+        changed = true;
+      }
+      if (changed) {
+        saveCabinetState();
+        updateCabinetUI();
+        if (typeof recalculateOrderTotals === "function") {
+          recalculateOrderTotals();
+        }
+      }
+    }
+  } catch(e) {}
 }
 
 function saveCabinetState() {
@@ -2458,6 +2508,20 @@ function saveUserProfile(event) {
 
   saveCabinetState();
   updateCabinetUI();
+
+  // Зберігаємо в центральну хмарну базу даних
+  if (phone && typeof AmbarCloudSync !== "undefined") {
+    AmbarCloudSync.saveUser({
+      phone: phone,
+      name: name,
+      bonuses: CabinetState.user.bonuses || 0,
+      address: address,
+      entrance: entrance,
+      floor: floor,
+      apt: apt
+    });
+  }
+
   showToast("Профіль та адресу збережено успішно!");
 }
 
@@ -2589,7 +2653,7 @@ function closeClientAuthModal() {
   }
 }
 
-function submitInstantAuth(event) {
+async function submitInstantAuth(event) {
   if (event) event.preventDefault();
   const phoneInp = document.getElementById("auth-phone-input");
   const nameInp = document.getElementById("auth-name-input");
@@ -2609,7 +2673,26 @@ function submitInstantAuth(event) {
     CabinetState.user.name = nameVal;
   }
 
-  // Прив'язка попередніх замовлень та адреси за цим номером
+  // 1. Спочатку підтягуємо центральний профіль та бонуси з хмарної БД
+  try {
+    if (typeof AmbarCloudSync !== "undefined") {
+      const cloudUser = await AmbarCloudSync.fetchUser(phoneVal);
+      if (cloudUser && typeof cloudUser === "object" && cloudUser.phone) {
+        if (typeof cloudUser.bonuses === "number") {
+          CabinetState.user.bonuses = cloudUser.bonuses;
+        }
+        if (cloudUser.name && !nameVal) CabinetState.user.name = cloudUser.name;
+        if (cloudUser.address) {
+          CabinetState.user.address = cloudUser.address;
+          if (cloudUser.entrance) CabinetState.user.entrance = cloudUser.entrance;
+          if (cloudUser.floor) CabinetState.user.floor = cloudUser.floor;
+          if (cloudUser.apt) CabinetState.user.apt = cloudUser.apt;
+        }
+      }
+    }
+  } catch(e) {}
+
+  // 2. Прив'язка попередніх замовлень та адреси за цим номером
   const allOrders = getGlobalOrders();
   const matchKey = digits.slice(-9);
   const matchingOrders = allOrders.filter(o => o && o.phone && o.phone.replace(/\D/g, "").includes(matchKey));
@@ -2636,7 +2719,7 @@ function submitInstantAuth(event) {
     }
   });
 
-  // Прив'язка броней столиків за цим номером
+  // 3. Прив'язка броней столиків за цим номером
   const allBookings = getGlobalBookings();
   const matchingBookings = allBookings.filter(b => b && b.phone && b.phone.replace(/\D/g, "").includes(matchKey));
   matchingBookings.forEach(mb => {
@@ -2653,17 +2736,35 @@ function submitInstantAuth(event) {
     }
   });
 
-  // Синхронізація бонусів за історією замовлень при першому вході
-  let calculatedBonuses = 0;
-  matchingOrders.forEach(mo => {
-    if (mo.status && !mo.status.includes("Скасовано")) {
-      calculatedBonuses += (mo.bonusesEarned || Math.round((mo.total || 0) * 0.05));
-      calculatedBonuses -= (mo.bonusesUsed || 0);
+  // 4. Синхронізація бонусів за історією замовлень при першому вході (якщо в хмарі ще 0)
+  if (!CabinetState.user.bonuses || CabinetState.user.bonuses === 0) {
+    let calculatedBonuses = 0;
+    matchingOrders.forEach(mo => {
+      if (mo.status && !mo.status.includes("Скасовано")) {
+        calculatedBonuses += (mo.bonusesEarned || Math.round((mo.total || 0) * 0.05));
+        calculatedBonuses -= (mo.bonusesUsed || 0);
+      }
+    });
+    if (calculatedBonuses > 0) {
+      CabinetState.user.bonuses = Math.max(0, calculatedBonuses);
     }
-  });
-  if (calculatedBonuses > 0 && (!CabinetState.user.bonuses || CabinetState.user.bonuses === 0)) {
-    CabinetState.user.bonuses = Math.max(0, calculatedBonuses);
   }
+
+  // 5. Зберігаємо оновлений профіль та бонуси в центральну хмарну БД
+  if (typeof AmbarCloudSync !== "undefined") {
+    AmbarCloudSync.saveUser({
+      phone: CabinetState.user.phone,
+      name: CabinetState.user.name,
+      bonuses: CabinetState.user.bonuses || 0,
+      address: CabinetState.user.address,
+      entrance: CabinetState.user.entrance,
+      floor: CabinetState.user.floor,
+      apt: CabinetState.user.apt
+    });
+  }
+
+  CabinetState.orders.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+  CabinetState.bookings.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
   saveCabinetState();
   updateCabinetUI();
@@ -2865,6 +2966,23 @@ const AmbarCloudSync = {
       method: "PUT",
       body: JSON.stringify(booking)
     });
+  },
+
+  async fetchUser(phone) {
+    if (!phone) return null;
+    return await this.request(`/users?phone=${encodeURIComponent(phone)}`);
+  },
+
+  async saveUser(user) {
+    if (!user || !user.phone) return null;
+    return await this.request("/users", {
+      method: "POST",
+      body: JSON.stringify(user)
+    });
+  },
+
+  async fetchAllUsers() {
+    return await this.request("/users");
   }
 };
 
