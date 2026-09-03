@@ -1746,6 +1746,7 @@ function submitFinalOrder(event) {
       bonusesEarned: earnedBonus,
       total: finalTotal,
       district: districtName,
+      addressStreet: addressStreet,
       address: fullDetailedAddress,
       entrance: entrance,
       floor: floor,
@@ -3063,6 +3064,45 @@ function renderAdminDashboard() {
   renderAdminBookings();
 }
 
+function getCleanNavAddress(o) {
+  if (!o) return "Запоріжжя, вул. Олександрівська, 88";
+  const isPickup = o.isPickup || (o.district && o.district.includes("Самовивіз")) || (o.address && o.address.includes("Самовивіз"));
+  if (isPickup) {
+    return "Запоріжжя, вул. Олександрівська, 88";
+  }
+
+  // Отримуємо базову вулицю та будинок без під'їзду, поверху та квартири
+  let raw = o.addressStreet || o.address || "";
+  
+  // Видаляємо під'їзд, поверх, квартиру, офіс, домофон тощо
+  raw = raw.replace(/,?\s*під'?їзд\s*[^,]+/gi, "")
+           .replace(/,?\s*подъезд\s*[^,]+/gi, "")
+           .replace(/,?\s*поверх\s*[^,]+/gi, "")
+           .replace(/,?\s*этаж\s*[^,]+/gi, "")
+           .replace(/,?\s*кв\.?\/офіс\s*[^,]+/gi, "")
+           .replace(/,?\s*кв\.?\s*\d+/gi, "")
+           .replace(/,?\s*кв\b[^,]*/gi, "")
+           .replace(/,?\s*квартира\s*[^,]+/gi, "")
+           .replace(/,?\s*офіс\s*[^,]+/gi, "")
+           .replace(/,?\s*офис\s*[^,]+/gi, "")
+           .replace(/,?\s*код\s*[^,]+/gi, "")
+           .replace(/,?\s*домофон\s*[^,]+/gi, "")
+           .trim();
+
+  // Прибираємо коми
+  raw = raw.replace(/^,\s*/, "").replace(/,\s*$/, "").trim();
+
+  if (!raw || raw.includes("Вказано при підтвердженні")) {
+    return "Запоріжжя";
+  }
+
+  // Додаємо назву міста, якщо її ще немає
+  if (!raw.toLowerCase().includes("запоріжжя") && !raw.toLowerCase().includes("запорожье")) {
+    return `Запоріжжя, ${raw}`;
+  }
+  return raw;
+}
+
 function renderAdminOrders() {
   const container = document.getElementById("adm-orders-list");
   if (!container) return;
@@ -3082,16 +3122,19 @@ function renderAdminOrders() {
   if (orders.length === 0) {
     container.innerHTML = `
       <div class="p-8 text-center bg-[#1c1c24] rounded-2xl border border-white/5 space-y-2">
-        <span class="material-symbols-outlined text-3xl text-gray-500">inbox</span>
+        <span class="material-symbols-outlined text-3xl text-gray-500">receipt_long</span>
         <h4 class="font-heading font-bold text-xs text-white">Немає замовлень у цій категорії</h4>
-        <p class="text-[11px] text-gray-400">Всі замовлення клієнтів з'являтимуться тут автоматично в реальному часі.</p>
+        <p class="text-[11px] text-gray-400">Нові замовлення з'являтимуться тут у реальному часі.</p>
       </div>
     `;
     return;
   }
 
   container.innerHTML = orders.map(o => {
-    const isPickup = o.orderType === "pickup" || (o.address && o.address.includes("Самовивіз")) || (o.district && o.district.includes("Самовивіз"));
+    const isPickup = o.isPickup || (o.district && o.district.includes("Самовивіз")) || (o.address && o.address.includes("Самовивіз"));
+    const navAddress = getCleanNavAddress(o);
+    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(navAddress)}`;
+    const wazeUrl = `https://waze.com/ul?q=${encodeURIComponent(navAddress)}&navigate=yes`;
     let st = o.status || "Готується 👨‍🍳";
 
     // Автоматична нормалізація: якщо це самовивіз, виправляємо помилкові кур'єрські статуси
@@ -3276,7 +3319,7 @@ function renderAdminOrders() {
             <!-- Швидкі кнопки навігатора для кур'єра -->
             <div class="flex items-center gap-1.5 pt-1 flex-wrap">
               <a 
-                href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Запоріжжя, ' + (isPickup ? 'вул. Олександрівська, 88' : (o.address || '')))}" 
+                href="${googleMapsUrl}" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 class="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-400 hover:bg-blue-500 hover:text-white font-bold text-[10px] transition-all inline-flex items-center gap-1 cursor-pointer border border-blue-500/30 shadow-sm"
@@ -3285,7 +3328,7 @@ function renderAdminOrders() {
                 <span>🗺️ Google Maps</span>
               </a>
               <a 
-                href="https://waze.com/ul?q=${encodeURIComponent('Запоріжжя, ' + (isPickup ? 'вул. Олександрівська, 88' : (o.address || '')))}&navigate=yes" 
+                href="${wazeUrl}" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 class="px-2 py-0.5 rounded-md bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500 hover:text-black font-bold text-[10px] transition-all inline-flex items-center gap-1 cursor-pointer border border-cyan-500/30 shadow-sm"
