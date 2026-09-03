@@ -2609,48 +2609,134 @@ const CLOUD_API_ENDPOINTS = [
 let isAudioNotificationEnabled = localStorage.getItem("ambar_admin_sound") !== "false";
 let adminKnownOrderIds = new Set();
 let adminKnownBookingIds = new Set();
+let soundedOrderIds = new Set();
+let soundedBookingIds = new Set();
 let isInitialSyncDone = false;
 let cloudSyncInterval = null;
 
-// Аудіо-сигнал нового замовлення через Web Audio API (чистий ресторанний тритонний передзвін)
-function playNewOrderSound() {
-  if (!isAudioNotificationEnabled) return;
+let sharedAudioCtx = null;
+let isAudioUnlocked = false;
+
+// Отримання або відновлення глобального аудіо-контексту
+function getSharedAudioContext() {
   try {
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    if (!AudioCtx) return;
-    const ctx = new AudioCtx();
-    if (ctx.state === "suspended") {
-      ctx.resume();
+    if (!sharedAudioCtx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) {
+        sharedAudioCtx = new AudioCtx();
+      }
     }
+    if (sharedAudioCtx && sharedAudioCtx.state === "suspended") {
+      sharedAudioCtx.resume().catch(() => {});
+    }
+    return sharedAudioCtx;
+  } catch(e) {
+    return null;
+  }
+}
 
-    const notes = [
-      { freq: 659.25, time: 0, dur: 0.25 },     // E5
-      { freq: 880.00, time: 0.12, dur: 0.3 },   // A5
-      { freq: 1318.51, time: 0.25, dur: 0.5 }   // E6
-    ];
-
-    notes.forEach(n => {
+// 100% розблокування Autoplay браузера при першому кліку або дотику
+function unlockAudioEngine() {
+  if (isAudioUnlocked) return;
+  try {
+    const ctx = getSharedAudioContext();
+    if (ctx) {
+      if (ctx.state === "suspended") {
+        ctx.resume();
+      }
+      // Програємо нечутний мікро-імпульс для зняття обмежень безпеки браузера
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(n.freq, ctx.currentTime + n.time);
-
-      gain.gain.setValueAtTime(0, ctx.currentTime + n.time);
-      gain.gain.linearRampToValueAtTime(0.25, ctx.currentTime + n.time + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + n.time + n.dur);
-
+      gain.gain.value = 0.0001;
       osc.connect(gain);
       gain.connect(ctx.destination);
+      osc.start(0);
+      osc.stop(ctx.currentTime + 0.01);
+      isAudioUnlocked = true;
+    }
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.getVoices();
+    }
+  } catch(e) {}
+}
 
-      osc.start(ctx.currentTime + n.time);
-      osc.stop(ctx.currentTime + n.time + n.dur + 0.05);
-    });
+// Слухачі глобальної взаємодії для гарантованого розблокування
+['click', 'touchstart', 'touchend', 'mousedown', 'keydown', 'pointerdown'].forEach(evt => {
+  window.addEventListener(evt, unlockAudioEngine, { once: true, passive: true });
+});
+
+// Голосове озвучення сповіщення українською мовою через Web Speech API
+function playVoiceNotification(text = "Нове замовлення в кафе Амбар!") {
+  if (!isAudioNotificationEnabled) return;
+  try {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel(); // Очищаємо попередню чергу
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "uk-UA";
+      utterance.rate = 1.05;
+      utterance.pitch = 1.05;
+      utterance.volume = 1.0;
+
+      const voices = window.speechSynthesis.getVoices();
+      const ukVoice = voices.find(v => v.lang && (v.lang.includes("uk") || v.lang.includes("UK") || v.lang.includes("ua") || v.lang.includes("UA")));
+      if (ukVoice) utterance.voice = ukVoice;
+
+      window.speechSynthesis.speak(utterance);
+    }
+  } catch (e) {
+    console.warn("Speech synthesis error", e);
+  }
+}
+
+// Повний аудіо-сигнал: ресторанний тритонний дзвінок + голос
+function playNewOrderSound(voiceText = "Нове замовлення в кафе Амбар!") {
+  if (!isAudioNotificationEnabled) return;
+
+  try {
+    const ctx = getSharedAudioContext();
+    if (ctx) {
+      if (ctx.state === "suspended") {
+        ctx.resume().catch(() => {});
+      }
+
+      // Тритонний передзвін дзвіночка
+      const notes = [
+        { freq: 587.33, time: 0, dur: 0.22 },     // D5
+        { freq: 880.00, time: 0.12, dur: 0.28 },   // A5
+        { freq: 1174.66, time: 0.24, dur: 0.55 }  // D6
+      ];
+
+      notes.forEach(n => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(n.freq, ctx.currentTime + n.time);
+
+        gain.gain.setValueAtTime(0, ctx.currentTime + n.time);
+        gain.gain.linearRampToValueAtTime(0.35, ctx.currentTime + n.time + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + n.time + n.dur);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(ctx.currentTime + n.time);
+        osc.stop(ctx.currentTime + n.time + n.dur + 0.05);
+      });
+    }
   } catch (e) {
     console.warn("Audio chime error", e);
+  }
+
+  // Через 300 мс після дзвінка чітко промовляємо повідомлення голосом
+  if (voiceText) {
+    setTimeout(() => {
+      playVoiceNotification(voiceText);
+    }, 320);
   }
 }
 
 function toggleAdminSound() {
+  unlockAudioEngine();
   isAudioNotificationEnabled = !isAudioNotificationEnabled;
   localStorage.setItem("ambar_admin_sound", isAudioNotificationEnabled ? "true" : "false");
   const icon = document.getElementById("adm-sound-icon");
@@ -2664,8 +2750,8 @@ function toggleAdminSound() {
       : "p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-500 border border-white/10 transition-colors flex items-center justify-center cursor-pointer";
   }
   if (isAudioNotificationEnabled) {
-    playNewOrderSound();
-    showToast("🔔 Звукові сповіщення увімкнено");
+    playNewOrderSound("Звукові та голосові сповіщення увімкнено");
+    showToast("🔔 Звукові та голосові сповіщення увімкнено");
   } else {
     showToast("🔇 Звукові сповіщення вимкнено");
   }
@@ -2808,8 +2894,12 @@ async function syncOrdersAndBookingsWithCloud(isUserAction = false) {
         if (!serverO || !serverO.id) return;
         const localO = orderMap.get(serverO.id);
         if (!localO) {
-          if (isInitialSyncDone && !adminKnownOrderIds.has(serverO.id)) {
-            hasNewOrders = true;
+          const age = serverO.timestamp ? (Date.now() - serverO.timestamp) : 0;
+          if (!adminKnownOrderIds.has(serverO.id) && !soundedOrderIds.has(serverO.id)) {
+            if (isInitialSyncDone || (age > 0 && age < 180000)) {
+              hasNewOrders = true;
+              soundedOrderIds.add(serverO.id);
+            }
           }
           orderMap.set(serverO.id, serverO);
         } else {
@@ -2845,8 +2935,12 @@ async function syncOrdersAndBookingsWithCloud(isUserAction = false) {
         if (!serverB || !serverB.id) return;
         const localB = bookingMap.get(serverB.id);
         if (!localB) {
-          if (isInitialSyncDone && !adminKnownBookingIds.has(serverB.id)) {
-            hasNewBookings = true;
+          const age = serverB.timestamp ? (Date.now() - serverB.timestamp) : 0;
+          if (!adminKnownBookingIds.has(serverB.id) && !soundedBookingIds.has(serverB.id)) {
+            if (isInitialSyncDone || (age > 0 && age < 180000)) {
+              hasNewBookings = true;
+              soundedBookingIds.add(serverB.id);
+            }
           }
           bookingMap.set(serverB.id, serverB);
         } else {
@@ -2872,14 +2966,21 @@ async function syncOrdersAndBookingsWithCloud(isUserAction = false) {
     }
 
     // Сповіщення при надходженні нового замовлення
-    if (hasNewOrders && isInitialSyncDone) {
-      playNewOrderSound();
+    if (hasNewOrders) {
+      playNewOrderSound("Увага! Нове замовлення в кафе Амбар!");
       if ("vibrate" in navigator) navigator.vibrate([200, 100, 200]);
       showToast("🔔 Надійшло нове замовлення клієнта!");
       document.title = "🔔 (НОВЕ ЗАМОВЛЕННЯ!) АМБАР";
       setTimeout(() => {
         document.title = "АМБАР — Ресторан & Гриль | Доставка їжі в Запоріжжі";
       }, 8000);
+    }
+
+    // Сповіщення при надходженні нового бронювання столика
+    if (hasNewBookings) {
+      playNewOrderSound("Нове бронювання столика!");
+      if ("vibrate" in navigator) navigator.vibrate([200, 100, 200]);
+      showToast("🍷 Надійшло нове бронювання столика!");
     }
 
     isInitialSyncDone = true;
@@ -4309,8 +4410,8 @@ function handleIncomingRealtimeEvent(data) {
 
     if (isAdminOpen) {
       updateAdminDashboard();
-      playNewOrderSound();
       const order = data.order || {};
+      playNewOrderSound("Нове замовлення в кафе Амбар!");
       const typeText = (order.orderType === "pickup" || (order.address && order.address.includes("Самовивіз"))) ? "Самовивіз" : "Доставка";
       const nameText = order.customerName || order.name || "Гість";
       showToast(`🔔 Нове замовлення #${order.id || ""} від ${nameText}! (${typeText} • ${order.total || 0} ₴)`);
@@ -4324,7 +4425,7 @@ function handleIncomingRealtimeEvent(data) {
 
     if (isAdminOpen) {
       updateAdminDashboard();
-      playNewOrderSound();
+      playNewOrderSound("Нове бронювання столика!");
       const booking = data.booking || {};
       showToast(`🍷 Нова бронь столика #${booking.id || ""} на ${booking.date || ""} (${booking.guests || 2} осіб)!`);
     }
