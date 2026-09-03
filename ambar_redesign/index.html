@@ -549,11 +549,13 @@
             </button>
           </div>
 
-          <!-- Дані клієнта: Ім'я та Номер телефону -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 items-end">
+          <!-- Дані клієнта: Ім'я та Номер телефону (Обов'язкові поля) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 items-start">
             <div>
               <div class="flex items-center justify-between h-5 mb-1.5 gap-2">
-                <label class="text-[11px] text-gray-400 block whitespace-nowrap truncate">Ваше ім'я</label>
+                <label for="order-name" class="text-[11px] text-gray-300 font-semibold block whitespace-nowrap truncate">
+                  Ваше ім'я <span class="text-rose-500 font-bold">*</span>
+                </label>
                 <span id="order-name-from-profile" class="hidden text-[10px] text-[#f59e0b] font-medium flex items-center gap-0.5 whitespace-nowrap shrink-0" title="Дані підставлено з вашого профілю">
                   <span class="material-symbols-outlined text-xs">account_circle</span>
                   <span>З профілю</span>
@@ -562,14 +564,20 @@
               <input 
                 id="order-name" 
                 type="text" 
+                required
                 placeholder="Введіть ваше ім'я"
-                class="w-full h-10 px-3.5 rounded-xl bg-[#22222a] border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]"
+                class="w-full h-10 px-3.5 rounded-xl bg-[#22222a] border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b] transition-colors"
               />
+              <p id="order-name-error" class="text-rose-400 text-[10px] mt-1 font-medium hidden flex items-center gap-1">
+                <span>⚠️</span> <span>Введіть ім'я (мін. 2 символи)</span>
+              </p>
             </div>
 
             <div>
               <div class="flex items-center justify-between h-5 mb-1.5 gap-2">
-                <label class="text-[11px] text-gray-400 block whitespace-nowrap truncate">Номер телефону</label>
+                <label for="order-phone" class="text-[11px] text-gray-300 font-semibold block whitespace-nowrap truncate">
+                  Номер телефону <span class="text-rose-500 font-bold">*</span>
+                </label>
                 <span id="order-phone-from-profile" class="hidden text-[10px] text-[#f59e0b] font-medium flex items-center gap-0.5 whitespace-nowrap shrink-0" title="Номер підставлено з вашого профілю">
                   <span class="material-symbols-outlined text-xs">verified</span>
                   <span>З профілю</span>
@@ -578,9 +586,13 @@
               <input 
                 id="order-phone" 
                 type="tel" 
+                required
                 placeholder="+38 (0__) ___-__-__"
-                class="w-full h-10 px-3.5 rounded-xl bg-[#22222a] border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]"
+                class="w-full h-10 px-3.5 rounded-xl bg-[#22222a] border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b] transition-colors"
               />
+              <p id="order-phone-error" class="text-rose-400 text-[10px] mt-1 font-medium hidden flex items-center gap-1">
+                <span>⚠️</span> <span>Введіть номер телефону</span>
+              </p>
             </div>
           </div>
 

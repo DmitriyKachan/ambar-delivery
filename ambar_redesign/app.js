@@ -1600,12 +1600,69 @@ function closeCartDrawer() {
 
 // 9. ОФОРМЛЕННЯ ТА ПІДТВЕРДЖЕННЯ ЗАМОВЛЕННЯ
 function submitFinalOrder(event) {
-  event.preventDefault();
-  if (AppState.cart.length === 0) return;
+  if (event && event.preventDefault) event.preventDefault();
+  if (AppState.cart.length === 0) {
+    showToast("⚠️ Ваш кошик порожній");
+    return;
+  }
 
   const isPickup = AppState.orderType === "pickup";
-  const customerName = document.getElementById("order-name")?.value.trim() || (CabinetState.user?.name ? CabinetState.user.name : "Гість");
-  const phone = document.getElementById("order-phone")?.value.trim() || "Не вказано";
+  const nameInput = document.getElementById("order-name");
+  const phoneInput = document.getElementById("order-phone");
+  const nameError = document.getElementById("order-name-error");
+  const phoneError = document.getElementById("order-phone-error");
+
+  const rawName = nameInput ? nameInput.value.trim() : "";
+  const rawPhone = phoneInput ? phoneInput.value.trim() : "";
+  const phoneDigits = rawPhone.replace(/\D/g, "");
+
+  let hasValidationError = false;
+
+  // 1. Обов'язкова валідація імені (не менше 2 символів)
+  if (!rawName || rawName.length < 2) {
+    hasValidationError = true;
+    if (nameInput) {
+      nameInput.classList.add("border-rose-500", "ring-1", "ring-rose-500", "bg-rose-500/10");
+      nameInput.classList.remove("border-white/10");
+    }
+    if (nameError) nameError.classList.remove("hidden");
+  } else {
+    if (nameInput) {
+      nameInput.classList.remove("border-rose-500", "ring-1", "ring-rose-500", "bg-rose-500/10");
+      nameInput.classList.add("border-white/10");
+    }
+    if (nameError) nameError.classList.add("hidden");
+  }
+
+  // 2. Обов'язкова валідація телефону (не менше 9 цифр)
+  if (!rawPhone || phoneDigits.length < 9) {
+    hasValidationError = true;
+    if (phoneInput) {
+      phoneInput.classList.add("border-rose-500", "ring-1", "ring-rose-500", "bg-rose-500/10");
+      phoneInput.classList.remove("border-white/10");
+    }
+    if (phoneError) phoneError.classList.remove("hidden");
+  } else {
+    if (phoneInput) {
+      phoneInput.classList.remove("border-rose-500", "ring-1", "ring-rose-500", "bg-rose-500/10");
+      phoneInput.classList.add("border-white/10");
+    }
+    if (phoneError) phoneError.classList.add("hidden");
+  }
+
+  // Якщо хоча б одне поле незаповнене — повністю блокуємо оформлення
+  if (hasValidationError) {
+    showToast("⚠️ Введіть ім'я та номер телефону для оформлення!");
+    if (!rawName || rawName.length < 2) {
+      nameInput?.focus();
+    } else {
+      phoneInput?.focus();
+    }
+    return;
+  }
+
+  const customerName = rawName;
+  const phone = rawPhone;
 
   let addressStreet = "Вказано при підтвердженні";
   let fullDetailedAddress = "Самовивіз із ресторану (вул. Олександрівська, 88)";
@@ -4118,7 +4175,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (nameInput) {
     nameInput.addEventListener("input", () => {
       if (nameInput.value.trim().length >= 2) {
-        nameInput.classList.remove("border-rose-500", "ring-1", "ring-rose-500");
+        nameInput.classList.remove("border-rose-500", "ring-1", "ring-rose-500", "bg-rose-500/10");
+        nameInput.classList.add("border-white/10");
         if (nameError) nameError.classList.add("hidden");
       }
     });
@@ -4128,7 +4186,8 @@ document.addEventListener("DOMContentLoaded", () => {
     phoneInput.addEventListener("input", () => {
       const digits = phoneInput.value.replace(/\D/g, "");
       if (digits.length >= 9) {
-        phoneInput.classList.remove("border-rose-500", "ring-1", "ring-rose-500");
+        phoneInput.classList.remove("border-rose-500", "ring-1", "ring-rose-500", "bg-rose-500/10");
+        phoneInput.classList.add("border-white/10");
         if (phoneError) phoneError.classList.add("hidden");
       }
     });
