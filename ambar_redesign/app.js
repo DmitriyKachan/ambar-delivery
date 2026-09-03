@@ -2255,6 +2255,25 @@ function renderCabinetOrders() {
   const container = document.getElementById("cabinet-orders-list");
   if (!container) return;
 
+  // Завжди підтягуємо найсвіжіші статуси з глобального сховища замовлень (хмари)
+  const globalOrders = getGlobalOrders();
+  const globalOrderMap = new Map(globalOrders.map(o => [o.id, o]));
+
+  if (Array.isArray(CabinetState.orders)) {
+    let hasChanges = false;
+    CabinetState.orders.forEach(o => {
+      const liveO = globalOrderMap.get(o.id);
+      if (liveO && liveO.status && (o.status !== liveO.status || o.statusUpdatedAt !== liveO.statusUpdatedAt)) {
+        o.status = liveO.status;
+        o.statusUpdatedAt = liveO.statusUpdatedAt;
+        o.updatedAt = liveO.updatedAt;
+        o.bonusesRefunded = liveO.bonusesRefunded;
+        hasChanges = true;
+      }
+    });
+    if (hasChanges) saveCabinetState();
+  }
+
   if (CabinetState.orders.length === 0) {
     container.innerHTML = `
       <div class="p-8 text-center bg-[#1e1e26] rounded-2xl border border-white/5 space-y-3">
@@ -2424,6 +2443,23 @@ function saveUserProfile(event) {
 function renderCabinetBookings() {
   const container = document.getElementById("cabinet-bookings-list");
   if (!container) return;
+
+  const globalBookings = getGlobalBookings();
+  const globalBookingMap = new Map(globalBookings.map(b => [b.id, b]));
+
+  if (Array.isArray(CabinetState.bookings)) {
+    let hasChanges = false;
+    CabinetState.bookings.forEach(b => {
+      const liveB = globalBookingMap.get(b.id);
+      if (liveB && liveB.status && (b.status !== liveB.status || b.statusUpdatedAt !== liveB.statusUpdatedAt)) {
+        b.status = liveB.status;
+        b.statusUpdatedAt = liveB.statusUpdatedAt;
+        b.updatedAt = liveB.updatedAt;
+        hasChanges = true;
+      }
+    });
+    if (hasChanges) saveCabinetState();
+  }
 
   if (CabinetState.bookings.length === 0) {
     container.innerHTML = `
@@ -2930,6 +2966,44 @@ async function syncOrdersAndBookingsWithCloud(isUserAction = false) {
       const mergedBookings = Array.from(bookingMap.values());
       saveGlobalBookings(mergedBookings);
       mergedBookings.forEach(b => adminKnownBookingIds.add(b.id));
+
+      // Автоматична синхронізація статусів у клієнтському кабінеті
+      if (typeof CabinetState !== "undefined" && Array.isArray(CabinetState.orders)) {
+        let cabChanged = false;
+        CabinetState.orders.forEach(userO => {
+          const cloudO = orderMap.get(userO.id);
+          if (cloudO && cloudO.status && (userO.status !== cloudO.status || userO.statusUpdatedAt !== cloudO.statusUpdatedAt)) {
+            userO.status = cloudO.status;
+            userO.statusUpdatedAt = cloudO.statusUpdatedAt;
+            userO.updatedAt = cloudO.updatedAt;
+            userO.bonusesRefunded = cloudO.bonusesRefunded;
+            cabChanged = true;
+          }
+        });
+        if (cabChanged) {
+          saveCabinetState();
+          updateCabinetUI();
+          renderCabinetOrders();
+        }
+      }
+
+      if (typeof CabinetState !== "undefined" && Array.isArray(CabinetState.bookings)) {
+        let cabBookingsChanged = false;
+        CabinetState.bookings.forEach(userB => {
+          const cloudB = bookingMap.get(userB.id);
+          if (cloudB && cloudB.status && (userB.status !== cloudB.status || userB.statusUpdatedAt !== cloudB.statusUpdatedAt)) {
+            userB.status = cloudB.status;
+            userB.statusUpdatedAt = cloudB.statusUpdatedAt;
+            userB.updatedAt = cloudB.updatedAt;
+            cabBookingsChanged = true;
+          }
+        });
+        if (cabBookingsChanged) {
+          saveCabinetState();
+          updateCabinetUI();
+          renderCabinetBookings();
+        }
+      }
     }
 
     // Сповіщення при надходженні нового замовлення
@@ -3424,36 +3498,40 @@ function renderAdminOrders() {
             `}
           </div>
           
-          <div class="flex items-center gap-2 flex-wrap">
+          <div class="flex items-center gap-1.5 flex-wrap sm:flex-nowrap justify-between sm:justify-end w-full sm:w-auto pt-1 sm:pt-0">
             <!-- Кнопка швидкого переходу на наступний етап -->
-            ${nextStepBtn}
+            <div class="shrink-0">
+              ${nextStepBtn}
+            </div>
 
-            <!-- Зручний селектор статусу -->
-            <select 
-              onchange="changeOrderStatus('${escapeHtml(o.id)}', this.value)" 
-              class="px-3 py-1.5 rounded-xl border text-xs font-bold focus:outline-none focus:border-[#f59e0b] cursor-pointer transition-colors ${statusClass}"
-              title="Змінити статус замовлення вручну"
-            >
-              <option value="Готується 👨‍🍳" class="bg-[#1c1c24] text-amber-400" ${st.includes("Готується") ? "selected" : ""}>👨‍🍳 Готується на кухні</option>
-              ${isPickup ? `
-                <option value="Готовий до видачі в кафе 🥡" class="bg-[#1c1c24] text-amber-400" ${st.includes("Готовий") || st.includes("видачі") ? "selected" : ""}>🥡 Готовий до видачі в кафе</option>
-                <option value="Видано гостю в кафе ✅" class="bg-[#1c1c24] text-emerald-400" ${st.includes("Видано") || st.includes("Доставлено") ? "selected" : ""}>✅ Видано гостю в кафе</option>
-              ` : `
-                <option value="Готовий, очікує кур'єра 🥡" class="bg-[#1c1c24] text-sky-400" ${st.includes("Готовий") || st.includes("очікує") ? "selected" : ""}>🥡 Готовий, очікує кур'єра</option>
-                <option value="Кур'єр в дорозі 🛵" class="bg-[#1c1c24] text-purple-400" ${st.includes("дорозі") ? "selected" : ""}>🛵 Кур'єр в дорозі</option>
-                <option value="Доставлено ✅" class="bg-[#1c1c24] text-emerald-400" ${st.includes("Доставлено") ? "selected" : ""}>✅ Доставлено кур'єром</option>
-              `}
-              <option value="Скасовано ❌" class="bg-[#1c1c24] text-rose-400" ${st.includes("Скасовано") ? "selected" : ""}>❌ Скасовано</option>
-            </select>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <!-- Зручний селектор статусу -->
+              <select 
+                onchange="changeOrderStatus('${escapeHtml(o.id)}', this.value)" 
+                class="px-2 py-1.5 rounded-xl border text-[11px] sm:text-xs font-bold focus:outline-none focus:border-[#f59e0b] cursor-pointer transition-colors max-w-[155px] sm:max-w-[210px] truncate ${statusClass}"
+                title="Змінити статус замовлення вручну"
+              >
+                <option value="Готується 👨‍🍳" class="bg-[#1c1c24] text-amber-400" ${st.includes("Готується") ? "selected" : ""}>👨‍🍳 Готується</option>
+                ${isPickup ? `
+                  <option value="Готовий до видачі в кафе 🥡" class="bg-[#1c1c24] text-amber-400" ${st.includes("Готовий") || st.includes("видачі") ? "selected" : ""}>🥡 До видачі</option>
+                  <option value="Видано гостю в кафе ✅" class="bg-[#1c1c24] text-emerald-400" ${st.includes("Видано") || st.includes("Доставлено") ? "selected" : ""}>✅ Видано в кафе</option>
+                ` : `
+                  <option value="Готовий, очікує кур'єра 🥡" class="bg-[#1c1c24] text-sky-400" ${st.includes("Готовий") || st.includes("очікує") ? "selected" : ""}>🥡 Очікує кур'єра</option>
+                  <option value="Кур'єр в дорозі 🛵" class="bg-[#1c1c24] text-purple-400" ${st.includes("дорозі") ? "selected" : ""}>🛵 В дорозі</option>
+                  <option value="Доставлено ✅" class="bg-[#1c1c24] text-emerald-400" ${st.includes("Доставлено") ? "selected" : ""}>✅ Доставлено</option>
+                `}
+                <option value="Скасовано ❌" class="bg-[#1c1c24] text-rose-400" ${st.includes("Скасовано") ? "selected" : ""}>❌ Скасовано</option>
+              </select>
 
-            <!-- Кнопка друку чека -->
-            <button 
-              onclick="printOrderReceipt('${escapeHtml(o.id)}')" 
-              class="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-colors cursor-pointer" 
-              title="Роздрукувати чек для кур'єра або кухні"
-            >
-              <span class="material-symbols-outlined text-base">print</span>
-            </button>
+              <!-- Кнопка друку чека -->
+              <button 
+                onclick="printOrderReceipt('${escapeHtml(o.id)}')" 
+                class="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-colors cursor-pointer shrink-0" 
+                title="Роздрукувати чек для кур'єра або кухні"
+              >
+                <span class="material-symbols-outlined text-base">print</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -4174,19 +4252,21 @@ function renderAdminBookings() {
             </span>
           </div>
 
-          <div class="flex items-center gap-2 flex-wrap">
+          <div class="flex items-center gap-1.5 flex-wrap sm:flex-nowrap justify-between sm:justify-end w-full sm:w-auto pt-1 sm:pt-0">
             <!-- Кнопка наступного кроку -->
-            ${nextStepBtn}
+            <div class="shrink-0">
+              ${nextStepBtn}
+            </div>
 
             <!-- Селектор статусу -->
             <select 
               onchange="changeBookingStatus('${escapeHtml(b.id)}', this.value)" 
-              class="px-3 py-1.5 rounded-xl border text-xs font-bold focus:outline-none focus:border-[#f59e0b] cursor-pointer transition-colors ${statusClass}"
+              class="px-2.5 py-1.5 rounded-xl border text-[11px] sm:text-xs font-bold focus:outline-none focus:border-[#f59e0b] cursor-pointer transition-colors max-w-[170px] sm:max-w-[210px] truncate ${statusClass}"
               title="Змінити статус броні"
             >
-              <option value="Очікує підтвердження ⏳" class="bg-[#1c1c24] text-amber-400" ${st.includes("Очікує") ? "selected" : ""}>⏳ Очікує підтвердження</option>
+              <option value="Очікує підтвердження ⏳" class="bg-[#1c1c24] text-amber-400" ${st.includes("Очікує") ? "selected" : ""}>⏳ Очікує</option>
               <option value="Підтверджено ✅" class="bg-[#1c1c24] text-emerald-400" ${st.includes("Підтверджено") ? "selected" : ""}>✅ Підтверджено</option>
-              <option value="Гості в залі 🍷" class="bg-[#1c1c24] text-purple-400" ${st.includes("прийшли") || st.includes("в залі") ? "selected" : ""}>🍷 Гості в залі</option>
+              <option value="Гості в залі 🍷" class="bg-[#1c1c24] text-purple-400" ${st.includes("прийшли") || st.includes("в залі") ? "selected" : ""}>🍷 В залі</option>
               <option value="Гості пішли (стіл вільний) ✨" class="bg-[#1c1c24] text-emerald-400" ${st.includes("пішли") || st.includes("вільний") || st.includes("завершено") ? "selected" : ""}>✨ Стіл вільний</option>
               <option value="Скасовано ❌" class="bg-[#1c1c24] text-rose-400" ${st.includes("Скасовано") ? "selected" : ""}>❌ Скасовано</option>
             </select>

@@ -1482,24 +1482,24 @@
           </button>
         </div>
 
-        <!-- Швидкий фільтр замовлень за статусом -->
-        <div id="adm-orders-filter-bar" class="flex items-center gap-1.5 text-[11px] overflow-x-auto">
-          <span class="text-gray-500 mr-1">Статус:</span>
-          <button onclick="setAdminOrderFilter('all')" class="adm-filter-btn px-2.5 py-1 rounded-lg bg-white/15 text-[#f59e0b] font-bold cursor-pointer" data-filter="all">Всі</button>
-          <button onclick="setAdminOrderFilter('prep')" class="adm-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer" data-filter="prep">👨‍🍳 Готуються</button>
-          <button onclick="setAdminOrderFilter('ready')" class="adm-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer" data-filter="ready">🥡 Очікують кур'єра</button>
-          <button onclick="setAdminOrderFilter('deliv')" class="adm-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer" data-filter="deliv">🛵 В дорозі</button>
-          <button onclick="setAdminOrderFilter('done')" class="adm-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer" data-filter="done">✅ Доставлені</button>
+        <!-- Швидкий фільтр замовлень за статусом (адаптивний для телефонів) -->
+        <div id="adm-orders-filter-bar" class="flex items-center gap-1.5 text-[10px] sm:text-[11px] overflow-x-auto no-scrollbar py-1 px-1 -mx-1 flex-nowrap w-full">
+          <span class="text-gray-500 mr-0.5 shrink-0 font-medium hidden sm:inline">Статус:</span>
+          <button onclick="setAdminOrderFilter('all')" class="adm-filter-btn shrink-0 whitespace-nowrap px-2.5 py-1 rounded-lg bg-white/15 text-[#f59e0b] font-bold cursor-pointer transition-colors" data-filter="all">Всі</button>
+          <button onclick="setAdminOrderFilter('prep')" class="adm-filter-btn shrink-0 whitespace-nowrap px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer transition-colors" data-filter="prep">👨‍🍳 Готуються</button>
+          <button onclick="setAdminOrderFilter('ready')" class="adm-filter-btn shrink-0 whitespace-nowrap px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer transition-colors" data-filter="ready">🥡 Готові</button>
+          <button onclick="setAdminOrderFilter('deliv')" class="adm-filter-btn shrink-0 whitespace-nowrap px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer transition-colors" data-filter="deliv">🛵 В дорозі</button>
+          <button onclick="setAdminOrderFilter('done')" class="adm-filter-btn shrink-0 whitespace-nowrap px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer transition-colors" data-filter="done">✅ Доставлені</button>
         </div>
 
         <!-- Швидкий фільтр бронювань столиків за статусом -->
-        <div id="adm-bookings-filter-bar" class="hidden flex items-center gap-1.5 text-[11px] overflow-x-auto">
-          <span class="text-gray-500 mr-1">Статус:</span>
-          <button onclick="setAdminBookingFilter('all')" class="adm-b-filter-btn px-2.5 py-1 rounded-lg bg-white/15 text-[#f59e0b] font-bold cursor-pointer" data-bfilter="all">Всі</button>
-          <button onclick="setAdminBookingFilter('pending')" class="adm-b-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer" data-bfilter="pending">⏳ Очікують</button>
-          <button onclick="setAdminBookingFilter('confirmed')" class="adm-b-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer" data-bfilter="confirmed">✅ Підтверджені</button>
-          <button onclick="setAdminBookingFilter('seated')" class="adm-b-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer" data-bfilter="seated">🍷 Гості в залі</button>
-          <button onclick="setAdminBookingFilter('finished')" class="adm-b-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer" data-bfilter="finished">✨ Стіл вільний</button>
+        <div id="adm-bookings-filter-bar" class="hidden flex items-center gap-1.5 text-[10px] sm:text-[11px] overflow-x-auto no-scrollbar py-1 px-1 -mx-1 flex-nowrap w-full">
+          <span class="text-gray-500 mr-0.5 shrink-0 font-medium hidden sm:inline">Статус:</span>
+          <button onclick="setAdminBookingFilter('all')" class="adm-b-filter-btn shrink-0 whitespace-nowrap px-2.5 py-1 rounded-lg bg-white/15 text-[#f59e0b] font-bold cursor-pointer transition-colors" data-bfilter="all">Всі</button>
+          <button onclick="setAdminBookingFilter('pending')" class="adm-b-filter-btn shrink-0 whitespace-nowrap px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer transition-colors" data-bfilter="pending">⏳ Очікують</button>
+          <button onclick="setAdminBookingFilter('confirmed')" class="adm-b-filter-btn shrink-0 whitespace-nowrap px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer transition-colors" data-bfilter="confirmed">✅ Підтверджені</button>
+          <button onclick="setAdminBookingFilter('seated')" class="adm-b-filter-btn shrink-0 whitespace-nowrap px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer transition-colors" data-bfilter="seated">🍷 Гості в залі</button>
+          <button onclick="setAdminBookingFilter('finished')" class="adm-b-filter-btn shrink-0 whitespace-nowrap px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer transition-colors" data-bfilter="finished">✨ Стіл вільний</button>
         </div>
       </div>
 
