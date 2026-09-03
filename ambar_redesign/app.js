@@ -2750,6 +2750,9 @@ function addGlobalBooking(booking) {
   AmbarCloudSync.saveBooking(booking);
 }
 
+const recentLocalOrderUpdates = new Map();
+const recentLocalBookingUpdates = new Map();
+
 async function syncOrdersAndBookingsWithCloud(isUserAction = false) {
   try {
     const serverOrders = await AmbarCloudSync.fetchOrders();
@@ -2763,12 +2766,30 @@ async function syncOrdersAndBookingsWithCloud(isUserAction = false) {
       const orderMap = new Map();
 
       localOrders.forEach(o => { if (o && o.id) orderMap.set(o.id, o); });
-      serverOrders.forEach(o => {
-        if (o && o.id) {
-          if (isInitialSyncDone && !adminKnownOrderIds.has(o.id)) {
+      serverOrders.forEach(serverO => {
+        if (!serverO || !serverO.id) return;
+        const localO = orderMap.get(serverO.id);
+        if (!localO) {
+          if (isInitialSyncDone && !adminKnownOrderIds.has(serverO.id)) {
             hasNewOrders = true;
           }
-          orderMap.set(o.id, o);
+          orderMap.set(serverO.id, serverO);
+        } else {
+          // Розумне злиття: перевірка чи був нещодавній локальний апдейт статусу
+          const localTime = localO.statusUpdatedAt || localO.updatedAt || localO.timestamp || 0;
+          const serverTime = serverO.statusUpdatedAt || serverO.updatedAt || serverO.timestamp || 0;
+          const recentLocal = recentLocalOrderUpdates.get(serverO.id);
+
+          if (recentLocal && (Date.now() - recentLocal.timestamp < 35000)) {
+            // Захист від відкату: локальний статус змінено менше 35 секунд тому, зберігаємо актуальний
+            const merged = { ...serverO, ...localO, status: recentLocal.status, statusUpdatedAt: recentLocal.timestamp };
+            orderMap.set(serverO.id, merged);
+          } else if (localTime > serverTime) {
+            const merged = { ...serverO, ...localO };
+            orderMap.set(serverO.id, merged);
+          } else {
+            orderMap.set(serverO.id, serverO);
+          }
         }
       });
 
@@ -2782,12 +2803,28 @@ async function syncOrdersAndBookingsWithCloud(isUserAction = false) {
       const bookingMap = new Map();
 
       localBookings.forEach(b => { if (b && b.id) bookingMap.set(b.id, b); });
-      serverBookings.forEach(b => {
-        if (b && b.id) {
-          if (isInitialSyncDone && !adminKnownBookingIds.has(b.id)) {
+      serverBookings.forEach(serverB => {
+        if (!serverB || !serverB.id) return;
+        const localB = bookingMap.get(serverB.id);
+        if (!localB) {
+          if (isInitialSyncDone && !adminKnownBookingIds.has(serverB.id)) {
             hasNewBookings = true;
           }
-          bookingMap.set(b.id, b);
+          bookingMap.set(serverB.id, serverB);
+        } else {
+          const localTime = localB.statusUpdatedAt || localB.updatedAt || localB.timestamp || 0;
+          const serverTime = serverB.statusUpdatedAt || serverB.updatedAt || serverB.timestamp || 0;
+          const recentLocal = recentLocalBookingUpdates.get(serverB.id);
+
+          if (recentLocal && (Date.now() - recentLocal.timestamp < 35000)) {
+            const merged = { ...serverB, ...localB, status: recentLocal.status, statusUpdatedAt: recentLocal.timestamp };
+            bookingMap.set(serverB.id, merged);
+          } else if (localTime > serverTime) {
+            const merged = { ...serverB, ...localB };
+            bookingMap.set(serverB.id, merged);
+          } else {
+            bookingMap.set(serverB.id, serverB);
+          }
         }
       });
 
@@ -3721,7 +3758,15 @@ function changeOrderStatus(orderId, newStatus) {
   const order = allOrders.find(o => o.id === orderId);
   if (!order) return;
 
+  const now = Date.now();
   order.status = newStatus;
+  order.statusUpdatedAt = now;
+  order.updatedAt = now;
+
+  // Фіксуємо локальний захист від перезапису фоновим опитуванням
+  if (typeof recentLocalOrderUpdates !== "undefined") {
+    recentLocalOrderUpdates.set(orderId, { status: newStatus, timestamp: now });
+  }
 
   // Керування бонусами при скасуванні/відновленні (закриття дір):
   let bonusMsg = "";
@@ -3747,7 +3792,7 @@ function changeOrderStatus(orderId, newStatus) {
 
   // Оновлюємо в хмарі
   if (typeof AmbarCloudSync !== "undefined") {
-    AmbarCloudSync.updateOrder({ id: orderId, status: newStatus });
+    AmbarCloudSync.updateOrder({ ...order, status: newStatus, statusUpdatedAt: now, updatedAt: now });
   }
 
   // Оновлюємо в кабінеті клієнта, якщо замовлення присутнє там
@@ -3755,6 +3800,8 @@ function changeOrderStatus(orderId, newStatus) {
     const userOrder = CabinetState.orders.find(o => o.id === orderId);
     if (userOrder) {
       userOrder.status = newStatus;
+      userOrder.statusUpdatedAt = now;
+      userOrder.updatedAt = now;
       userOrder.bonusesRefunded = order.bonusesRefunded;
     }
     saveCabinetState();
@@ -3803,42 +3850,42 @@ function renderAdminBookings() {
   }
 
   container.innerHTML = filtered.map(b => {
-    const st = b.status || "Очікує ⏳";
-    let statusClass = "bg-amber-500/15 text-amber-300 border-amber-500/30";
-    let statusIcon = "hourglass_empty";
-    let statusLabel = "Очікує ⏳";
+    const st = b.status || "Очікує підтвердження ⏳";
+    let statusClass = "bg-amber-500/15 text-amber-400 border-amber-500/30";
+    let statusIcon = "schedule";
+    let statusLabel = "Очікує підтвердження ⏳";
     let nextStepBtn = "";
 
-    if (st.includes("Очікує")) {
-      statusClass = "bg-amber-500/15 text-amber-300 border-amber-500/30";
-      statusIcon = "hourglass_empty";
-      statusLabel = "Очікує ⏳";
+    if (st.includes("Підтверджено")) {
+      statusClass = "bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
+      statusIcon = "check_circle";
+      statusLabel = "Підтверджено ✅";
+      nextStepBtn = `
+        <button 
+          onclick="changeBookingStatus('${escapeHtml(b.id)}', 'Гості в залі 🍷')"
+          class="px-2.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-300 hover:bg-purple-500 hover:text-white font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-purple-500/30 shadow-sm"
+          title="Гості прийшли та зайняли столик у ресторані"
+        >
+          <span>➔ Гості прийшли</span>
+          <span>🍷</span>
+        </button>
+      `;
+    } else if (st.includes("Очікує")) {
+      statusClass = "bg-amber-500/15 text-amber-400 border-amber-500/30";
+      statusIcon = "schedule";
+      statusLabel = "Очікує підтвердження ⏳";
       nextStepBtn = `
         <button 
           onclick="changeBookingStatus('${escapeHtml(b.id)}', 'Підтверджено ✅')"
-          class="px-2.5 py-1.5 rounded-xl bg-sky-500/20 text-sky-300 hover:bg-sky-500 hover:text-black font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-sky-500/30 shadow-sm"
+          class="px-2.5 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500 hover:text-black font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-emerald-500/30 shadow-sm"
           title="Підтвердити бронювання столика"
         >
           <span>➔ Підтвердити</span>
           <span>✅</span>
         </button>
       `;
-    } else if (st.includes("Підтверджено")) {
-      statusClass = "bg-sky-500/15 text-sky-300 border-sky-500/30";
-      statusIcon = "check_circle";
-      statusLabel = "Підтверджено ✅";
-      nextStepBtn = `
-        <button 
-          onclick="changeBookingStatus('${escapeHtml(b.id)}', 'Гості прийшли 🍷')"
-          class="px-2.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-300 hover:bg-purple-500 hover:text-white font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-purple-500/30 shadow-sm"
-          title="Гості прийшли до ресторану та сіли за столик"
-        >
-          <span>➔ Гості прийшли</span>
-          <span>🍷</span>
-        </button>
-      `;
     } else if (st.includes("прийшли") || st.includes("в залі")) {
-      statusClass = "bg-purple-500/15 text-purple-300 border-purple-500/30";
+      statusClass = "bg-purple-500/15 text-purple-400 border-purple-500/30";
       statusIcon = "wine_bar";
       statusLabel = "Гості в залі 🍷";
       nextStepBtn = `
@@ -3881,25 +3928,21 @@ function renderAdminBookings() {
             </span>
           </div>
 
-          <!-- Кнопки швидкого переходу статусу + бейдж + випадаючий список -->
           <div class="flex items-center gap-2 flex-wrap">
+            <!-- Кнопка наступного кроку -->
             ${nextStepBtn}
-            
-            <span class="px-2.5 py-1 rounded-xl text-[11px] font-bold border ${statusClass} flex items-center gap-1 shadow-sm">
-              <span class="material-symbols-outlined text-xs">${statusIcon}</span>
-              <span>${statusLabel}</span>
-            </span>
 
+            <!-- Селектор статусу -->
             <select 
-              onchange="changeBookingStatus('${escapeHtml(b.id)}', this.value)"
-              class="px-2.5 py-1 rounded-xl bg-[#282834] border border-white/15 text-xs font-bold text-white focus:outline-none focus:border-[#f59e0b] cursor-pointer"
-              title="Змінити статус бронювання вручну"
+              onchange="changeBookingStatus('${escapeHtml(b.id)}', this.value)" 
+              class="px-3 py-1.5 rounded-xl border text-xs font-bold focus:outline-none focus:border-[#f59e0b] cursor-pointer transition-colors ${statusClass}"
+              title="Змінити статус броні"
             >
-              <option value="Очікує ⏳" ${st.includes("Очікує") ? "selected" : ""}>⏳ Очікує</option>
-              <option value="Підтверджено ✅" ${st.includes("Підтверджено") ? "selected" : ""}>✅ Підтверджено</option>
-              <option value="Гості прийшли 🍷" ${st.includes("прийшли") || st.includes("в залі") ? "selected" : ""}>🍷 Гості прийшли</option>
-              <option value="Гості пішли (стіл вільний) ✨" ${st.includes("пішли") || st.includes("вільний") ? "selected" : ""}>✨ Гості пішли (стіл вільний)</option>
-              <option value="Скасовано ❌" ${st.includes("Скасовано") ? "selected" : ""}>❌ Скасовано</option>
+              <option value="Очікує підтвердження ⏳" class="bg-[#1c1c24] text-amber-400" ${st.includes("Очікує") ? "selected" : ""}>⏳ Очікує підтвердження</option>
+              <option value="Підтверджено ✅" class="bg-[#1c1c24] text-emerald-400" ${st.includes("Підтверджено") ? "selected" : ""}>✅ Підтверджено</option>
+              <option value="Гості в залі 🍷" class="bg-[#1c1c24] text-purple-400" ${st.includes("прийшли") || st.includes("в залі") ? "selected" : ""}>🍷 Гості в залі</option>
+              <option value="Гості пішли (стіл вільний) ✨" class="bg-[#1c1c24] text-emerald-400" ${st.includes("пішли") || st.includes("вільний") || st.includes("завершено") ? "selected" : ""}>✨ Стіл вільний</option>
+              <option value="Скасовано ❌" class="bg-[#1c1c24] text-rose-400" ${st.includes("Скасовано") ? "selected" : ""}>❌ Скасовано</option>
             </select>
           </div>
         </div>
@@ -3943,12 +3986,21 @@ function changeBookingStatus(bookingId, newStatus) {
   const booking = allBookings.find(b => b.id === bookingId);
   if (!booking) return;
 
+  const now = Date.now();
   booking.status = newStatus;
+  booking.statusUpdatedAt = now;
+  booking.updatedAt = now;
+
+  // Фіксуємо локальний захист від перезапису фоновим опитуванням
+  if (typeof recentLocalBookingUpdates !== "undefined") {
+    recentLocalBookingUpdates.set(bookingId, { status: newStatus, timestamp: now });
+  }
+
   saveGlobalBookings(allBookings);
 
   // Оновлюємо в хмарі
   if (typeof AmbarCloudSync !== "undefined") {
-    AmbarCloudSync.updateBooking({ id: bookingId, status: newStatus });
+    AmbarCloudSync.updateBooking({ ...booking, status: newStatus, statusUpdatedAt: now, updatedAt: now });
   }
 
   // Оновлення в клієнтському кабінеті
@@ -3956,6 +4008,8 @@ function changeBookingStatus(bookingId, newStatus) {
     const userB = CabinetState.bookings.find(b => b.id === bookingId);
     if (userB) {
       userB.status = newStatus;
+      userB.statusUpdatedAt = now;
+      userB.updatedAt = now;
       saveCabinetState();
       updateCabinetUI();
       renderCabinetBookings();
@@ -3970,6 +4024,7 @@ function changeBookingStatus(bookingId, newStatus) {
     });
   }
 
+  renderAdminDashboard();
   renderAdminBookings();
   showToast(`Статус броні #${bookingId} змінено на: ${newStatus}`);
 }

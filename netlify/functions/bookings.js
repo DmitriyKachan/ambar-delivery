@@ -66,14 +66,12 @@ export default async (req, context) => {
       const idx = bookings.findIndex(b => b.id === updateData.id);
       if (idx >= 0) {
         bookings[idx] = { ...bookings[idx], ...updateData };
-        await store.setJSON("bookings", bookings);
-        return new Response(JSON.stringify({ success: true, booking: bookings[idx] }), {
-          headers: corsHeaders
-        });
+      } else {
+        bookings.unshift(updateData);
       }
+      await store.setJSON("bookings", bookings.slice(0, 200));
 
-      return new Response(JSON.stringify({ error: "Booking not found" }), {
-        status: 404,
+      return new Response(JSON.stringify({ success: true, booking: idx >= 0 ? bookings[idx] : updateData }), {
         headers: corsHeaders
       });
     }
