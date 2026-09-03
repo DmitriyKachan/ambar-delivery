@@ -3004,6 +3004,25 @@ function logoutAdmin() {
   showToast("Ви вийшли з панелі адміністратора");
 }
 
+let adminLiveTicker = null;
+
+function startAdminTicker() {
+  if (adminLiveTicker) clearInterval(adminLiveTicker);
+  adminLiveTicker = setInterval(() => {
+    const modal = document.getElementById("admin-dashboard-modal");
+    if (!modal || modal.classList.contains("hidden")) return;
+    const orders = getGlobalOrders();
+    const hasBrandNew = orders.some(o => {
+      const st = o.status || "";
+      const age = o.timestamp ? (Date.now() - o.timestamp) : 999999;
+      return age < 125000 && !st.includes("Скасовано") && !st.includes("Доставлено") && !st.includes("Видано");
+    });
+    if (hasBrandNew) {
+      renderAdminOrders();
+    }
+  }, 1000);
+}
+
 function openAdminDashboard() {
   const modal = document.getElementById("admin-dashboard-modal");
   const backdrop = document.getElementById("admin-dashboard-backdrop");
@@ -3011,12 +3030,17 @@ function openAdminDashboard() {
     renderAdminDashboard();
     backdrop.classList.remove("hidden");
     modal.classList.remove("hidden");
+    startAdminTicker();
   }
 }
 
 function closeAdminDashboard() {
   const modal = document.getElementById("admin-dashboard-modal");
   const backdrop = document.getElementById("admin-dashboard-backdrop");
+  if (adminLiveTicker) {
+    clearInterval(adminLiveTicker);
+    adminLiveTicker = null;
+  }
   if (modal && backdrop) {
     modal.classList.add("hidden");
     backdrop.classList.add("hidden");
@@ -3274,8 +3298,45 @@ function renderAdminOrders() {
       }
     }
 
+    const orderAgeMs = o.timestamp ? (Date.now() - o.timestamp) : 999999;
+    const isBrandNew = orderAgeMs < 120000 && !st.includes("Скасовано") && !st.includes("Доставлено") && !st.includes("Видано");
+    const remainingSec = Math.max(0, Math.ceil((120000 - orderAgeMs) / 1000));
+
+    const cardClass = isBrandNew 
+      ? "p-4 rounded-2xl bg-[#1c1c24] border-2 border-[#f59e0b] shadow-xl shadow-amber-500/20 ring-2 ring-[#f59e0b]/40 space-y-3 relative overflow-hidden transition-all"
+      : "p-4 rounded-2xl bg-[#1c1c24] border border-white/10 space-y-3 transition-all";
+
     return `
-      <div class="p-4 rounded-2xl bg-[#1c1c24] border border-white/10 space-y-3">
+      <div class="${cardClass}">
+        ${isBrandNew ? `
+          <!-- Банер термінового нового замовлення (перші 2 хвилини) -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500/25 via-red-500/20 to-amber-500/25 border border-amber-500/60 text-amber-300 shadow-md">
+            <div class="flex items-center gap-2">
+              <span class="relative flex h-3 w-3 shrink-0">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
+              </span>
+              <span class="material-symbols-outlined text-base text-amber-400">ring_volume</span>
+              <span class="font-heading font-extrabold text-xs text-white tracking-wide">
+                🔥 НОВЕ ЗАМОВЛЕННЯ — ПЕРЕДЗВОНІТЬ КЛІЄНТУ!
+              </span>
+            </div>
+            <div class="flex items-center gap-2 self-end sm:self-auto shrink-0">
+              <span class="text-[11px] font-mono text-amber-200 bg-black/40 px-2 py-0.5 rounded-md border border-amber-500/30">
+                ⏱️ ${remainingSec}с
+              </span>
+              <a 
+                href="tel:${escapeHtml((o.phone || '').replace(/[^0-9+]/g, ''))}" 
+                class="px-3 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-heading font-extrabold text-[11px] flex items-center gap-1 transition-all shadow-md active:scale-95 cursor-pointer"
+                title="Миттєво зателефонувати клієнту для підтвердження"
+              >
+                <span class="material-symbols-outlined text-xs">call</span>
+                <span>ПОДЗВОНИТИ</span>
+              </a>
+            </div>
+          </div>
+        ` : ""}
+
         <!-- Заголовок замовлення -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-white/5">
           <div class="flex items-center gap-2 flex-wrap">
