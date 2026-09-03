@@ -2217,6 +2217,9 @@ function openCabinetModal() {
     renderCabinetBookings();
     backdrop.classList.remove("hidden");
     modal.classList.remove("hidden");
+
+    // Миттєво підтягуємо найновіші статуси з хмари
+    syncOrdersAndBookingsWithCloud(false);
   }
 }
 
@@ -2259,20 +2262,38 @@ function renderCabinetOrders() {
   const globalOrders = getGlobalOrders();
   const globalOrderMap = new Map(globalOrders.map(o => [o.id, o]));
 
-  if (Array.isArray(CabinetState.orders)) {
-    let hasChanges = false;
-    CabinetState.orders.forEach(o => {
-      const liveO = globalOrderMap.get(o.id);
-      if (liveO && liveO.status && (o.status !== liveO.status || o.statusUpdatedAt !== liveO.statusUpdatedAt)) {
-        o.status = liveO.status;
-        o.statusUpdatedAt = liveO.statusUpdatedAt;
-        o.updatedAt = liveO.updatedAt;
-        o.bonusesRefunded = liveO.bonusesRefunded;
-        hasChanges = true;
+  const userPhoneDigits = (CabinetState.user?.phone || "").replace(/\D/g, "");
+  const userMatchKey = userPhoneDigits.length >= 9 ? userPhoneDigits.slice(-9) : null;
+
+  if (!Array.isArray(CabinetState.orders)) CabinetState.orders = [];
+
+  // Автоматично підтягуємо всі замовлення з хмари за номером телефону клієнта
+  if (userMatchKey) {
+    globalOrders.forEach(go => {
+      if (!go || !go.id) return;
+      const oPhoneDigits = (go.phone || "").replace(/\D/g, "");
+      if (oPhoneDigits.includes(userMatchKey)) {
+        if (!CabinetState.orders.some(co => co.id === go.id)) {
+          CabinetState.orders.push({ ...go });
+        }
       }
     });
-    if (hasChanges) saveCabinetState();
   }
+
+  let hasChanges = false;
+  CabinetState.orders.forEach(o => {
+    const liveO = globalOrderMap.get(o.id);
+    if (liveO && liveO.status && (o.status !== liveO.status || o.statusUpdatedAt !== liveO.statusUpdatedAt)) {
+      o.status = liveO.status;
+      o.statusUpdatedAt = liveO.statusUpdatedAt;
+      o.updatedAt = liveO.updatedAt;
+      o.bonusesRefunded = liveO.bonusesRefunded;
+      hasChanges = true;
+    }
+  });
+
+  CabinetState.orders.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+  if (hasChanges) saveCabinetState();
 
   if (CabinetState.orders.length === 0) {
     container.innerHTML = `
@@ -2447,19 +2468,36 @@ function renderCabinetBookings() {
   const globalBookings = getGlobalBookings();
   const globalBookingMap = new Map(globalBookings.map(b => [b.id, b]));
 
-  if (Array.isArray(CabinetState.bookings)) {
-    let hasChanges = false;
-    CabinetState.bookings.forEach(b => {
-      const liveB = globalBookingMap.get(b.id);
-      if (liveB && liveB.status && (b.status !== liveB.status || b.statusUpdatedAt !== liveB.statusUpdatedAt)) {
-        b.status = liveB.status;
-        b.statusUpdatedAt = liveB.statusUpdatedAt;
-        b.updatedAt = liveB.updatedAt;
-        hasChanges = true;
+  const userPhoneDigits = (CabinetState.user?.phone || "").replace(/\D/g, "");
+  const userMatchKey = userPhoneDigits.length >= 9 ? userPhoneDigits.slice(-9) : null;
+
+  if (!Array.isArray(CabinetState.bookings)) CabinetState.bookings = [];
+
+  if (userMatchKey) {
+    globalBookings.forEach(gb => {
+      if (!gb || !gb.id) return;
+      const bPhoneDigits = (gb.phone || "").replace(/\D/g, "");
+      if (bPhoneDigits.includes(userMatchKey)) {
+        if (!CabinetState.bookings.some(cb => cb.id === gb.id)) {
+          CabinetState.bookings.push({ ...gb });
+        }
       }
     });
-    if (hasChanges) saveCabinetState();
   }
+
+  let hasChanges = false;
+  CabinetState.bookings.forEach(b => {
+    const liveB = globalBookingMap.get(b.id);
+    if (liveB && liveB.status && (b.status !== liveB.status || b.statusUpdatedAt !== liveB.statusUpdatedAt)) {
+      b.status = liveB.status;
+      b.statusUpdatedAt = liveB.statusUpdatedAt;
+      b.updatedAt = liveB.updatedAt;
+      hasChanges = true;
+    }
+  });
+
+  CabinetState.bookings.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+  if (hasChanges) saveCabinetState();
 
   if (CabinetState.bookings.length === 0) {
     container.innerHTML = `
@@ -2577,8 +2615,14 @@ function submitInstantAuth(event) {
   const matchingOrders = allOrders.filter(o => o && o.phone && o.phone.replace(/\D/g, "").includes(matchKey));
   
   matchingOrders.forEach(mo => {
-    if (!CabinetState.orders.some(co => co.id === mo.id)) {
-      CabinetState.orders.push(mo);
+    const existing = CabinetState.orders.find(co => co.id === mo.id);
+    if (!existing) {
+      CabinetState.orders.push({ ...mo });
+    } else {
+      existing.status = mo.status;
+      existing.statusUpdatedAt = mo.statusUpdatedAt;
+      existing.updatedAt = mo.updatedAt;
+      existing.bonusesRefunded = mo.bonusesRefunded;
     }
     // Автоматично підтягуємо збережену адресу, якщо ще немає
     if (!CabinetState.user.address && mo.address && !mo.address.includes("Самовивіз")) {
@@ -2596,8 +2640,13 @@ function submitInstantAuth(event) {
   const allBookings = getGlobalBookings();
   const matchingBookings = allBookings.filter(b => b && b.phone && b.phone.replace(/\D/g, "").includes(matchKey));
   matchingBookings.forEach(mb => {
-    if (!CabinetState.bookings.some(cb => cb.id === mb.id)) {
-      CabinetState.bookings.push(mb);
+    const existingB = CabinetState.bookings.find(cb => cb.id === mb.id);
+    if (!existingB) {
+      CabinetState.bookings.push({ ...mb });
+    } else {
+      existingB.status = mb.status;
+      existingB.statusUpdatedAt = mb.statusUpdatedAt;
+      existingB.updatedAt = mb.updatedAt;
     }
     if (!CabinetState.user.name && mb.name && mb.name !== "Гість") {
       CabinetState.user.name = mb.name;
@@ -2906,20 +2955,15 @@ async function syncOrdersAndBookingsWithCloud(isUserAction = false) {
           }
           orderMap.set(serverO.id, serverO);
         } else {
-          // Розумне злиття: перевірка чи був нещодавній локальний апдейт статусу
-          const localTime = localO.statusUpdatedAt || localO.updatedAt || localO.timestamp || 0;
-          const serverTime = serverO.statusUpdatedAt || serverO.updatedAt || serverO.timestamp || 0;
           const recentLocal = recentLocalOrderUpdates.get(serverO.id);
-
           if (recentLocal && (Date.now() - recentLocal.timestamp < 35000)) {
-            // Захист від відкату: локальний статус змінено менше 35 секунд тому, зберігаємо актуальний
+            // Локальний статус змінено щойно на цьому пристрої
             const merged = { ...serverO, ...localO, status: recentLocal.status, statusUpdatedAt: recentLocal.timestamp };
             orderMap.set(serverO.id, merged);
-          } else if (localTime > serverTime) {
-            const merged = { ...serverO, ...localO };
-            orderMap.set(serverO.id, merged);
           } else {
-            orderMap.set(serverO.id, serverO);
+            // Завжди приймаємо актуальний статус із сервера (хмари)
+            const merged = { ...localO, ...serverO };
+            orderMap.set(serverO.id, merged);
           }
         }
       });
@@ -2927,6 +2971,42 @@ async function syncOrdersAndBookingsWithCloud(isUserAction = false) {
       const mergedOrders = Array.from(orderMap.values()).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
       saveGlobalOrders(mergedOrders);
       mergedOrders.forEach(o => adminKnownOrderIds.add(o.id));
+
+      // Автоматична синхронізація замовлень у кабінеті клієнта
+      if (typeof CabinetState !== "undefined") {
+        let cabChanged = false;
+        if (!Array.isArray(CabinetState.orders)) CabinetState.orders = [];
+
+        const userPhoneDigits = (CabinetState.user?.phone || "").replace(/\D/g, "");
+        const userMatchKey = userPhoneDigits.length >= 9 ? userPhoneDigits.slice(-9) : null;
+
+        mergedOrders.forEach(cloudO => {
+          if (!cloudO || !cloudO.id) return;
+          const oPhoneDigits = (cloudO.phone || "").replace(/\D/g, "");
+          const isUserMatch = userMatchKey && oPhoneDigits.includes(userMatchKey);
+          const existing = CabinetState.orders.find(co => co.id === cloudO.id);
+
+          if (existing) {
+            if (existing.status !== cloudO.status || existing.statusUpdatedAt !== cloudO.statusUpdatedAt) {
+              existing.status = cloudO.status;
+              existing.statusUpdatedAt = cloudO.statusUpdatedAt;
+              existing.updatedAt = cloudO.updatedAt;
+              existing.bonusesRefunded = cloudO.bonusesRefunded;
+              cabChanged = true;
+            }
+          } else if (isUserMatch) {
+            CabinetState.orders.push({ ...cloudO });
+            cabChanged = true;
+          }
+        });
+
+        if (cabChanged) {
+          CabinetState.orders.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+          saveCabinetState();
+          updateCabinetUI();
+          renderCabinetOrders();
+        }
+      }
     }
 
     if (Array.isArray(serverBookings)) {
@@ -2947,18 +3027,13 @@ async function syncOrdersAndBookingsWithCloud(isUserAction = false) {
           }
           bookingMap.set(serverB.id, serverB);
         } else {
-          const localTime = localB.statusUpdatedAt || localB.updatedAt || localB.timestamp || 0;
-          const serverTime = serverB.statusUpdatedAt || serverB.updatedAt || serverB.timestamp || 0;
           const recentLocal = recentLocalBookingUpdates.get(serverB.id);
-
           if (recentLocal && (Date.now() - recentLocal.timestamp < 35000)) {
             const merged = { ...serverB, ...localB, status: recentLocal.status, statusUpdatedAt: recentLocal.timestamp };
             bookingMap.set(serverB.id, merged);
-          } else if (localTime > serverTime) {
-            const merged = { ...serverB, ...localB };
-            bookingMap.set(serverB.id, merged);
           } else {
-            bookingMap.set(serverB.id, serverB);
+            const merged = { ...localB, ...serverB };
+            bookingMap.set(serverB.id, merged);
           }
         }
       });
@@ -2967,37 +3042,33 @@ async function syncOrdersAndBookingsWithCloud(isUserAction = false) {
       saveGlobalBookings(mergedBookings);
       mergedBookings.forEach(b => adminKnownBookingIds.add(b.id));
 
-      // Автоматична синхронізація статусів у клієнтському кабінеті
-      if (typeof CabinetState !== "undefined" && Array.isArray(CabinetState.orders)) {
-        let cabChanged = false;
-        CabinetState.orders.forEach(userO => {
-          const cloudO = orderMap.get(userO.id);
-          if (cloudO && cloudO.status && (userO.status !== cloudO.status || userO.statusUpdatedAt !== cloudO.statusUpdatedAt)) {
-            userO.status = cloudO.status;
-            userO.statusUpdatedAt = cloudO.statusUpdatedAt;
-            userO.updatedAt = cloudO.updatedAt;
-            userO.bonusesRefunded = cloudO.bonusesRefunded;
-            cabChanged = true;
-          }
-        });
-        if (cabChanged) {
-          saveCabinetState();
-          updateCabinetUI();
-          renderCabinetOrders();
-        }
-      }
-
-      if (typeof CabinetState !== "undefined" && Array.isArray(CabinetState.bookings)) {
+      // Автоматична синхронізація бронювань у кабінеті клієнта
+      if (typeof CabinetState !== "undefined") {
         let cabBookingsChanged = false;
-        CabinetState.bookings.forEach(userB => {
-          const cloudB = bookingMap.get(userB.id);
-          if (cloudB && cloudB.status && (userB.status !== cloudB.status || userB.statusUpdatedAt !== cloudB.statusUpdatedAt)) {
-            userB.status = cloudB.status;
-            userB.statusUpdatedAt = cloudB.statusUpdatedAt;
-            userB.updatedAt = cloudB.updatedAt;
+        if (!Array.isArray(CabinetState.bookings)) CabinetState.bookings = [];
+
+        const userPhoneDigits = (CabinetState.user?.phone || "").replace(/\D/g, "");
+        const userMatchKey = userPhoneDigits.length >= 9 ? userPhoneDigits.slice(-9) : null;
+
+        mergedBookings.forEach(cloudB => {
+          if (!cloudB || !cloudB.id) return;
+          const bPhoneDigits = (cloudB.phone || "").replace(/\D/g, "");
+          const isUserMatch = userMatchKey && bPhoneDigits.includes(userMatchKey);
+          const existing = CabinetState.bookings.find(cb => cb.id === cloudB.id);
+
+          if (existing) {
+            if (existing.status !== cloudB.status || existing.statusUpdatedAt !== cloudB.statusUpdatedAt) {
+              existing.status = cloudB.status;
+              existing.statusUpdatedAt = cloudB.statusUpdatedAt;
+              existing.updatedAt = cloudB.updatedAt;
+              cabBookingsChanged = true;
+            }
+          } else if (isUserMatch) {
+            CabinetState.bookings.push({ ...cloudB });
             cabBookingsChanged = true;
           }
         });
+
         if (cabBookingsChanged) {
           saveCabinetState();
           updateCabinetUI();
