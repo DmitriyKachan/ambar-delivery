@@ -2654,42 +2654,16 @@ function unlockAudioEngine() {
       osc.stop(ctx.currentTime + 0.01);
       isAudioUnlocked = true;
     }
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.getVoices();
-    }
   } catch(e) {}
 }
 
-// Слухачі глобальної взаємодії для гарантованого розблокування
+// Слухачі глобальної взаємодії для гарантованого розблокування звуку
 ['click', 'touchstart', 'touchend', 'mousedown', 'keydown', 'pointerdown'].forEach(evt => {
   window.addEventListener(evt, unlockAudioEngine, { once: true, passive: true });
 });
 
-// Голосове озвучення сповіщення українською мовою через Web Speech API
-function playVoiceNotification(text = "Нове замовлення в кафе Амбар!") {
-  if (!isAudioNotificationEnabled) return;
-  try {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel(); // Очищаємо попередню чергу
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "uk-UA";
-      utterance.rate = 1.05;
-      utterance.pitch = 1.05;
-      utterance.volume = 1.0;
-
-      const voices = window.speechSynthesis.getVoices();
-      const ukVoice = voices.find(v => v.lang && (v.lang.includes("uk") || v.lang.includes("UK") || v.lang.includes("ua") || v.lang.includes("UA")));
-      if (ukVoice) utterance.voice = ukVoice;
-
-      window.speechSynthesis.speak(utterance);
-    }
-  } catch (e) {
-    console.warn("Speech synthesis error", e);
-  }
-}
-
-// Повний аудіо-сигнал: ресторанний тритонний дзвінок + голос
-function playNewOrderSound(voiceText = "Нове замовлення в кафе Амбар!") {
+// Кристально чистий ресторанний тритонний передзвін дзвіночка
+function playNewOrderSound() {
   if (!isAudioNotificationEnabled) return;
 
   try {
@@ -2699,7 +2673,7 @@ function playNewOrderSound(voiceText = "Нове замовлення в каф�
         ctx.resume().catch(() => {});
       }
 
-      // Тритонний передзвін дзвіночка
+      // Тритонний приємний акорд (D5 -> A5 -> D6)
       const notes = [
         { freq: 587.33, time: 0, dur: 0.22 },     // D5
         { freq: 880.00, time: 0.12, dur: 0.28 },   // A5
@@ -2726,13 +2700,6 @@ function playNewOrderSound(voiceText = "Нове замовлення в каф�
   } catch (e) {
     console.warn("Audio chime error", e);
   }
-
-  // Через 300 мс після дзвінка чітко промовляємо повідомлення голосом
-  if (voiceText) {
-    setTimeout(() => {
-      playVoiceNotification(voiceText);
-    }, 320);
-  }
 }
 
 function toggleAdminSound() {
@@ -2750,8 +2717,8 @@ function toggleAdminSound() {
       : "p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-500 border border-white/10 transition-colors flex items-center justify-center cursor-pointer";
   }
   if (isAudioNotificationEnabled) {
-    playNewOrderSound("Звукові та голосові сповіщення увімкнено");
-    showToast("🔔 Звукові та голосові сповіщення увімкнено");
+    playNewOrderSound();
+    showToast("🔔 Звукові сповіщення увімкнено");
   } else {
     showToast("🔇 Звукові сповіщення вимкнено");
   }
@@ -2967,7 +2934,7 @@ async function syncOrdersAndBookingsWithCloud(isUserAction = false) {
 
     // Сповіщення при надходженні нового замовлення
     if (hasNewOrders) {
-      playNewOrderSound("Увага! Нове замовлення в кафе Амбар!");
+      playNewOrderSound();
       if ("vibrate" in navigator) navigator.vibrate([200, 100, 200]);
       showToast("🔔 Надійшло нове замовлення клієнта!");
       document.title = "🔔 (НОВЕ ЗАМОВЛЕННЯ!) АМБАР";
@@ -2978,7 +2945,7 @@ async function syncOrdersAndBookingsWithCloud(isUserAction = false) {
 
     // Сповіщення при надходженні нового бронювання столика
     if (hasNewBookings) {
-      playNewOrderSound("Нове бронювання столика!");
+      playNewOrderSound();
       if ("vibrate" in navigator) navigator.vibrate([200, 100, 200]);
       showToast("🍷 Надійшло нове бронювання столика!");
     }
@@ -4411,7 +4378,7 @@ function handleIncomingRealtimeEvent(data) {
     if (isAdminOpen) {
       updateAdminDashboard();
       const order = data.order || {};
-      playNewOrderSound("Нове замовлення в кафе Амбар!");
+      playNewOrderSound();
       const typeText = (order.orderType === "pickup" || (order.address && order.address.includes("Самовивіз"))) ? "Самовивіз" : "Доставка";
       const nameText = order.customerName || order.name || "Гість";
       showToast(`🔔 Нове замовлення #${order.id || ""} від ${nameText}! (${typeText} • ${order.total || 0} ₴)`);
@@ -4425,7 +4392,7 @@ function handleIncomingRealtimeEvent(data) {
 
     if (isAdminOpen) {
       updateAdminDashboard();
-      playNewOrderSound("Нове бронювання столика!");
+      playNewOrderSound();
       const booking = data.booking || {};
       showToast(`🍷 Нова бронь столика #${booking.id || ""} на ${booking.date || ""} (${booking.guests || 2} осіб)!`);
     }
