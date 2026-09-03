@@ -1,4 +1,4 @@
-import { getStore } from "@netlify/blobs";
+﻿import { getStore } from "@netlify/blobs";
 
 export default async (req, context) => {
   const method = req.method;
@@ -15,7 +15,9 @@ export default async (req, context) => {
   }
 
   try {
-    const store = getStore("ambar_restaurant_data");
+    const store = getStore("ambar_restaurant_v2");
+    const url = new URL(req.url);
+    const isResetAll = url.searchParams.get("all") === "true";
 
     if (method === "GET") {
       let orders = [];
@@ -45,8 +47,7 @@ export default async (req, context) => {
         orders.unshift(newOrder);
       }
 
-      // Store up to 250 recent orders
-      const trimmed = orders.slice(0, 250);
+      const trimmed = orders.slice(0, 300);
       await store.setJSON("orders", trimmed);
 
       return new Response(JSON.stringify({ success: true, order: newOrder }), {
@@ -70,7 +71,7 @@ export default async (req, context) => {
       } else {
         orders.unshift(updateData);
       }
-      await store.setJSON("orders", orders.slice(0, 250));
+      await store.setJSON("orders", orders.slice(0, 300));
 
       return new Response(JSON.stringify({ success: true, order: idx >= 0 ? orders[idx] : updateData }), {
         headers: corsHeaders
@@ -78,7 +79,22 @@ export default async (req, context) => {
     }
 
     if (method === "DELETE") {
-      const { id } = await req.json();
+      if (isResetAll) {
+        await store.setJSON("orders", []);
+        return new Response(JSON.stringify({ success: true, message: "All orders cleared" }), {
+          headers: corsHeaders
+        });
+      }
+
+      const body = await req.json().catch(() => ({}));
+      if (body.all) {
+        await store.setJSON("orders", []);
+        return new Response(JSON.stringify({ success: true, message: "All orders cleared" }), {
+          headers: corsHeaders
+        });
+      }
+
+      const { id } = body;
       let orders = [];
       try {
         const raw = await store.get("orders", { type: "json" });

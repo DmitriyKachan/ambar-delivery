@@ -1,4 +1,4 @@
-import { getStore } from "@netlify/blobs";
+﻿import { getStore } from "@netlify/blobs";
 
 export default async (req, context) => {
   const method = req.method;
@@ -15,7 +15,9 @@ export default async (req, context) => {
   }
 
   try {
-    const store = getStore("ambar_restaurant_data");
+    const store = getStore("ambar_restaurant_v2");
+    const url = new URL(req.url);
+    const isResetAll = url.searchParams.get("all") === "true";
 
     if (method === "GET") {
       let bookings = [];
@@ -45,7 +47,7 @@ export default async (req, context) => {
         bookings.unshift(newBooking);
       }
 
-      const trimmed = bookings.slice(0, 200);
+      const trimmed = bookings.slice(0, 300);
       await store.setJSON("bookings", trimmed);
 
       return new Response(JSON.stringify({ success: true, booking: newBooking }), {
@@ -69,9 +71,42 @@ export default async (req, context) => {
       } else {
         bookings.unshift(updateData);
       }
-      await store.setJSON("bookings", bookings.slice(0, 200));
+      await store.setJSON("bookings", bookings.slice(0, 300));
 
       return new Response(JSON.stringify({ success: true, booking: idx >= 0 ? bookings[idx] : updateData }), {
+        headers: corsHeaders
+      });
+    }
+
+    if (method === "DELETE") {
+      if (isResetAll) {
+        await store.setJSON("bookings", []);
+        return new Response(JSON.stringify({ success: true, message: "All bookings cleared" }), {
+          headers: corsHeaders
+        });
+      }
+
+      const body = await req.json().catch(() => ({}));
+      if (body.all) {
+        await store.setJSON("bookings", []);
+        return new Response(JSON.stringify({ success: true, message: "All bookings cleared" }), {
+          headers: corsHeaders
+        });
+      }
+
+      const { id } = body;
+      let bookings = [];
+      try {
+        const raw = await store.get("bookings", { type: "json" });
+        if (Array.isArray(raw)) bookings = raw;
+      } catch (e) {
+        bookings = [];
+      }
+
+      bookings = bookings.filter(b => b.id !== id);
+      await store.setJSON("bookings", bookings);
+
+      return new Response(JSON.stringify({ success: true }), {
         headers: corsHeaders
       });
     }

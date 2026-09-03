@@ -2101,7 +2101,7 @@ function getDeclension(number, titles) {
 // =========================================================================
 // 13. ОСОБИСТИЙ КАБІНЕТ КЛІЄНТА ТА ЗАХИСТ ДАНИХ
 // =========================================================================
-const CABINET_STORAGE_KEY = "ambar_cabinet_v1";
+const CABINET_STORAGE_KEY = "ambar_cabinet_v2";
 
 const CabinetState = {
   user: {
@@ -2809,8 +2809,8 @@ async function submitInstantAuth(event) {
 // =========================================================================
 // 15. ГЛОБАЛЬНІ СХОВИЩА ТА АДМІН-ПАНЕЛЬ КЕРУВАННЯ РЕСТОРАНОМ «АМБАР»
 // =========================================================================
-const GLOBAL_ORDERS_KEY = "ambar_all_orders_v1";
-const GLOBAL_BOOKINGS_KEY = "ambar_all_bookings_v1";
+const GLOBAL_ORDERS_KEY = "ambar_all_orders_v2";
+const GLOBAL_BOOKINGS_KEY = "ambar_all_bookings_v2";
 
 // =========================================================================
 // 15. ХМАРНА СИНХРОНІЗАЦІЯ В РЕАЛЬНОМУ ЧАСІ (CLOUD SYNC ENGINE)
@@ -3011,8 +3011,52 @@ const AmbarCloudSync = {
 
   async fetchAllUsers() {
     return await this.request("/users");
+  },
+
+  async resetAllCloudData() {
+    await this.request("/orders?all=true", { method: "DELETE" });
+    await this.request("/bookings?all=true", { method: "DELETE" });
+    await this.request("/users?all=true", { method: "DELETE" });
   }
 };
+
+async function adminResetEntireDatabase() {
+  if (confirm("⚠️ УВАГА! Ви дійсно бажаєте повністю очистити базу даних (видалити ВСІ замовлення, броні та історію на сервері та всіх пристроях)?\n\nБаза повернеться до абсолютно чистого стану (0 замовлень).")) {
+    try {
+      showToast("Очищення бази даних ресторану...");
+      if (typeof AmbarCloudSync !== "undefined") {
+        await AmbarCloudSync.resetAllCloudData();
+      }
+      localStorage.removeItem(GLOBAL_ORDERS_KEY);
+      localStorage.removeItem(GLOBAL_BOOKINGS_KEY);
+      localStorage.removeItem(CABINET_STORAGE_KEY);
+      localStorage.removeItem("ambar_all_orders_v1");
+      localStorage.removeItem("ambar_all_bookings_v1");
+      localStorage.removeItem("ambar_cabinet_v1");
+      localStorage.removeItem("ambar_orders");
+      localStorage.removeItem("ambar_bookings");
+      localStorage.removeItem("ambar_cabinet_state");
+
+      CabinetState.user = { name: "", phone: "", address: "", entrance: "", floor: "", apt: "", bonuses: 0 };
+      CabinetState.orders = [];
+      CabinetState.bookings = [];
+
+      adminKnownOrderIds.clear();
+      adminKnownBookingIds.clear();
+      soundedOrderIds.clear();
+      soundedBookingIds.clear();
+
+      renderAdminOrders();
+      renderAdminBookings();
+      updateCabinetUI();
+      renderCabinetOrders();
+      renderCabinetBookings();
+      showToast("✅ Базу даних повністю скинуто до нуля!");
+    } catch(e) {
+      showToast("Помилка очищення: " + e.message);
+    }
+  }
+}
 
 function getGlobalOrders() {
   try {
@@ -4755,6 +4799,11 @@ window.addEventListener("storage", (e) => {
 
 // ІНІЦІАЛІЗАЦІЯ ПРИ ЗАВАНТАЖЕННІ
 document.addEventListener("DOMContentLoaded", () => {
+  // Автоматичне очищення застарілих тестових ключів v1 на всіх браузерах
+  ["ambar_all_orders_v1", "ambar_all_bookings_v1", "ambar_cabinet_v1", "ambar_orders", "ambar_bookings", "ambar_cabinet_state"].forEach(k => {
+    try { localStorage.removeItem(k); } catch(e) {}
+  });
+
   loadSavedState();
   loadCabinetState();
   updateCabinetUI();

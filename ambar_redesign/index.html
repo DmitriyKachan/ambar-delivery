@@ -1434,6 +1434,12 @@
             <span class="hidden md:inline">Оновити</span>
           </button>
 
+          <!-- Кнопка скидання всієї бази даних до нуля -->
+          <button onclick="adminResetEntireDatabase()" class="p-2 px-3 rounded-xl bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/30 transition-colors flex items-center gap-1 text-xs font-bold cursor-pointer" title="Повністю очистити всі замовлення та скинути базу до нуля">
+            <span class="material-symbols-outlined text-base">delete_forever</span>
+            <span class="hidden md:inline">Скинути базу</span>
+          </button>
+
           <!-- Перемикач звуку нових замовлень -->
           <button id="adm-sound-toggle" onclick="toggleAdminSound()" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-[#f59e0b] border border-white/10 transition-colors flex items-center justify-center cursor-pointer" title="Звукове сповіщення нових замовлень">
             <span id="adm-sound-icon" class="material-symbols-outlined text-base">volume_up</span>

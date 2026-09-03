@@ -15,11 +15,11 @@ export default async (req, context) => {
   }
 
   try {
-    const store = getStore("ambar_restaurant_data");
+    const store = getStore("ambar_restaurant_v2");
     const url = new URL(req.url);
     const queryPhone = url.searchParams.get("phone") || "";
+    const isResetAll = url.searchParams.get("all") === "true";
 
-    // 1. Отримання профілю користувача за номером телефону
     if (method === "GET") {
       if (!queryPhone) {
         let users = [];
@@ -61,7 +61,6 @@ export default async (req, context) => {
       return new Response(JSON.stringify(userData), { headers: corsHeaders });
     }
 
-    // 2. Збереження / оновлення профілю та балансу бонусів клієнта
     if (method === "POST" || method === "PUT") {
       const payload = await req.json();
       const rawPhone = payload.phone || queryPhone || "";
@@ -107,6 +106,14 @@ export default async (req, context) => {
       } catch(e) {}
 
       return new Response(JSON.stringify({ success: true, user: updatedUser }), { headers: corsHeaders });
+    }
+
+    if (method === "DELETE") {
+      if (isResetAll) {
+        await store.setJSON("users_index", []);
+        return new Response(JSON.stringify({ success: true, message: "All users reset" }), { headers: corsHeaders });
+      }
+      return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
     }
 
     return new Response("Method not allowed", { status: 405, headers: corsHeaders });
