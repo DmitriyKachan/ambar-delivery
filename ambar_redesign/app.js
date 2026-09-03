@@ -3389,14 +3389,14 @@ function renderAdminOrders() {
           </div>
         </div>
 
-        <!-- Інформація про клієнта та доставку -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-[#242430] p-3 rounded-xl">
-          <div>
-            <span class="text-[10px] text-gray-400 block">Клієнт / Телефон:</span>
-            <div class="flex items-center gap-1.5 mt-0.5 flex-wrap">
+        <!-- Інформація про клієнта та доставку (ідеальне вирівнювання) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-[#242430] p-3 rounded-xl items-start">
+          <div class="space-y-1">
+            <span class="text-[10px] text-gray-400 block font-medium">Клієнт / Телефон:</span>
+            <div class="flex items-center gap-1.5 flex-wrap">
               <span class="font-bold text-white text-xs">${escapeHtml(o.customerName || o.name || "Гість")}</span>
               <span class="text-gray-400 font-medium text-[11px]">(${escapeHtml(o.phone)})</span>
-              <a href="tel:${escapeHtml(o.phone.replace(/[^0-9+]/g, ""))}" class="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 font-bold hover:bg-emerald-500/30 transition-colors inline-flex items-center gap-1 text-[10px]">
+              <a href="tel:${escapeHtml((o.phone || '').replace(/[^0-9+]/g, ''))}" class="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 font-bold hover:bg-emerald-500/30 transition-colors inline-flex items-center gap-1 text-[10px]">
                 <span class="material-symbols-outlined text-xs">call</span>
                 <span>Дзвінок</span>
               </a>
@@ -3404,15 +3404,25 @@ function renderAdminOrders() {
           </div>
 
           <div class="space-y-1">
-            <span class="text-[10px] text-gray-400 block">${isPickup ? "Спосіб отримання:" : "Адреса доставки:"}</span>
-            <span class="font-medium text-gray-200 mt-0.5 block leading-tight">
+            <span class="text-[10px] text-gray-400 block font-medium">${isPickup ? "Спосіб отримання:" : "Адреса доставки:"}</span>
+            <div class="flex items-center gap-2 flex-wrap text-xs">
               ${isPickup 
-                ? `<span class="inline-flex items-center gap-1 font-bold text-[#f59e0b]"><span class="material-symbols-outlined text-xs">storefront</span> САМОВИВІЗ:</span> вул. Олександрівська, 88 (кафе)` 
-                : `📍 ${escapeHtml(o.address)}`
+                ? `
+                  <span class="px-2 py-0.5 rounded-md bg-[#f59e0b]/20 text-[#f59e0b] border border-[#f59e0b]/40 font-bold text-[10px] inline-flex items-center gap-1 shrink-0 shadow-sm">
+                    <span class="material-symbols-outlined text-xs">storefront</span>
+                    <span>САМОВИВІЗ</span>
+                  </span>
+                  <span class="text-gray-200 font-medium leading-tight">вул. Олександрівська, 88 (кафе)</span>
+                ` 
+                : `
+                  <span class="inline-flex items-center gap-1 text-gray-200 font-medium leading-tight">
+                    <span class="text-sky-400 font-bold">📍</span> ${escapeHtml(o.address)}
+                  </span>
+                `
               }
-            </span>
+            </div>
 
-            <!-- Швидкі кнопки навігатора для кур'єра (тільки для доставки, не для самовивозу) -->
+            <!-- Швидкі кнопки навігатора для кур'єра (тільки для доставки) -->
             ${!isPickup ? `
               <div class="flex items-center gap-1.5 pt-1 flex-wrap">
                 <a 
@@ -3437,10 +3447,13 @@ function renderAdminOrders() {
             ` : ""}
           </div>
 
-          <div>
-            <span class="text-[10px] text-gray-400 block">Час та оплата:</span>
-            <span class="font-medium text-gray-200 block text-[11px]">${escapeHtml(o.deliveryTime)}</span>
-            <span class="text-[10px] text-[#f59e0b]">${escapeHtml(o.paymentMethod)}</span>
+          <div class="space-y-1">
+            <span class="text-[10px] text-gray-400 block font-medium">Час та оплата:</span>
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="font-medium text-gray-200 text-xs">${escapeHtml(o.deliveryTime)}</span>
+              <span class="text-gray-500">•</span>
+              <span class="text-[11px] font-bold text-[#f59e0b]">${escapeHtml(o.paymentMethod)}</span>
+            </div>
           </div>
         </div>
 
