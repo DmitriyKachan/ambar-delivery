@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="uk"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>АМБАР • Гриль &amp; Доставка</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&amp;family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed": "#ffdada",
+                      "tertiary-fixed-dim": "#7fd0ff",
+                      "surface-container": "#201f21",
+                      "secondary-container": "#cc003c",
+                      "on-secondary": "#68001a",
+                      "on-surface-variant": "#d8c3ad",
+                      "primary-container": "#f59e0b",
+                      "on-surface": "#e5e1e4",
+                      "surface": "#131315",
+                      "surface-tint": "#ffb95f",
+                      "on-tertiary-fixed": "#001e2d",
+                      "inverse-primary": "#855300",
+                      "inverse-on-surface": "#303032",
+                      "on-tertiary-fixed-variant": "#004c6a",
+                      "tertiary": "#8fd5ff",
+                      "secondary-fixed-dim": "#ffb3b6",
+                      "outline-variant": "#534434",
+                      "on-tertiary-container": "#004966",
+                      "on-secondary-container": "#ffdcdc",
+                      "on-secondary-fixed": "#40000c",
+                      "surface-container-high": "#2a2a2c",
+                      "surface-dim": "#131315",
+                      "on-primary-fixed": "#2a1700",
+                      "on-secondary-fixed-variant": "#920028",
+                      "error": "#ffb4ab",
+                      "tertiary-container": "#1abdff",
+                      "surface-variant": "#353437",
+                      "tertiary-fixed": "#c5e7ff",
+                      "primary-fixed-dim": "#ffb95f",
+                      "on-error-container": "#ffdad6",
+                      "on-primary-fixed-variant": "#653e00",
+                      "surface-container-low": "#1b1b1d",
+                      "surface-glass": "rgba(24, 24, 28, 0.8)",
+                      "error-container": "#93000a",
+                      "text-primary": "#FFFFFF",
+                      "surface-container-lowest": "#0e0e10",
+                      "surface-container-highest": "#353437",
+                      "surface-card": "#18181c",
+                      "surface-bright": "#39393b",
+                      "on-error": "#690005",
+                      "on-primary-container": "#613b00",
+                      "on-tertiary": "#00344a",
+                      "secondary": "#ffb3b6",
+                      "background": "#131315",
+                      "outline": "#a08e7a",
+                      "on-background": "#e5e1e4",
+                      "primary": "#ffc174",
+                      "text-muted": "#9ca3af",
+                      "primary-fixed": "#ffddb8",
+                      "on-primary": "#472a00",
+                      "inverse-surface": "#e5e1e4"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "container-max": "1280px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "40px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Montserrat"
+                      ],
+                      "price-display": [
+                              "Montserrat"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Montserrat"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "display-lg-mobile": [
+                              "Montserrat"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "price-display": [
+                              "20px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "36px",
+                              {
+                                      "lineHeight": "42px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "800"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        body { background-color: #121214; color: #FFFFFF; }
+        .glass-header { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .card-bg { background-color: #18181c; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .amber-glow:focus-within { border-color: #f59e0b; box-shadow: 0 0 0 1px #f59e0b; }
+        
+        /* Custom Scrollbar for Horizontal Lists */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Card Image Gradient */
+        .card-image-gradient { background: linear-gradient(to top, #18181c 0%, transparent 50%); }
+    </style>
+</head>
+<body class="font-body-lg text-body-lg antialiased selection:bg-primary-container selection:text-black">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-surface-glass fixed top-0 w-full z-50 backdrop-blur-md border-b border-white/10 shadow-sm transition-all duration-300">
+<div class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<!-- Logo -->
+<div class="flex items-center space-x-4">
+<a class="font-display-lg text-headline-md tracking-tighter text-primary hover:opacity-80 transition-opacity" href="#">
+                    АМБАР <span class="text-on-surface-variant font-light px-2">•</span> Гриль &amp; Доставка
+                </a>
+</div>
+<!-- Navigation Links (Hidden on Mobile) -->
+<nav class="hidden md:flex space-x-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-variant/50 px-3 py-2 rounded-lg duration-300" href="#">
+<span class="flex items-center gap-2"><span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">location_on</span> Запоріжжя</span>
+</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-variant/50 px-3 py-2 rounded-lg duration-300" href="tel:+380991234567">
+<span class="flex items-center gap-2"><span class="material-symbols-outlined text-xl">call</span> +380 99 123 45 67</span>
+</a>
+</nav>
+<!-- Search (Right Aligned) -->
+<div class="hidden lg:flex flex-1 max-w-sm mx-6">
+<div class="relative w-full amber-glow rounded-full transition-all">
+<input class="w-full bg-surface-container border border-outline-variant text-text-primary rounded-full pl-12 pr-4 py-2 focus:outline-none focus:border-transparent font-body-md text-body-md placeholder-text-muted" placeholder="Пошук страв..." type="text"/>
+<span class="material-symbols-outlined absolute left-4 top-1/2 transform -translate-y-1/2 text-text-muted">search</span>
+</div>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center space-x-4">
+<button class="hidden md:flex items-center gap-2 px-6 py-2 rounded-full border border-primary-container text-text-primary hover:bg-primary-container hover:text-black transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+<span class="font-body-md font-bold">Замовити стіл</span>
+</button>
+<button aria-label="shopping_cart" class="text-on-surface-variant hover:text-primary transition-colors p-2 active:scale-95">
+<div class="relative">
+<span class="material-symbols-outlined text-2xl">shopping_cart</span>
+<span class="absolute -top-2 -right-2 bg-secondary-container text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
+</div>
+</button>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-text-primary p-2">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-32 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop min-h-screen flex flex-col gap-[80px] md:gap-[120px]">
+<!-- Delivery Badge -->
+<section class="flex justify-center mt-4">
+<div class="inline-flex items-center gap-2 bg-surface-container-high border border-outline-variant rounded-full px-6 py-2 shadow-lg">
+<span class="material-symbols-outlined text-primary-container">timer</span>
+<span class="font-body-md text-on-surface font-semibold text-sm">⏱ Доставка 35-45 хв • Безкоштовно від 500 ₴</span>
+</div>
+</section>
+<!-- Hero Banners (Bento Grid) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter h-[400px]">
+<!-- Main Promo -->
+<div class="md:col-span-2 rounded-[24px] overflow-hidden relative group cursor-pointer border border-white/5">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A spectacular high-resolution photo of premium assorted meats cooking over an open charcoal grill. Glowing orange embers and rising smoke create a dramatic, intense modern dark gourmet aesthetic. High contrast lighting highlighting the juicy texture of the meat against a deep black matte background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBm39exKr6BrYMaKMe3Medk7RNE52GSSCXwG3oWLjQR54Xf3t7pXYY154DGA3Wpi2UH6UVSpTl2NnaFT9-e6WgSf85Ky52GhJ-2L9Spkyp7EskLJU1l7AGM5q3O3VKGHLMjnlpcKo5xr6iQy3E1WxVNeFUiziESJN2woAGxDHs7g0OgBXM1A6M-I7yGXWt9aEK55ugr5W6gjuEo2-N3QScx5BEh_JkeweALW6TtCR5n48KcMVXMV3L7SRxSMpiQqxBii-fTiGDxb8Y')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#121214] via-[#121214]/60 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8 flex flex-col justify-end h-full">
+<span class="bg-secondary-container text-white font-label-caps px-3 py-1 rounded-full w-max mb-4">HOT DEAL</span>
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg text-text-primary mb-2">Мангал тиждень</h2>
+<p class="font-headline-md text-primary-container mb-6 text-3xl font-bold">-20% на все гриль меню</p>
+<button class="bg-primary-container text-black font-bold px-8 py-3 rounded-full w-max hover:bg-white transition-colors">Замовити</button>
+</div>
+</div>
+<!-- Side Promos -->
+<div class="flex flex-col gap-gutter">
+<div class="flex-1 rounded-[24px] overflow-hidden relative group cursor-pointer border border-white/5">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A close up, mouth watering high resolution image of two premium pizzas with melting cheese, artisan crusts, and rich toppings on a dark textured graphite slate. Warm, directional lighting creates a luxurious, appetizing mood in a modern dark dining setting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB7VZlSqFQ7n4zTaTLCyhceujE9ixecwO8c7LJlf3SvHI9_DIJXSB3wudnIMdDflf9xAYHDJ8G40sTcYKaDiiDqbNk5j1a48lhgccLCN5hPO-pP5UD-59dU2UGJKXh_8KcfS55TIXxZLgmF22tdczUfnmxp48IsL9fwehXqiw2ODIT4hUGrUL-X55a7018beO9r5fw-cETvaeh4A6dATEgokdiMWwbbjR6rG8etoKIu5yI7aqvRmN0ai18f5q-e2HFB0XIGDu7yWg8')"></div>
+<div class="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-colors"></div>
+<div class="absolute inset-0 p-6 flex flex-col justify-center items-center text-center">
+<h3 class="font-headline-md text-text-primary text-2xl mb-1">Піца 1+1</h3>
+<p class="font-body-md text-on-surface-variant">Друга піца в подарунок</p>
+</div>
+</div>
+<div class="flex-1 rounded-[24px] overflow-hidden relative group cursor-pointer border border-white/5">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A colossal, gourmet Black Angus beef burger stacked high with melted cheddar, crispy bacon, and fresh greens, dripping with savory sauce. Photographed against a matte black background with fiery red and amber neon accents highlighting the juicy textures." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD0FsF2KyP5rNY3HpKXxuPf6AYTFzurPtQart4RbZNKXgMDyEZhwReUrBrC7vBbu5r958h6lyC2789xzcarQzHEPn0_1nfG2puUmHDaX6hRBfGKnLkIKAWYBPP7ieFIqecG8I8big0wgn8XKYhlauAGTEVGw-8pyXghQxJ_z3SEw_Y1rcCtoB02KXLK7FDyMR21RLapniZ_XyhAlrrwLaEu7z9FDwA2ShG1C4c0F2QKcadX8bHSSQdShP_UpMox6CgBwk3D_JDdO8o')"></div>
+<div class="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-colors"></div>
+<div class="absolute inset-0 p-6 flex flex-col justify-center items-center text-center">
+<h3 class="font-headline-md text-text-primary text-2xl mb-1">Бургери Black Angus</h3>
+<p class="font-body-md text-on-surface-variant">Справжнє м'ясо</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- SideNavBar (Hidden on Mobile, serves as structural reference for desktop side-nav if implemented) -->
+<!-- Implementation logic dictates hiding shell elements if not direct navigation, but instruction asks to use SideNavBar from JSON for categories -->
+<!-- Using the JSON SideNavBar data to create the Sticky Category Bar as requested in prompt -->
+<div class="sticky top-20 z-40 bg-[#121214]/95 backdrop-blur-xl border-b border-white/5 py-4 w-full">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop overflow-x-auto hide-scrollbar">
+<div class="flex space-x-2 md:space-x-4 min-w-max">
+<!-- Active Category -->
+<button class="bg-primary-container text-black rounded-full px-5 py-2.5 flex items-center gap-2 font-body-md font-bold transition-all">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">outdoor_grill</span>
+                    Мангал &amp; Гриль
+                </button>
+<!-- Inactive Categories based on Prompt & JSON -->
+<button class="bg-surface-container text-on-surface-variant hover:bg-surface-variant rounded-full px-5 py-2.5 flex items-center gap-2 font-body-md font-semibold transition-all border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined text-[20px]">set_meal</span>
+                    Суші
+                </button>
+<button class="bg-surface-container text-on-surface-variant hover:bg-surface-variant rounded-full px-5 py-2.5 flex items-center gap-2 font-body-md font-semibold transition-all border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined text-[20px]">local_pizza</span>
+                    Піца
+                </button>
+<button class="bg-surface-container text-on-surface-variant hover:bg-surface-variant rounded-full px-5 py-2.5 flex items-center gap-2 font-body-md font-semibold transition-all border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined text-[20px]">lunch_dining</span>
+                    Бургери
+                </button>
+<button class="bg-surface-container text-on-surface-variant hover:bg-surface-variant rounded-full px-5 py-2.5 flex items-center gap-2 font-body-md font-semibold transition-all border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined text-[20px]">diagnosis</span>
+                    WOK
+                </button>
+<button class="bg-surface-container text-on-surface-variant hover:bg-surface-variant rounded-full px-5 py-2.5 flex items-center gap-2 font-body-md font-semibold transition-all border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined text-[20px]">soup_kitchen</span>
+                    Супи
+                </button>
+<button class="bg-surface-container text-on-surface-variant hover:bg-surface-variant rounded-full px-5 py-2.5 flex items-center gap-2 font-body-md font-semibold transition-all border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined text-[20px]">eco</span>
+                    Салати
+                </button>
+<button class="bg-surface-container text-on-surface-variant hover:bg-surface-variant rounded-full px-5 py-2.5 flex items-center gap-2 font-body-md font-semibold transition-all border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined text-[20px]">tapas</span>
+                    Закуски
+                </button>
+<button class="bg-surface-container text-on-surface-variant hover:bg-surface-variant rounded-full px-5 py-2.5 flex items-center gap-2 font-body-md font-semibold transition-all border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined text-[20px]">icecream</span>
+                    Десерти
+                </button>
+<button class="bg-surface-container text-on-surface-variant hover:bg-surface-variant rounded-full px-5 py-2.5 flex items-center gap-2 font-body-md font-semibold transition-all border border-transparent hover:border-outline-variant">
+<span class="material-symbols-outlined text-[20px]">local_bar</span>
+                    Напої
+                </button>
+</div>
+</div>
+</div>
+<main class="py-12 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop min-h-screen">
+<h2 class="font-display-lg text-headline-md text-text-primary mb-8 border-b border-white/10 pb-4">Популярні страви</h2>
+<!-- Food Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-gutter">
+<!-- Card 1 -->
+<div class="card-bg rounded-2xl overflow-hidden group flex flex-col relative transition-transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-container/10">
+<div class="relative h-[240px] w-full overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="High resolution gourmet photography of pork neck skewers (shashlik) hot off the grill. The meat is caramelized and juicy, served on a dark slate board with charred vegetables. Moody, high-contrast dark aesthetic with warm amber highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACfhoj7WhSaMUQ9Wc7lOZ8DjVJYNRHd5iizuXiJdu1sb4B-MrlcM6pRo49SfMQ811JfL4pgUO--O9ucYUO_y4IEe-zI_SL-kQ-vHEHAPbLGngNkEttV_xXQoQTbWlWbyuP0TO7u41F2NJ1RNde4cnO_51lWn9AmR-zKn4NTPBJmNOENok6vKDUZiDQMqMWyNArejgZqzOR400Kv1ifRHcUI0sSxHLNuxVZIRkt01gGfrU3jLGVhhQiVLIQpRGBKy_Qg-flnZZUnyk"/>
+<div class="absolute inset-0 card-image-gradient"></div>
+<div class="absolute top-4 left-4 bg-[#e11d48] text-white font-label-caps px-3 py-1 rounded-full font-extrabold shadow-lg">ХІТ МАНГАЛУ</div>
+<button class="absolute top-4 right-4 text-white/70 hover:text-secondary-container transition-colors p-2 bg-black/40 rounded-full backdrop-blur-sm">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="font-headline-md text-[18px] text-text-primary mb-2 line-clamp-2">Шашлик зі свинячого ошийка</h3>
+<p class="font-body-md text-text-muted text-sm mb-4">300г</p>
+<div class="mt-auto flex justify-between items-center pt-4 border-t border-white/5">
+<span class="font-price-display text-price-display text-primary-container">240 ₴</span>
+<button class="bg-surface-variant hover:bg-primary-container text-white hover:text-black w-10 h-10 rounded-full flex items-center justify-center transition-colors active:scale-90">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="card-bg rounded-2xl overflow-hidden group flex flex-col relative transition-transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-container/10">
+<div class="relative h-[240px] w-full overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Macro photography of premium Philadelphia sushi rolls with thick, glossy slices of fresh salmon. Placed on a matte black ceramic plate with a subtle reflection. Dark luxury aesthetic, dramatic overhead lighting focusing on the fresh texture of the fish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvEXr8jxok2kAFHiX7yD9EO1-w90-B5MLrfvnXevVLzECVytlLuR36IDiAuKhcF5-K5soALfPnOwiBdneMI9rpbOuggHuD9cwq6sQIVjtIFk0NT-WM5s5jhdGmPklrVlZQLNE0P9Er-he9k3BStgbPt0pcA7GyOBQVIHnoz2h8CVVkQiGkO-p4gx--s6ebNJ3g21K-v55R6YiqiYyk5CxRPs8Dl0eFunzdsx5j9C-8mWV3kd-YY5qJ3UzVQZ6PWJ_qFhdBy0R8xmQ"/>
+<div class="absolute inset-0 card-image-gradient"></div>
+<div class="absolute top-4 left-4 bg-primary-container text-black font-label-caps px-3 py-1 rounded-full font-extrabold shadow-lg">ТОП ПРОДАЖІВ</div>
+<button class="absolute top-4 right-4 text-white/70 hover:text-secondary-container transition-colors p-2 bg-black/40 rounded-full backdrop-blur-sm">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="font-headline-md text-[18px] text-text-primary mb-2 line-clamp-2">Філадельфія з лососем</h3>
+<p class="font-body-md text-text-muted text-sm mb-4">290г</p>
+<div class="mt-auto flex justify-between items-center pt-4 border-t border-white/5">
+<span class="font-price-display text-price-display text-primary-container">285 ₴</span>
+<button class="bg-surface-variant hover:bg-primary-container text-white hover:text-black w-10 h-10 rounded-full flex items-center justify-center transition-colors active:scale-90">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="card-bg rounded-2xl overflow-hidden group flex flex-col relative transition-transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-container/10">
+<div class="relative h-[240px] w-full overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A rich, meaty Bavarian style pizza with pepperoni, bacon, and sausages. Perfectly blistered crust edge, melted mozzarella strings. Photographed from a 45-degree angle on a dark wooden table in a dimly lit gourmet restaurant, accented by fiery red tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvaUkkB6Zg5cfKPCigiNLhfUdZxIz4a5AJysWOQSzM1V1N_0OduA1FTBVvxYwBBRTo0XprYWNuWmZIKCg9-F7jfJYEpthGW_AWgAb9ncxUT-ABrl_O2UnOgqq91Xub0-wemop3HLL9xIIJIKWHmpHHODor8JBzYJxAE8cLOl-hu1Xyuv6VhZnUwh-o2f5bxddyELWUM3aIeLzECcoHCciQzgqc5Kf6rhVXrZmdKKgHXgbSyrYoUsooC-pCwj13ba1FlKOMJCxYLD4"/>
+<div class="absolute inset-0 card-image-gradient"></div>
+<button class="absolute top-4 right-4 text-white/70 hover:text-secondary-container transition-colors p-2 bg-black/40 rounded-full backdrop-blur-sm">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="font-headline-md text-[18px] text-text-primary mb-2 line-clamp-2">Піца М'ясна Баварія 35см</h3>
+<p class="font-body-md text-text-muted text-sm mb-4">620г</p>
+<div class="mt-auto flex justify-between items-center pt-4 border-t border-white/5">
+<span class="font-price-display text-price-display text-primary-container">265 ₴</span>
+<button class="bg-surface-variant hover:bg-primary-container text-white hover:text-black w-10 h-10 rounded-full flex items-center justify-center transition-colors active:scale-90">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="card-bg rounded-2xl overflow-hidden group flex flex-col relative transition-transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-container/10">
+<div class="relative h-[240px] w-full overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A towering Black Angus BBQ burger featuring a thick, juicy beef patty, melting cheese, crispy onion rings, and shiny brioche bun. Placed on rustic dark metal grate. Intense, dark cinematic lighting emphasizing the appetizing textures and amber sauce drips." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrPfaVBtdVUkJkbOr_yBKWayBUhAIWb8XFHTVneDMHoGlIYy0faaA_8wamLLvyHVeDlOH0PsWiH2JICW7jkayS-DQzGnUqrO2NCQIk_8ALJ4oG9urBeub8pCh2oaIHBojpNr5EzwLbDVsDZot5VBF17m6xerGhmbRFj3krLnnRff9ht2ZrPAsHa_h4iBeXGvYb_VmqFPH_trCnvjTmmH_xsPT2EElGXgQl3PPYqLMM6UXV158FSd-0oU1fDSmJgO9pkBtVdKHeou4"/>
+<div class="absolute inset-0 card-image-gradient"></div>
+<button class="absolute top-4 right-4 text-white/70 hover:text-secondary-container transition-colors p-2 bg-black/40 rounded-full backdrop-blur-sm">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="font-headline-md text-[18px] text-text-primary mb-2 line-clamp-2">Бургер Black Angus BBQ</h3>
+<p class="font-body-md text-text-muted text-sm mb-4">420г</p>
+<div class="mt-auto flex justify-between items-center pt-4 border-t border-white/5">
+<span class="font-price-display text-price-display text-primary-container">215 ₴</span>
+<button class="bg-surface-variant hover:bg-primary-container text-white hover:text-black w-10 h-10 rounded-full flex items-center justify-center transition-colors active:scale-90">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="card-bg rounded-2xl overflow-hidden group flex flex-col relative transition-transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-container/10">
+<div class="relative h-[240px] w-full overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A steaming bowl of chicken udon noodles (WOK) with vibrant stir-fried vegetables and sesame seeds. Served in a deep, matte black ceramic bowl with dark wooden chopsticks resting on top. Shot in a dark moody style with dramatic side lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT48DYJnJKw_iPScquVQCQBwwmc3zfzcjkkQpapzDZ_S-Liu8tDWIhj5ohw9C11cOGGmZPXYg4oIXUjdB631NJbohytGLlrYJYLbKr_MMiA3irjDkXe1E74a3VNoHseO_E-_BWWvNWHCjAaoijtA_cfuvzK6ypB5dljzD2IxxWGeOUvzsCu5vkbhbs3b5nlOFrXhTZGOOB7c-IgQlW0zjTQWzOBvQsrBlfd72-oxLT2yNpqCaP6ar2m3hqfM7EF6aniwwPGPdW3uE"/>
+<div class="absolute inset-0 card-image-gradient"></div>
+<button class="absolute top-4 right-4 text-white/70 hover:text-secondary-container transition-colors p-2 bg-black/40 rounded-full backdrop-blur-sm">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<div class="p-5 flex flex-col flex-1">
+<h3 class="font-headline-md text-[18px] text-text-primary mb-2 line-clamp-2">Лапша Удон з куркою WOK</h3>
+<p class="font-body-md text-text-muted text-sm mb-4">380г</p>
+<div class="mt-auto flex justify-between items-center pt-4 border-t border-white/5">
+<span class="font-price-display text-price-display text-primary-container">175 ₴</span>
+<button class="bg-surface-variant hover:bg-primary-container text-white hover:text-black w-10 h-10 rounded-full flex items-center justify-center transition-colors active:scale-90">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Mini-Cart (Mobile primarily, but positioned for both) -->
+<div class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 w-[90%] max-w-sm">
+<div class="bg-primary-container text-black rounded-full shadow-2xl p-2 flex items-center justify-between cursor-pointer hover:bg-primary transition-colors hover:scale-[1.02] active:scale-95">
+<div class="flex items-center gap-3 pl-4">
+<div class="bg-black/10 rounded-full p-2 flex items-center justify-center">
+<span class="material-symbols-outlined text-black" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+</div>
+<div class="flex flex-col">
+<span class="font-body-md font-bold text-sm leading-tight">Кошик</span>
+<span class="font-body-md text-black/70 text-xs">3 товари</span>
+</div>
+</div>
+<div class="bg-black text-white px-6 py-3 rounded-full font-price-display text-[16px] font-bold">
+                740 ₴
+            </div>
+</div>
+</div>
+<!-- Footer (Shared Component) -->
+<footer class="bg-surface-container-lowest w-full py-12 px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter mt-24">
+<div class="col-span-1 md:col-span-1">
+<h2 class="font-display-lg text-primary text-2xl mb-4">АМБАР</h2>
+<p class="text-text-muted text-sm mb-4">Гриль &amp; Доставка у м. Запоріжжя. Смачно, швидко, з вогнем.</p>
+</div>
+<div class="col-span-1 md:col-span-2 flex flex-col md:flex-row gap-8 justify-center">
+<div class="flex flex-col gap-2">
+<a class="text-text-muted hover:text-primary font-body-md text-sm transition-colors" href="#">Про нас</a>
+<a class="text-text-muted hover:text-primary font-body-md text-sm transition-colors" href="#">Доставка та оплата</a>
+</div>
+<div class="flex flex-col gap-2">
+<a class="text-text-muted hover:text-primary font-body-md text-sm transition-colors" href="#">Акції</a>
+<a class="text-text-muted hover:text-primary font-body-md text-sm transition-colors" href="#">Контакти</a>
+<a class="text-text-muted hover:text-primary font-body-md text-sm transition-colors" href="#">Публічна оферта</a>
+</div>
+</div>
+<div class="col-span-1 flex flex-col items-start md:items-end justify-between">
+<div class="flex gap-4 mb-6">
+<a class="text-text-muted hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">phone_iphone</span></a>
+<a class="text-text-muted hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">mail</span></a>
+</div>
+<p class="font-body-md text-text-muted text-xs opacity-80 hover:opacity-100 transition-opacity">© 2024 АМБАР • Гриль &amp; Доставка. Всі права захищені.</p>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="uk"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Оформлення замовлення - АМБАР</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&amp;family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#ffb3b6",
+                      "surface-glass": "rgba(24, 24, 28, 0.8)",
+                      "primary-container": "#f59e0b",
+                      "secondary-fixed": "#ffdada",
+                      "on-secondary": "#68001a",
+                      "on-tertiary-container": "#004966",
+                      "on-primary-container": "#613b00",
+                      "surface-container-highest": "#353437",
+                      "inverse-on-surface": "#303032",
+                      "secondary": "#ffb3b6",
+                      "surface-container-lowest": "#0e0e10",
+                      "on-primary-fixed-variant": "#653e00",
+                      "on-primary-fixed": "#2a1700",
+                      "tertiary": "#8fd5ff",
+                      "on-secondary-fixed": "#40000c",
+                      "surface-dim": "#131315",
+                      "tertiary-fixed-dim": "#7fd0ff",
+                      "surface-variant": "#353437",
+                      "surface-card": "#18181c",
+                      "tertiary-container": "#1abdff",
+                      "primary-fixed-dim": "#ffb95f",
+                      "on-secondary-container": "#ffdcdc",
+                      "on-surface-variant": "#d8c3ad",
+                      "on-background": "#e5e1e4",
+                      "outline-variant": "#534434",
+                      "on-tertiary-fixed": "#001e2d",
+                      "surface": "#131315",
+                      "error-container": "#93000a",
+                      "on-primary": "#472a00",
+                      "outline": "#a08e7a",
+                      "surface-container-low": "#1b1b1d",
+                      "background": "#131315",
+                      "on-tertiary": "#00344a",
+                      "surface-tint": "#ffb95f",
+                      "inverse-primary": "#855300",
+                      "primary": "#ffc174",
+                      "on-error-container": "#ffdad6",
+                      "secondary-container": "#cc003c",
+                      "inverse-surface": "#e5e1e4",
+                      "text-primary": "#FFFFFF",
+                      "on-surface": "#e5e1e4",
+                      "surface-container": "#201f21",
+                      "primary-fixed": "#ffddb8",
+                      "error": "#ffb4ab",
+                      "surface-container-high": "#2a2a2c",
+                      "text-muted": "#9ca3af",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed-variant": "#004c6a",
+                      "on-secondary-fixed-variant": "#920028",
+                      "surface-bright": "#39393b",
+                      "tertiary-fixed": "#c5e7ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "container-max": "1280px",
+                      "margin-desktop": "40px",
+                      "gutter": "24px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "price-display": [
+                              "Montserrat"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Montserrat"
+                      ],
+                      "display-lg-mobile": [
+                              "Montserrat"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Montserrat"
+                      ]
+              },
+              "fontSize": {
+                      "price-display": [
+                              "20px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "36px",
+                              {
+                                      "lineHeight": "42px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "800"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(24, 24, 28, 0.5);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #353437;
+            border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #534434;
+        }
+      </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col pt-24 pb-20 md:pb-0">
+<!-- TopNavBar (JSON Layout + Styles) -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-md bg-surface-glass border-b border-white/10 shadow-sm flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<a class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg tracking-tighter text-primary" href="#">АМБАР • Гриль &amp; Доставка</a>
+</div>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-variant/50 transition-all duration-300 px-3 py-2 rounded-lg" href="#">Запоріжжя</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-surface-variant/50 transition-all duration-300 px-3 py-2 rounded-lg" href="#">+380 99 123 45 67</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden md:flex items-center gap-2 bg-primary-container text-on-primary-container px-6 py-2.5 rounded-full font-label-caps text-label-caps hover:bg-primary transition-colors active:scale-95">
+                Замовити стіл
+            </button>
+<button class="flex items-center gap-2 text-primary font-bold border-b-2 border-primary pb-1 active:scale-95 transition-transform hover:bg-surface-variant/50 duration-300 px-2 pt-2 rounded-t-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+<span class="hidden md:inline">Кошик (0)</span>
+</button>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors active:scale-95 hover:bg-surface-variant/50 duration-300 p-2 rounded-lg">
+<span class="material-symbols-outlined">location_on</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12">
+<div class="mb-8 md:mb-12">
+<h1 class="font-headline-md text-headline-md text-text-primary mb-2">Оформлення замовлення</h1>
+<p class="text-text-muted font-body-md">Перевірте ваші страви та вкажіть деталі доставки</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Left Column: Order Review -->
+<div class="lg:col-span-7 flex flex-col gap-6">
+<!-- Order Items Card -->
+<div class="bg-surface-card rounded-xl border border-white/5 p-6 shadow-lg">
+<h2 class="font-headline-md text-price-display text-text-primary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">restaurant_menu</span>
+                        Ваше замовлення
+                    </h2>
+<ul class="flex flex-col gap-4">
+<!-- Item 1 -->
+<li class="flex flex-col sm:flex-row gap-4 items-start sm:items-center py-4 border-b border-white/5 last:border-0 last:pb-0">
+<div class="w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-surface-container-high border border-white/5 relative">
+<img class="w-full h-full object-cover" data-alt="A close up, high quality, appetizing food photography shot of grilled pork neck skewers (shashlik) on a dark slate plate, garnished with fresh herbs and a side of white tartar sauce. Dark gourmet aesthetic, warm cinematic lighting, deep black background with soft amber accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-lvf8E_wqkuuUB0GiwHL09pTQSvt0MG9o2SOni4AOirxhupx7k7SCUhFImZodX_fpKjUsRPiOJSK_lcHl1Xd2LYiRhNi8He5dMjLKd2g8kFxsmMz8gzQDgr7QeP9AScuoAlKvpbr3Gy57aemqaJo-Ak33ArTeGHwSKAXra3c_n4Rcr57taILv8HjToYZHQ65q1zP2DcLvEylHDRiXK2aWQjvR7hxZTiRlj4bAHwx6GErL7w71gNn9axOdWM3yfVp6uztlWySpDFI"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-body-lg text-body-lg text-text-primary">Шашлик зі свинячого ошийка (300г)</h3>
+<p class="text-text-muted text-sm mt-1">+ соус тар-тар 25 ₴</p>
+</div>
+<div class="flex items-center gap-4 shrink-0 mt-4 sm:mt-0 w-full sm:w-auto justify-between sm:justify-end">
+<div class="font-price-display text-price-display text-primary">240 ₴</div>
+<div class="flex items-center bg-surface-container-highest rounded-full border border-white/10 p-1">
+<button class="w-8 h-8 flex items-center justify-center text-text-primary hover:text-primary transition-colors rounded-full hover:bg-white/5">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="w-6 text-center font-bold">1</span>
+<button class="w-8 h-8 flex items-center justify-center text-text-primary hover:text-primary transition-colors rounded-full hover:bg-white/5">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<button class="text-text-muted hover:text-error-container transition-colors p-2">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</li>
+<!-- Item 2 -->
+<li class="flex flex-col sm:flex-row gap-4 items-start sm:items-center py-4 border-b border-white/5 last:border-0 last:pb-0">
+<div class="w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-surface-container-high border border-white/5 relative">
+<img class="w-full h-full object-cover" data-alt="A top-down, high quality food photography shot of a meaty Bavarian pizza with various sausages and melted cheese on a dark rustic wooden table. Dark gourmet aesthetic, warm dramatic lighting emphasizing the textures of the meat and cheese, deep shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnjoXoH1kDgV7BwRGs22OtlzpMdeWkk_384CrpcWGMrkNd7YKq7f-8iIy37zBCRfc1uwSYuQHIKWQ3Prua7svlQ4_eHFPixz0ztDBNWMVKkaxACSJPqVCcpipTH_fBnuPfjpF6Sl1OZ5sbjlBLx2D3nZhXFXgaL3ZyCQJQcCufAbO5CYw1WN-_Vyb2u43aKh2rK433_4A00RvH18crXyTKm11MiVBSu24PMxaHQA0tRkaJq80UG-yuYccxIGQLD4mqsBfQFtOJ3Gs"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-body-lg text-body-lg text-text-primary">Піца М'ясна Баварія 35см</h3>
+<p class="text-text-muted text-sm mt-1">+ подвійний сир 35 ₴</p>
+</div>
+<div class="flex items-center gap-4 shrink-0 mt-4 sm:mt-0 w-full sm:w-auto justify-between sm:justify-end">
+<div class="font-price-display text-price-display text-primary">265 ₴</div>
+<div class="flex items-center bg-surface-container-highest rounded-full border border-white/10 p-1">
+<button class="w-8 h-8 flex items-center justify-center text-text-primary hover:text-primary transition-colors rounded-full hover:bg-white/5">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="w-6 text-center font-bold">1</span>
+<button class="w-8 h-8 flex items-center justify-center text-text-primary hover:text-primary transition-colors rounded-full hover:bg-white/5">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<button class="text-text-muted hover:text-error-container transition-colors p-2">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</li>
+<!-- Item 3 -->
+<li class="flex flex-col sm:flex-row gap-4 items-start sm:items-center py-4 border-b border-white/5 last:border-0 last:pb-0">
+<div class="w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-surface-container-high border border-white/5 relative">
+<img class="w-full h-full object-cover" data-alt="A macro, high quality food photography shot of Philadelphia sushi rolls with fresh bright orange salmon on top, resting on a dark ceramic plate. Dark gourmet aesthetic, cool rim lighting contrasting with warm ambient light, sleek modern presentation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAYrc34WYyyL5ybvnNMCshY9sidyGHE81tXnoKOTst0LBajCaMRXtG5H4ttXDZF5KHuEX48xpxbNKuIDhNSWYLVbG7lF1-vY_VciwoY9vZv_AWMBLVClqvTJalKNL6SFJgzOus7jEjlUpEniTpO92Wcnhi76dyEK5wOV1cGL08tYj4tX3bhNZ1qYJ1hNbsKiZZbJseFxJ0zS7ODL4d1dFYcFiOxq-yooaXiA_nwrdWz8zF6dhxJuwjN5df9mmNUgCLtM6TapU67Xs"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-body-lg text-body-lg text-text-primary">Філадельфія з лососем</h3>
+</div>
+<div class="flex items-center gap-4 shrink-0 mt-4 sm:mt-0 w-full sm:w-auto justify-between sm:justify-end">
+<div class="font-price-display text-price-display text-primary">285 ₴</div>
+<div class="flex items-center bg-surface-container-highest rounded-full border border-white/10 p-1">
+<button class="w-8 h-8 flex items-center justify-center text-text-primary hover:text-primary transition-colors rounded-full hover:bg-white/5">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<span class="w-6 text-center font-bold">1</span>
+<button class="w-8 h-8 flex items-center justify-center text-text-primary hover:text-primary transition-colors rounded-full hover:bg-white/5">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<button class="text-text-muted hover:text-error-container transition-colors p-2">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</li>
+</ul>
+</div>
+<!-- Utensils Toggle -->
+<div class="bg-surface-card rounded-xl border border-white/5 p-6 flex items-center justify-between shadow-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-text-muted">flatware</span>
+<span class="font-body-md text-text-primary">Безкоштовні прибори та серветки</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+<!-- Right Column: Delivery & Payment -->
+<div class="lg:col-span-5 flex flex-col gap-6">
+<!-- Delivery Form Card -->
+<div class="bg-surface-card rounded-xl border border-white/5 p-6 shadow-lg">
+<h2 class="font-headline-md text-price-display text-text-primary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">local_shipping</span>
+                        Доставка
+                    </h2>
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-label-caps text-text-muted mb-2 uppercase">Район доставки</label>
+<div class="relative">
+<select class="w-full bg-surface-container-highest border border-white/10 text-text-primary rounded-lg focus:ring-primary-container focus:border-primary-container block p-3 appearance-none">
+<option>Вознесенівський (Центр)</option>
+<option>Дніпровський / Бородінський</option>
+<option>Олександрівський</option>
+<option>Комунарський (Космос)</option>
+<option>Хортицький (Бабурка)</option>
+<option>Заводський / Шевченківський</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-text-muted">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<div>
+<label class="block text-sm font-label-caps text-text-muted mb-2 uppercase">Вулиця</label>
+<input class="w-full bg-surface-container-highest border border-white/10 text-text-primary rounded-lg focus:ring-primary-container focus:border-primary-container block p-3 placeholder-text-muted/50" placeholder="Наприклад, пр. Соборний" type="text"/>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div>
+<label class="block text-sm font-label-caps text-text-muted mb-2 uppercase truncate">Будинок</label>
+<input class="w-full bg-surface-container-highest border border-white/10 text-text-primary rounded-lg focus:ring-primary-container focus:border-primary-container block p-3" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-label-caps text-text-muted mb-2 uppercase truncate">Кв.</label>
+<input class="w-full bg-surface-container-highest border border-white/10 text-text-primary rounded-lg focus:ring-primary-container focus:border-primary-container block p-3" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-label-caps text-text-muted mb-2 uppercase truncate">Поверх</label>
+<input class="w-full bg-surface-container-highest border border-white/10 text-text-primary rounded-lg focus:ring-primary-container focus:border-primary-container block p-3" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-label-caps text-text-muted mb-2 uppercase truncate">Код</label>
+<input class="w-full bg-surface-container-highest border border-white/10 text-text-primary rounded-lg focus:ring-primary-container focus:border-primary-container block p-3" type="text"/>
+</div>
+</div>
+<div class="pt-4 border-t border-white/5">
+<label class="block text-sm font-label-caps text-text-muted mb-3 uppercase">Час доставки</label>
+<div class="grid grid-cols-2 gap-4">
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" name="delivery_time" type="radio"/>
+<div class="p-3 border border-white/10 rounded-lg text-center bg-surface-container-highest peer-checked:border-primary-container peer-checked:bg-primary-container/10 peer-checked:text-primary transition-all">
+<span class="block text-sm font-bold">Якнайшвидше</span>
+<span class="block text-xs text-text-muted mt-1">(35-45 хв)</span>
+</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="delivery_time" type="radio"/>
+<div class="p-3 border border-white/10 rounded-lg text-center bg-surface-container-highest peer-checked:border-primary-container peer-checked:bg-primary-container/10 peer-checked:text-primary transition-all flex flex-col justify-center h-full">
+<span class="block text-sm font-bold">На точний час</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Payment & Summary Card -->
+<div class="bg-surface-card rounded-xl border border-white/5 p-6 shadow-lg">
+<h2 class="font-headline-md text-price-display text-text-primary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">payments</span>
+                        Оплата
+                    </h2>
+<div class="space-y-4 mb-6">
+<label class="flex items-center gap-3 p-3 border border-white/10 rounded-lg bg-surface-container-highest cursor-pointer hover:border-primary/50 transition-colors">
+<input class="text-primary-container focus:ring-primary-container bg-surface-dim border-white/20" name="payment_method" type="radio"/>
+<span class="material-symbols-outlined text-text-muted">payments</span>
+<span class="text-sm font-bold text-text-primary">Готівкою кур'єру</span>
+</label>
+<label class="flex items-center gap-3 p-3 border border-primary-container/50 rounded-lg bg-primary-container/5 cursor-pointer">
+<input checked="" class="text-primary-container focus:ring-primary-container bg-surface-dim border-white/20" name="payment_method" type="radio"/>
+<span class="material-symbols-outlined text-primary">credit_card</span>
+<span class="text-sm font-bold text-text-primary">Карткою при отриманні</span>
+</label>
+<label class="flex items-center gap-3 p-3 border border-white/10 rounded-lg bg-surface-container-highest cursor-pointer hover:border-primary/50 transition-colors">
+<input class="text-primary-container focus:ring-primary-container bg-surface-dim border-white/20" name="payment_method" type="radio"/>
+<span class="material-symbols-outlined text-text-muted">language</span>
+<span class="text-sm font-bold text-text-primary">Онлайн оплата</span>
+</label>
+</div>
+<!-- Promo Code -->
+<div class="mb-6 relative">
+<input class="w-full bg-surface-container-highest border border-primary/30 text-text-primary rounded-lg focus:ring-primary-container focus:border-primary-container block p-3 pr-12 font-bold text-primary" readonly="" type="text" value="AMBAR10"/>
+<button class="absolute inset-y-0 right-0 px-3 flex items-center text-text-muted hover:text-error-container transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+<p class="text-xs text-primary mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Промокод застосовано (-10%)
+                        </p>
+</div>
+<!-- Summary -->
+<div class="pt-4 border-t border-white/5 space-y-3 mb-6">
+<div class="flex justify-between text-text-muted text-sm">
+<span>Сума замовлення:</span>
+<span>850 ₴</span>
+</div>
+<div class="flex justify-between text-text-muted text-sm">
+<span>Доставка:</span>
+<span class="text-tertiary">Безкоштовно</span>
+</div>
+<div class="flex justify-between text-error-container text-sm font-bold">
+<span>Знижка:</span>
+<span>-85 ₴</span>
+</div>
+<div class="flex justify-between text-text-primary font-price-display text-price-display pt-2 border-t border-white/5">
+<span>Разом до сплати:</span>
+<span class="text-primary">765 ₴</span>
+</div>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container py-4 rounded-full font-headline-md text-[18px] hover:bg-primary transition-colors active:scale-95 shadow-[0_0_20px_rgba(245,158,11,0.2)]">
+                        Підтвердити замовлення • 765 ₴
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (JSON Layout + Styles) -->
+<footer class="bg-surface-container-lowest text-on-surface-variant font-body-md w-full py-12 px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter mt-auto">
+<div class="col-span-1 md:col-span-1">
+<div class="font-display-lg-mobile md:font-display-lg text-primary mb-4 tracking-tighter">АМБАР</div>
+<p class="text-sm opacity-80">© 2024 АМБАР • Гриль &amp; Доставка. Всі права захищені.</p>
+</div>
+<div class="col-span-1 flex flex-col gap-2">
+<a class="text-text-muted hover:text-primary transition-colors" href="#">Про нас</a>
+<a class="text-text-muted hover:text-primary transition-colors" href="#">Доставка та оплата</a>
+</div>
+<div class="col-span-1 flex flex-col gap-2">
+<a class="text-text-muted hover:text-primary transition-colors" href="#">Акції</a>
+<a class="text-text-muted hover:text-primary transition-colors" href="#">Контакти</a>
+</div>
+<div class="col-span-1 flex flex-col gap-2">
+<a class="text-text-muted hover:text-primary transition-colors" href="#">Публічна оферта</a>
+</div>
+</footer>
+</body></html>

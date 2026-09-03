@@ -1,0 +1,3161 @@
+[
+  {
+    "id": "mangal-1",
+    "name": "Стейк из индейки гриль",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 289,
+    "description": "180/150/50 грамм. Стейк из индейки гриль с мексиканским гарниром( фасоль стрючковая, фасоль красная, кукуруза, броколи, морковь, перец болгарский) подается с соусом Дзадзыки",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/4 629-384x384.jpg"
+  },
+  {
+    "id": "mangal-2",
+    "name": "Стейк с индейки и яблоками на углях",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 319,
+    "description": "200/125/50 грамм. Стейк из индейки с яблоком, подается с миксом салата, томатами чери, миндальными хлопьями и сырным соусом&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/4 356-384x384.jpg"
+  },
+  {
+    "id": "mangal-3",
+    "name": "Стейк с лосося с соусом шампань",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 329,
+    "description": "150/120 грамм . Стейк с лосося,&nbsp; с мексиканским гарниром, соусом на основе шампанского со сливками, икрой тобико, украшается зеленым маслом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/4 989-384x384.jpg"
+  },
+  {
+    "id": "mangal-4",
+    "name": "Брюшки семги на мангале",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 169,
+    "description": "Выход - 230 грамм.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/3567-384x384.jpg"
+  },
+  {
+    "id": "mangal-5",
+    "name": "Рваная свинина",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 999,
+    "description": "1000/500/100 Рваная свинина, подается с морковью по-корейски, соленым помидором, картофелем,&nbsp; с соусами bbq и аджикой&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/4 260-384x384.jpg"
+  },
+  {
+    "id": "mangal-6",
+    "name": "Морской сэт на углях",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 1099,
+    "description": "730/200/200. Тигровые креветки, тунец,&nbsp; брюшки лосося на углях, окунь, помидоры черри, лимон, соус тартар.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/3533-384x384.jpg"
+  },
+  {
+    "id": "mangal-7",
+    "name": "Крылья на углях",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 189,
+    "description": "260/50 грамм. Куриные крылышки с фирменным маринадом с медом, подается с соусом кисло-сладким и лавашом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/2341-384x384.jpg"
+  },
+  {
+    "id": "mangal-8",
+    "name": "Тигровые креветки на углях",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 355,
+    "description": "120/50 . Тигровые креветки подаются с лимоном&nbsp; и соусом тартар.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/3534-384x384.jpg"
+  },
+  {
+    "id": "mangal-9",
+    "name": "Тунец на углях",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 325,
+    "description": "165/50 грамм. Тунец на углях подается с лимоном, помидором и соусом тартар",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/3535-384x384.jpg"
+  },
+  {
+    "id": "mangal-10",
+    "name": "Шашлык свиной",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 319,
+    "description": "200/50 грамм. Шашлык свиной, в фирменном маринаде подается с соусом Маскания",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/1047-384x384.jpg"
+  },
+  {
+    "id": "mangal-11",
+    "name": "Овощи гриль",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 179,
+    "description": "220 грамм. Баклажан перец болгарский, шампиньоны, помидоры",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3434-384x384.jpg"
+  },
+  {
+    "id": "mangal-12",
+    "name": "Овощное соте",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 169,
+    "description": "200 грамм. Весовое блюдо. Баклажан, кабачок, шампиньоны, помидор.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3435-384x384.jpg"
+  },
+  {
+    "id": "mangal-13",
+    "name": "Ребрышки  под соусом BBQ (весовое блюдо)",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 139,
+    "description": "Цена за 100 грамм. Весовое блюдо: выход 300-450 грамм. Свиные ребрышки на мангале под соусом BBQ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/5 296-384x384.jpg"
+  },
+  {
+    "id": "mangal-14",
+    "name": "Сковородочка с колбасками и овощами",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 189,
+    "description": "320 грамм. Картофель, охотничьи колбаски, грибы, стрючковая фасоль, болгарский перец, лук, сыр, томат, кинза, часнок",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/5 251-384x384.jpg"
+  },
+  {
+    "id": "mangal-15",
+    "name": "Стейк из куриной грудки",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 249,
+    "description": "160/100/50 Стейк из куриной грудки подается с болгарским перцем,грибами,кабачком&nbsp; и соусом свитчили",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/3425-384x384.jpg"
+  },
+  {
+    "id": "mangal-16",
+    "name": "Лаваш",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 25,
+    "description": "5 квадратиков",
+    "originalImage": "https://ambar.net.ua/image/cache/data/ НОВ/lavash-1-384x384.jpg"
+  },
+  {
+    "id": "mangal-17",
+    "name": "Вок с индейкой",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 159,
+    "description": "350 грамм. Филе индейки, лук, болгарский перец, рис, морковь, соус терияки, мирин, соевый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/5 384-384x384.png"
+  },
+  {
+    "id": "mangal-18",
+    "name": "Вок с курицей",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 154,
+    "description": "350 грамм. Куриное филе, лук, болгарский перец, рис, морковь, соус терияки, мирин, соевый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3442-384x384.jpg"
+  },
+  {
+    "id": "mangal-19",
+    "name": "Вок с лососем",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 174,
+    "description": "350 грамм. Лосось, лук, болгарский перец, рис, морковь, соус терияки, мирин, соевый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3555-384x384.jpg"
+  },
+  {
+    "id": "mangal-20",
+    "name": "Вок с морепродуктами",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 209,
+    "description": "350 грамм. Креветка, кальмар, осьминог, лук,болгарский перец , рис, морковь, соус терияки, мирин, соевый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3443-384x384.jpg"
+  },
+  {
+    "id": "mangal-21",
+    "name": "Вок со свининой",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 164,
+    "description": "350 грамм. Свиная вырезка, лук,болгарский перец , рис, морковь, соус терияки, мирин, соевый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3441-384x384.jpg"
+  },
+  {
+    "id": "mangal-22",
+    "name": "Фиш энд чипс",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 239,
+    "description": "150/100/50 грамм. Классическое блюдо английской кухни",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3427-384x384.jpg"
+  },
+  {
+    "id": "mangal-23",
+    "name": "Гриль сэт",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 1199,
+    "description": "1600/200 . Шашлык свиной,  крылья гриль, купаты на углях, ребрышки джорджия, ростбиф Hanger, картофель по-селянски",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/1610-384x384.jpg"
+  },
+  {
+    "id": "mangal-24",
+    "name": "Медальоны из телятины",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 279,
+    "description": "220 грамм.подается с картофельным пюре и сливочно-грибным соусом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/3346-384x384.jpg"
+  },
+  {
+    "id": "mangal-25",
+    "name": "Стейк  Рибай NEW",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 399,
+    "description": "160//60 грамм. стейк из толстого края говядины , подается с овощами гриль&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/2058-384x384.jpg"
+  },
+  {
+    "id": "mangal-26",
+    "name": "Ребрышки Джорджия (весовое блюдо)",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 139,
+    "description": "Цена за 100 грамм. Весовое блюдо: выход 350-400 грамм. Свиные  ребрышки, соус маскания, лаваш",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/2113-384x384.jpg"
+  },
+  {
+    "id": "mangal-27",
+    "name": "Ростбиф Hanger",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 279,
+    "description": "240 грамм. Ростбиф из телятины, с овощами гриль&nbsp; и соусом маскания",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/2903-384x384.jpg"
+  },
+  {
+    "id": "mangal-28",
+    "name": "Семга на углях",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 190,
+    "description": "Стейк из семги, с соусом тартар . Весовое блюдо, вес от 250 грамм. Цена указана за 100 грамм.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/2443-384x384.jpg"
+  },
+  {
+    "id": "mangal-29",
+    "name": "Цыпленок на углях",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 259,
+    "description": "320/100/50. Цыпленок подается с кукурузой и соусом Свит чили.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/3433-384x384.jpg"
+  },
+  {
+    "id": "mangal-30",
+    "name": "Люля-кебаб из курицы",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 149,
+    "description": "130/50 грамм Рубленое мясо&nbsp; курицы с кавказскими специями подается с&nbsp; соусом маскания и лавашом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/1118-384x384.jpg"
+  },
+  {
+    "id": "mangal-31",
+    "name": "Люля-кебаб из телятины",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 149,
+    "description": "130/50 грамм. рубленое мясо телятины подается с соусом маскания и лавашом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/2183-384x384.jpg"
+  },
+  {
+    "id": "mangal-32",
+    "name": "Скумбрия (весовое блюдо)",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 119,
+    "description": "(весовое блюдо ,цена за 100 грамм)маринованная с зеленью и лимонным соком ,жареная на углях с печеным картофелем и соусом тартар&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/1752-384x384.jpg"
+  },
+  {
+    "id": "mangal-33",
+    "name": "BEEF FILLET MEDIUM",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 359,
+    "description": "160/150/50 грамм. Стейк з телятини, обгорнутий беконом, подається&nbsp; з печеною картоплею",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/1107-384x384.jpg"
+  },
+  {
+    "id": "mangal-34",
+    "name": "Атлантические креветки",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 205,
+    "description": "150 грамм. Креветки, зелень, лист салата",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/1850-384x384.jpg"
+  },
+  {
+    "id": "mangal-35",
+    "name": "Креветки в соево-медовом соусе",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 225,
+    "description": "180 грамм. Креветки, соево-медовый соус и  зелень ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/2115-384x384.jpg"
+  },
+  {
+    "id": "mangal-36",
+    "name": "Куриные крылышки BBQ",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 189,
+    "description": "285 грамм. Куриные крылышки обжаренные в панировке в соусе BBQ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/1101-384x384.jpg"
+  },
+  {
+    "id": "mangal-37",
+    "name": "Куриные крылышки Chili",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 199,
+    "description": "285 грамм. Куриные крылышки, соус  Chili",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/1106-384x384.jpg"
+  },
+  {
+    "id": "mangal-38",
+    "name": "Куриные крылышки Баффало",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 189,
+    "description": "285 грамм. Куриные крылышки, соево-медовый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/1108-384x384.jpg"
+  },
+  {
+    "id": "mangal-39",
+    "name": "Мидии по бельгийски",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 169,
+    "description": "180 грамм. Мидии, соус соевый, бальзамический крем, сливки, лук, чеснок",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/1728-384x384.jpg"
+  },
+  {
+    "id": "mangal-40",
+    "name": "Рулька свиная",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 619,
+    "description": "1 шт/500-600 грамм. Рулька свиная, картофель по - селянски, горчица, хрен",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/1275-384x384.jpg"
+  },
+  {
+    "id": "mangal-41",
+    "name": "Стейк из свинины",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 319,
+    "description": "200/50 грамм. Стейк из свинины, соус Байрактар (томатный, слегка острый)&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/1134-384x384.jpg"
+  },
+  {
+    "id": "mangal-42",
+    "name": "Шампиньоны с соусом тартар",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 159,
+    "description": "150/50грамм. Грибы шампиньоны на мангале подается с соусом Тартар",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/1773-384x384.jpg"
+  },
+  {
+    "id": "mangal-43",
+    "name": "Бефстроганов",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 219,
+    "description": "300 грамм.&nbsp;Готовится из мелко нарезанных кусочков говядины (тонкие квадратики), в горячем сметанном соусе.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/3545-384x384.jpg"
+  },
+  {
+    "id": "mangal-44",
+    "name": "Брынза в лаваше",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 109,
+    "description": "120 грамм\\50 грамм. Брынза, зелень, помидор, лаваш с соусом тартар.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/1739-384x384.jpg"
+  },
+  {
+    "id": "mangal-45",
+    "name": "Брынза на мангале",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 159,
+    "description": "230 грамм. Маринованный сыр запеченый на мангале с  помидором ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/2061-384x384.jpg"
+  },
+  {
+    "id": "mangal-46",
+    "name": "Оссобуко",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 319,
+    "description": "260 грамм. Традиционное блюдо кухни Ломбардии, представляющее собой тушёную телячью голяшку с соусом гремолата",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/3546-384x384.jpg"
+  },
+  {
+    "id": "mangal-47",
+    "name": "Стейк Стриплойн",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 359,
+    "description": "160/50/50 . Стейк с телятины  фасоль, соус тартар",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/1132-384x384.jpg"
+  },
+  {
+    "id": "mangal-48",
+    "name": "Сковородочка Ассорти",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 199,
+    "description": "320 грамм. Картофель, свинина, филе куриное, телятина ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/1125-384x384.jpg"
+  },
+  {
+    "id": "mangal-49",
+    "name": "Сэт из крылышек",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 859,
+    "description": "1500///200грамм. Крылья, соусы: маскания ,кисло-сладкий , чили,&nbsp; и медово-горчичный,",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/1768-384x384.jpg"
+  },
+  {
+    "id": "mangal-50",
+    "name": "Сэт мясной",
+    "category": "mangal",
+    "categoryName": "Мангал & Гриль",
+    "price": 1290,
+    "description": "1600/200 Рулька свинная, ребро BBQ, оссобуко , купаты свино-говяжие ,соуса: аджика, горчица, хрен, BBQ&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/3 533-384x384.jpg"
+  },
+  {
+    "id": "pizza-1",
+    "name": "Пицца  гавайская",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 199,
+    "description": "Соус сливочный, курица, ананас, кукуруза, лук, моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/ новое/photo_2025-06-05_16-47-0007-384x384.jpg"
+  },
+  {
+    "id": "pizza-2",
+    "name": "Пицца  с рубленной курицей",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 199,
+    "description": "Соус сливочный, рубленная курица,&nbsp; шампиньоны, кунжут,&nbsp; зелень, моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/ новое/photo_2025-06-04_12-40-0003-384x384.jpg"
+  },
+  {
+    "id": "pizza-3",
+    "name": "Пицца chopped chicken &amp; tomato",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 199,
+    "description": "Соус томатный, рубленная курица, томаты черри, моцарелла,&nbsp; лук, кунжут&nbsp;&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/ новое/photo_2025-06-05_16-47-0008-384x384.jpg"
+  },
+  {
+    "id": "pizza-4",
+    "name": "Пицца с тунцом",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 219,
+    "description": "Соус томатный, тунец, помидор, маслины, лук порей, сыр моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3338-384x384.jpg"
+  },
+  {
+    "id": "pizza-5",
+    "name": "Пицца BBQ",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 239,
+    "description": "Соус BBQ, шашлык, бекон, лук, перец болгарский, грибы, сыр моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3378-384x384.jpg"
+  },
+  {
+    "id": "pizza-6",
+    "name": "Пицца с шашлыком и цукини",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 199,
+    "description": "Соус BBQ, болгарский перец, цукини, помидор, шашлык, зелень, сыр моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3447-384x384.jpg"
+  },
+  {
+    "id": "pizza-7",
+    "name": "Пицца Чизбургер",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 219,
+    "description": "Соус томатный, куриное филе, огурец соленый, помидор, лук, сыр: чеддер, пармезан и моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3563-384x384.jpg"
+  },
+  {
+    "id": "pizza-8",
+    "name": "Пицца Карбонара",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 249,
+    "description": "Соус томатный, соус \"бальзамик\", бекон, ветчина, помидор, яйцо перепелиное, базилик, сыр пармезан и моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3341-384x384.jpg"
+  },
+  {
+    "id": "pizza-9",
+    "name": "Пицца Дольче Вита",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 239,
+    "description": "Соус томатный, просол из телятины, помидор, каперсы, лук, сыр пармезан и моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3371-384x384.jpg"
+  },
+  {
+    "id": "pizza-10",
+    "name": "Пицца Салями",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 229,
+    "description": "Соус томатный, салями, болгарский перец, помидор, маслины, зелень, сыр моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3340-384x384.jpg"
+  },
+  {
+    "id": "pizza-11",
+    "name": "Пицца Цезарь",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 249,
+    "description": "Соус томатный, помидоры, бекон, куриное филе, яйцо перепелиное, сыр пармезан, сыр моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3331-384x384.jpg"
+  },
+  {
+    "id": "pizza-12",
+    "name": "Пицца 4 мяса",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 259,
+    "description": "Соус томатный, просол из телятины, курица, ветчина, бекон, соленый огурец,&nbsp; помидор, сыр пармезан, сыр моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3376-384x384.jpg"
+  },
+  {
+    "id": "pizza-13",
+    "name": "Пицца 4 сыра",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 239,
+    "description": "Соус сливочный, сыр: Радомер, пармезан, Дор Блю, моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3344-384x384.jpg"
+  },
+  {
+    "id": "pizza-14",
+    "name": "Пицца 5 сыров с грушей",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 219,
+    "description": "Соус сливочный, груша, сыр: Радомер, пармезан, Дор Блю, Бри, моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3561-384x384.jpg"
+  },
+  {
+    "id": "pizza-15",
+    "name": "Пицца Di Mare",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 279,
+    "description": "Соус томатный, кальмары, креветка коктельная, тунец, лосось, сыр моцарелла&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3337-384x384.jpg"
+  },
+  {
+    "id": "pizza-16",
+    "name": "Пицца Diablo",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 209,
+    "description": "Соус томатный, салями, перец чили, лук, грибы, помидор, сыр моцарелла (Острая)",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3335-384x384.jpg"
+  },
+  {
+    "id": "pizza-17",
+    "name": "Пицца Маргарита",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 129,
+    "description": "Соус томатный, помидор, сыр моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3385-384x384.jpg"
+  },
+  {
+    "id": "pizza-18",
+    "name": "Пицца Мексикано",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 229,
+    "description": "Соус томатный,&nbsp; салями, фасоль стрючковая, перец болгарский, ветчина, каперсы, перец чили кукуруза, зелень, сыр моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3377-384x384.jpg"
+  },
+  {
+    "id": "pizza-19",
+    "name": "Пицца Пепперони",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 209,
+    "description": "Соус томатный, колбаса пепперони, помидор, маслины, сыр моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3333-384x384.jpg"
+  },
+  {
+    "id": "pizza-20",
+    "name": "Пицца с курицей и ананасом",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 199,
+    "description": "Соус томатный, куриное филе, ананас, сыр моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3336-384x384.jpg"
+  },
+  {
+    "id": "pizza-21",
+    "name": "Пицца с курицей и грибами",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 209,
+    "description": "Соус томатный, куриное филе, грибы, помидор, сыр пармезан и моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3384-384x384.jpg"
+  },
+  {
+    "id": "pizza-22",
+    "name": "Пицца с охотничьими колбасками",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 239,
+    "description": "Соус томатный, охотничьи колбаски, салями, шашлык, помидор, соленый огурец, лук, маслины, сыр моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3339-384x384.jpg"
+  },
+  {
+    "id": "pizza-23",
+    "name": "Пицца с лососем и шпинатом",
+    "category": "pizza",
+    "categoryName": "Піца",
+    "price": 199,
+    "description": "Соус томатный и \"бальзамик\", лосось, помидор, шпинат, крем-сыр, сыр моцарелла",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3562-384x384.jpg"
+  },
+  {
+    "id": "sushi-1",
+    "name": "Ролл Айова",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 189,
+    "description": "240 гр. Лосось холодного копчения, яблоко, крем сыр, икра массаго, рис нори&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/5 381-384x384.jpg"
+  },
+  {
+    "id": "sushi-2",
+    "name": "Ролл Миссури",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 199,
+    "description": "240 гр. Креветко коктейльная, Груша, крем сыр, икра массаго, рис нори&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/5 380-384x384.jpg"
+  },
+  {
+    "id": "sushi-3",
+    "name": "Ролл Нью- Джерси",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 189,
+    "description": "240 гр. Мидия, крабовое мясо, крем сыр, икра массаго, рис нори&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/5 382-384x384.jpg"
+  },
+  {
+    "id": "sushi-4",
+    "name": "Суши сендвич спайси-краб",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 199,
+    "description": "340 г/50 гКрабовое мясо, крем сыр, огурец, икра масаго, лист салата, тостерный сыр, соус спайси, соус унаги, подается с соусом \"Спайси\"",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/5 316-384x384.jpg"
+  },
+  {
+    "id": "sushi-5",
+    "name": "Суши сендвич с тигровой креветкой",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 249,
+    "description": "320 г/50 гТигровая креветка, крем сыр, икра масаго, авокадо, тостерный сыр,&nbsp; лист салата, подается с соусом \"Сладкий Чили\"&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/5 317-384x384.jpg"
+  },
+  {
+    "id": "sushi-6",
+    "name": "Суши сендвич с лососем",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 209,
+    "description": "310 г/50 гЛосось, крем сыр, огурец, лист салата, тостерный сыр, подается с соусом \"Унаги\"",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/5 315-384x384.jpg"
+  },
+  {
+    "id": "sushi-7",
+    "name": "Суши сендвич с копченой курицей",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 149,
+    "description": "320 г/50 гКопченая курица, крем сыр, чипсы, лист салата, помидор, тостерный сыр, подается с соусом \"Японский майонез\"",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/5 314-384x384.jpg"
+  },
+  {
+    "id": "sushi-8",
+    "name": "Хенд ролл с креветкой темпура",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 259,
+    "description": "370 г/50 гТигровая креветка в кляре, крем сир ,&nbsp; тостерный сыр, лист салата, помидор, подается с соусом \"Сладкий Чили\"",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/5 311-384x384.jpg"
+  },
+  {
+    "id": "sushi-9",
+    "name": "Хенд ролл с лососем",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 219,
+    "description": "330 г/50 гЛосось, крем сыр,&nbsp; огурец, икра масаго, лист салата, подается с соусом \"Спайси\"",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/5 312-384x384.jpg"
+  },
+  {
+    "id": "sushi-10",
+    "name": "Хенд ролл с тунцом",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 209,
+    "description": "360 г/50 гТунец в панировке, крем сыр, лист салата, огурец, помидор, подается с соусом \"Японский майонез\"",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/5 313-384x384.jpg"
+  },
+  {
+    "id": "sushi-11",
+    "name": "Хенд ролл унаги",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 239,
+    "description": "330 г/50 гОкунь в соусе унаги, крем сыр, лист салата, икра масаго, авокадо, подается с соусом \"Унаги\"",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/5 310-384x384.jpg"
+  },
+  {
+    "id": "sushi-12",
+    "name": "Ролл Честер",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 209,
+    "description": "270 грамм.Тунец, сыр филадельфия, сыр дор-блю, фундук, украшается соусом Кимчи",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/4 769-384x384.jpg"
+  },
+  {
+    "id": "sushi-13",
+    "name": "Ролл Сяке-Магура",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 259,
+    "description": "290 граммТигровая креветка в кляре, сыр Филадельфия,&nbsp;&nbsp;лосось, тунец, соус сладкий чили",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/4 258-384x384.jpg"
+  },
+  {
+    "id": "sushi-14",
+    "name": "Ролл Чиз",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 169,
+    "description": "260 граммСыр филадельфия, сыр дор-блю, сыр пармезан, груша, тостерный сыр, украшается грецким орехом&nbsp;&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/4 257-384x384.jpg"
+  },
+  {
+    "id": "sushi-15",
+    "name": "Ролл Чамбо",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 279,
+    "description": "330 граммСыр филадельфия, тостерный сыр , сыр дор-блю, сыр пармезан, фундук, груша, авокадо ,украшается соусом Унаги и грецким орехом&nbsp;&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/4 792-384x384.jpg"
+  },
+  {
+    "id": "sushi-16",
+    "name": "Калифорния с лососем",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 239,
+    "description": "220 грамм. Лосось,&nbsp; рис, нори, икра тобико, японский майонез",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/2986-384x384.jpg"
+  },
+  {
+    "id": "sushi-17",
+    "name": "Филадельфия с икрой",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 339,
+    "description": "300 грамм. Лосось, икра лососевая, сыр филадельфия, рис, нори",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3246-384x384.jpg"
+  },
+  {
+    "id": "sushi-18",
+    "name": "Банзай",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 199,
+    "description": "265 грамм Рис,груша,сыр,огурец,икра красная ,кунжут&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/4 217-384x384.jpg"
+  },
+  {
+    "id": "sushi-19",
+    "name": "Дракон в кунжуте",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 169,
+    "description": "230 грамм. Креветка коктельная, авокадо, сыр филадельфия, икра тобико, кунжут,&nbsp;нори, рис",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/5096-384x384.jpg"
+  },
+  {
+    "id": "sushi-20",
+    "name": "Дракон с манго",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 179,
+    "description": "260 грамм. Манго, креветка коктельная, сыр филадельфия, авокадо, унаги соус, нори, рис",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/5093-384x384.jpg"
+  },
+  {
+    "id": "sushi-21",
+    "name": "Калифорния с тунцом",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 189,
+    "description": "220 грамм. Тунец, авокадо, огурец, японский майонез, нори, рис, икра тобико",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/2988-384x384.jpg"
+  },
+  {
+    "id": "sushi-22",
+    "name": "Кансай",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 237,
+    "description": "240 грамм.&nbsp; Креветка коктельная,крабовое мясо ,авокадо,соус унаги ,кунжут ,&nbsp; нори, рис, икра тобико",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/5097-384x384.jpg"
+  },
+  {
+    "id": "sushi-23",
+    "name": "Невада",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 239,
+    "description": "260 грамм. Лосось, креветка коктельная, авокадо,сыр филадельфия, нори, рис, икра тобико",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/5095-384x384.jpg"
+  },
+  {
+    "id": "sushi-24",
+    "name": "Ролл с креветкой и манго",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 159,
+    "description": "220 грамм. Манго, креветка коктельная, сыр филадельфия, нори, рис, икра тобико,кунжут",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/5094-384x384.jpg"
+  },
+  {
+    "id": "sushi-25",
+    "name": "Калифорния унаги",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 164,
+    "description": "220 грамм. Обжаренный окунь в соусе унаги, майонез, огурец, икра тобико",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3023-384x384.jpg"
+  },
+  {
+    "id": "sushi-26",
+    "name": "Ролл дракон с креветкой",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 279,
+    "description": "260 грамм. Тигровая креветка, авокадо, лосось, рис, нори, сыр филадельфия.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3254-384x384.jpg"
+  },
+  {
+    "id": "sushi-27",
+    "name": "Ролл Красный дракон",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 239,
+    "description": "270 грамм. Лосось, рис, нори, филадельфия, огурец, коктельная креветка.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/2970-384x384.jpg"
+  },
+  {
+    "id": "sushi-28",
+    "name": "Ролл Ниагара с копченым лососем",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 299,
+    "description": "280 грамм. Лосось холодного копчения, креветки, сыр филадельфия, чеддер, помидор",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3412-384x384.jpg"
+  },
+  {
+    "id": "sushi-29",
+    "name": "Филадельфия с копченным лососем",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 239,
+    "description": "250 грамм. Лосось холодного копчения, огурец, сыр филадельфия, рис, нори",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3411-384x384.jpg"
+  },
+  {
+    "id": "sushi-30",
+    "name": "Филадельфия с креветками и икрой",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 339,
+    "description": "260 грамм. Креветки тигровые, икра лососевая, авокадо, японский майонез, сыр филадельфия, рис, нори",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3253-384x384.jpg"
+  },
+  {
+    "id": "sushi-31",
+    "name": "Филадельфия с лососем",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 239,
+    "description": "270 грамм. Лосось, сыр филадельфия, рис, нори",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/2983-384x384.jpg"
+  },
+  {
+    "id": "sushi-32",
+    "name": "Иньянь",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 183,
+    "description": "210 грамм. Креветка коктельная, огурец, майонез, авокадо, изумидай унаги, нори, рис.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3255-384x384.jpg"
+  },
+  {
+    "id": "sushi-33",
+    "name": "Набор для суши",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 25,
+    "description": "50/30/15",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3585-384x384.jpg"
+  },
+  {
+    "id": "sushi-34",
+    "name": "Ролл Монтана с копченым лососем",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 259,
+    "description": "260 грамм. Копченый лосось,&nbsp; сыр филадельфия, снежный краб, помидор, рис",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3410-384x384.jpg"
+  },
+  {
+    "id": "sushi-35",
+    "name": "Ролл с тунцом тереяки",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 169,
+    "description": "230 грамм. Тунец тереяки, огурец, кимчи, кунжут, лист салата",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3367-384x384.jpg"
+  },
+  {
+    "id": "sushi-36",
+    "name": "Ролл с угрем в кунжуте",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 299,
+    "description": "210 грамм. Угорь, болгарский перец, кунжут, икра массаго&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3365-384x384.jpg"
+  },
+  {
+    "id": "sushi-37",
+    "name": "Ролл сырный с лососем",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 209,
+    "description": "220 грамм. Лосось, сыр чеддер, огурец, кимчи,&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3364-384x384.jpg"
+  },
+  {
+    "id": "sushi-38",
+    "name": "Ролл Сяке Фламбе",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 299,
+    "description": "250 грамм. Лосось, угорь, огурец, лист салата, спайси",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3362-384x384.jpg"
+  },
+  {
+    "id": "sushi-39",
+    "name": "Ролл Филадельфия  с угрем",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 369,
+    "description": "260 грамм. Угорь, сыр филадельфия, унаги соус, кунжут, огурец, рис, нори",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/2989-384x384.jpg"
+  },
+  {
+    "id": "sushi-40",
+    "name": "Сяке Яки",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 199,
+    "description": "230 грамм. Лосось, авокадо, сыр филадельфия, кунжут, нори, рис.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3361-384x384.jpg"
+  },
+  {
+    "id": "sushi-41",
+    "name": "Футомаки с лососем тереяки",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 159,
+    "description": "220 грамм. Лосось, огурец,&nbsp; лист салата, Спайси соус, нори, рис",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3368-384x384.jpg"
+  },
+  {
+    "id": "sushi-42",
+    "name": "Комбо ролл",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 199,
+    "description": "220 грамм. Помидор, лосось, лист салата, стружка тунца, майонез.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3400-384x384.jpg"
+  },
+  {
+    "id": "sushi-43",
+    "name": "Креольский ролл",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 199,
+    "description": "260 грамм.&nbsp; Лосось, крабовое мясо, сыр филадельфия, огурец, икра Тобико",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3404-384x384.jpg"
+  },
+  {
+    "id": "sushi-44",
+    "name": "Ролл дракон с тунцом",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 209,
+    "description": "270 грамм. Тунец, лист салата ,&nbsp; лосось , сыр филадельфия&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/2985-384x384.jpg"
+  },
+  {
+    "id": "sushi-45",
+    "name": "Ролл с угрем и лососем",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 389,
+    "description": "270 грамм.&nbsp;Лосось , сыр Филадельфия, огурец, угорь, соус Унаги, кунжут.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3403-384x384.jpg"
+  },
+  {
+    "id": "sushi-46",
+    "name": "Ролл Сальса",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 189,
+    "description": "260 грамм. Лосось, тунец, авокадо, яблоки, рис, нори, филадельфия.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3270-384x384.jpg"
+  },
+  {
+    "id": "sushi-47",
+    "name": "Футомаки с креветкой",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 159,
+    "description": "200 грамм. Коктейльная креветка,икра тобико, сыр филадельфия, рис, нори",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3258-384x384.jpg"
+  },
+  {
+    "id": "sushi-48",
+    "name": "Футомаки унаги",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 159,
+    "description": "240 грамм. Изумидай унаги, авокадо, сыр филадельфия, соус Унаги, кунжут, рис, нори",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/2997-384x384.jpg"
+  },
+  {
+    "id": "sushi-49",
+    "name": "Сяке Бонито",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 239,
+    "description": "230 грамм. Слабосоленный лосось&nbsp; , сыр филадельфия, огурец, стружка тунца, рис, нори",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/2994-384x384.jpg"
+  },
+  {
+    "id": "sushi-50",
+    "name": "Ролл сяке унаги",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 319,
+    "description": "280 грамм. Лосось, угорь, унаги соус, сыр филадельфия, мясо краба, огурец,&nbsp; кунжут, нори, рис",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/2972-384x384.jpg"
+  },
+  {
+    "id": "sushi-51",
+    "name": "Ролл Венеция",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 299,
+    "description": "240 грамм. Тигровые креветки, Лосось , икра тобико, перец болгарский,&nbsp; рис.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3374-384x384.jpg"
+  },
+  {
+    "id": "sushi-52",
+    "name": "Маки с копченным лососем",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 139,
+    "description": "120 грамм. Лосось копченный, рис, нори",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/2978-384x384.jpg"
+  },
+  {
+    "id": "sushi-53",
+    "name": "Маки с лососем",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 139,
+    "description": "120 грамм. Лосось, рис, нори",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/2976-384x384.jpg"
+  },
+  {
+    "id": "sushi-54",
+    "name": "Сэт с лососем",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 789,
+    "description": "850 грамм. 31 кусочек. Филадельфия с лососем, ролл Кентукки, маки с лососем, маки с копченным лососем, суши с лососем -3 шт.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3020-384x384.jpg"
+  },
+  {
+    "id": "sushi-55",
+    "name": "Ролл Верона",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 229,
+    "description": "260 грамм. Лосось , перец болгарский, кимчи, сыр, хиящи",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3373-384x384.jpg"
+  },
+  {
+    "id": "sushi-56",
+    "name": "Ролл Амай",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 219,
+    "description": "240 грамм.лосось ,авокадо ,сыр , икра тобико, рис, нори",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3375-384x384.jpg"
+  },
+  {
+    "id": "sushi-57",
+    "name": "Ролл хрустящий",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 149,
+    "description": "260 грамм. Рис, нори, огурец, авокадо, сыр, окунь, лосось.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3008-384x384.jpg"
+  },
+  {
+    "id": "sushi-58",
+    "name": "Футомаки с курицей",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 147,
+    "description": "220 грамм. Сыр филадельфия, копченая курица, помидор, листья салата,&nbsp;нори, рис",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3247-384x384.jpg"
+  },
+  {
+    "id": "sushi-59",
+    "name": "Зеленый дракон",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 189,
+    "description": "270 грамм. Авокадо, изумидай унаги, огурец, кунжут, рис, нори, филадельфия.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3269-384x384.jpg"
+  },
+  {
+    "id": "sushi-60",
+    "name": "Ролл Золотой Дракон",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 299,
+    "description": "260 грамм. Угорь, рис,нори,огурец,&nbsp; унаги соус,лосось,лосось",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/2971-384x384.jpg"
+  },
+  {
+    "id": "sushi-61",
+    "name": "Ролл  Нью-Йорк",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 189,
+    "description": "230 грамм. Морской окунь, икра тобико, мясо краба, нори, рис, сыр филадельфия",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3015-384x384.jpg"
+  },
+  {
+    "id": "sushi-62",
+    "name": "Кольца Кальмара",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 179,
+    "description": "150/50 грамм. Кальмары в панировке темпура с соусом тартар",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3310-384x384.jpg"
+  },
+  {
+    "id": "sushi-63",
+    "name": "Креветки Темпура",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 355,
+    "description": "150/50 грамм. Креветки Темпура подаются с соусом тартар",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3312-384x384.jpg"
+  },
+  {
+    "id": "sushi-64",
+    "name": "Сэт Гункан",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 539,
+    "description": "540 грамм.&nbsp;&nbsp;9 кусочков.&nbsp;гунканы с угрем, лососем, хияши, беконм, тунцом, креветками, копченным лососем, снежным крабом, мидиями.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3280-384x384.jpg"
+  },
+  {
+    "id": "sushi-65",
+    "name": "Ролл Токио",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 199,
+    "description": "230 грамм. Лосось крабовое мясо, изумидай унаги, рис, нори,майонез",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3304-384x384.jpg"
+  },
+  {
+    "id": "sushi-66",
+    "name": "Гункан с беконом спайси",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 37,
+    "description": "60 грамм. Бекон, соус кимчи, японский майонез, нори, рис.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3272-384x384.jpg"
+  },
+  {
+    "id": "sushi-67",
+    "name": "Гункан с копченным лососем",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 69,
+    "description": "60 грамм. Копченный лосось, нори, рис.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3275-384x384.jpg"
+  },
+  {
+    "id": "sushi-68",
+    "name": "Гункан с креветками спайси",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 59,
+    "description": "60 грамм. Креветки, соус кимчи, японский майонез, нори, рис.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3274-384x384.jpg"
+  },
+  {
+    "id": "sushi-69",
+    "name": "Гункан с лососем спайси",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 69,
+    "description": "60 грамм. Лосось, соус кимчи, японский майонез, нори, рис.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3271-384x384.jpg"
+  },
+  {
+    "id": "sushi-70",
+    "name": "Гункан с мидиями спайси",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 39,
+    "description": "60 грамм. Копченая мидия, соус кимчи, японский майонез, нори, рис.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3278-384x384.jpg"
+  },
+  {
+    "id": "sushi-71",
+    "name": "Гункан с снежным крабом спайси",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 49,
+    "description": "60 грамм. Снежный краб, соус кимчи, японский майонез, нори, рис.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3276-384x384.jpg"
+  },
+  {
+    "id": "sushi-72",
+    "name": "Гункан с тунцом спайси",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 55,
+    "description": "60 грамм. Тунец, соус кимчи, японский майонез, нори, рис.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3273-384x384.jpg"
+  },
+  {
+    "id": "sushi-73",
+    "name": "Гункан с угрем спайси",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 137,
+    "description": "60 грамм. Угорь, соус кимчи, японский майонез, нори, рис.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3277-384x384.jpg"
+  },
+  {
+    "id": "sushi-74",
+    "name": "Гункан с хияши в ореховом соусе",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 29,
+    "description": "60 грамм. Хияши, ореховый соус, кунжут, нори, рис.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3279-384x384.jpg"
+  },
+  {
+    "id": "sushi-75",
+    "name": "Ролл Индиана",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 269,
+    "description": "260 грамм. Лосось, изумидай унаги, огурец, сыр филадельфия, рис, нори",
+    "originalImage": "https://ambar.net.ua/image/no_uploads.png"
+  },
+  {
+    "id": "sushi-76",
+    "name": "Ролл Бостон",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 159,
+    "description": "230 грамм. Изумидай унаги, сыр чеддар, чипсы, сыр филадельфия, рис, нори",
+    "originalImage": "https://ambar.net.ua/image/no_uploads.png"
+  },
+  {
+    "id": "sushi-77",
+    "name": "Ролл Кентукки",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 209,
+    "description": "240 грамм. Лосось, огурец, икра тобико, японский майонез, мясо краба, нори, рис",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/2960-384x384.jpg"
+  },
+  {
+    "id": "sushi-78",
+    "name": "Маки с огурцом",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 49,
+    "description": "120 грамм. Огурец, рис, нори",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3303-384x384.jpg"
+  },
+  {
+    "id": "sushi-79",
+    "name": "Маки унаги",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 89,
+    "description": "130 грамм. Изумідай унаги, норі, унагі соус, кунжут, рис",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3262-384x384.jpg"
+  },
+  {
+    "id": "sushi-80",
+    "name": "Канадский ролл",
+    "category": "sushi",
+    "categoryName": "Суші",
+    "price": 229,
+    "description": "240 грамм. Сыр чеддер, лосось, креветки, огурец, листья салата, рис, нори,&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/roll/3252-384x384.jpg"
+  },
+  {
+    "id": "setu-1",
+    "name": "Сэт Рокфор",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 599,
+    "description": "850 грамм. 24 кусочка.&nbsp;Ролл Чиз, ролл Чамбо и ролл Честер&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/2 435-384x384.jpg"
+  },
+  {
+    "id": "setu-2",
+    "name": "Сэт Икура",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 839,
+    "description": "1,100&nbsp; кг. 38 кусочков. Филадельфия с креветкой и икрой, дракон с манго, ролл с креветкой и манго, маки с креветкой, дракон в кунжуте",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/5098-384x384.jpg"
+  },
+  {
+    "id": "setu-3",
+    "name": "Сэт Монако",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 719,
+    "description": "0,930&nbsp; кг. 32 кусочка. Кансай, Невада, Дракон в кунжуте, футомаки с креветкой",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/5099-384x384.jpg"
+  },
+  {
+    "id": "setu-4",
+    "name": "Сэт Оникс",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 555,
+    "description": "720 гр. 24 кусочков. Айова, Миссури, Нью Джерси&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/5 383-384x384.jpg"
+  },
+  {
+    "id": "setu-5",
+    "name": "Сэт Три Калифорнии",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 499,
+    "description": "0,660&nbsp; кг. 24кусочка. Калифорния унаги,&nbsp; калифорния с крабовым мясом, калифорния с лососем",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3551-384x384.jpg"
+  },
+  {
+    "id": "setu-6",
+    "name": "Сэт Фиджи",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 1059,
+    "description": "1,355&nbsp; кг. 46 кусочков. Калифорния&nbsp; с креветкой, филадельфия с лососем, маки с креветкой, футомаки с креветкой, Кансай, дракон с манго&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/5101-384x384.jpg"
+  },
+  {
+    "id": "setu-7",
+    "name": "Сэт Филадельфия",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 699,
+    "description": "820 грамм. 24 кусочка. Лосось, сыр филадельфия, огурец, нори, рис",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3038-384x384.jpg"
+  },
+  {
+    "id": "setu-8",
+    "name": "Сэт Канада с копченым лососем",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 859,
+    "description": "1 килограмм. 30 кусочов. Роллы с копченым лососем: Филадельфия, Ниагара, Монтана и маки.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3413-384x384.jpg"
+  },
+  {
+    "id": "setu-9",
+    "name": "Морской сэт на углях",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 1099,
+    "description": "730/200/200. Тигровые креветки, тунец,&nbsp; брюшки лосося на углях, окунь, помидоры черри, лимон, соус тартар.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/3533-384x384.jpg"
+  },
+  {
+    "id": "setu-10",
+    "name": "Сэт XXL",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 999,
+    "description": "Вес: 1,215 кг. Ролл Грин-стайл,&nbsp;Ролл с Угрём и лососем,&nbsp;Ролл Комбо,&nbsp;Ролл Креольский, Хокайдо",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3315-384x384.jpg"
+  },
+  {
+    "id": "setu-11",
+    "name": "Сэт Premium De Luxe",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 1666,
+    "description": "2,205 кг. 76кусочка. Филадельфия с лососем, Калифорния унаги, маки унаги, изумидай унаги, Футомаки с креветкой,Зеленый Дракон, маки с копченным лососем, ролл Дракон с тунцом, калифорния с лососем, ролл дракон с креветкой.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3329-384x384.jpg"
+  },
+  {
+    "id": "setu-12",
+    "name": "Сэт Голливуд",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 569,
+    "description": "0,82 кг. 22кусочка. Ролл Сяке темпура, ролл Хокайдо, Ролл Батакон Хотто.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3549-384x384.jpg"
+  },
+  {
+    "id": "setu-13",
+    "name": "Сэт Темпура",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 769,
+    "description": "650/100 грамм. Креветки темпура, кольца кальмара , мидии темпура, кольца лука, соус тартар",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3313-384x384.jpg"
+  },
+  {
+    "id": "setu-14",
+    "name": "Сэт Три Дракона",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 629,
+    "description": "790 грамм . 24 кусочка. Дракон с лососем, Дракон с креветкой, ролл Грин&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3550-384x384.jpg"
+  },
+  {
+    "id": "setu-15",
+    "name": "Сэт Фристайл",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 609,
+    "description": "780 грамм. 24 кусочка. Филадельфия с лососем, Ситори ролл&nbsp; , ролл Грин&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3552-384x384.jpg"
+  },
+  {
+    "id": "setu-16",
+    "name": "Маки сэт",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 519,
+    "description": "750 грамм. 36 кусочков. Маки с лососем, копченным лососем, креветками,&nbsp; окунем, огурцом, тунцом.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3034-384x384.jpg"
+  },
+  {
+    "id": "setu-17",
+    "name": "Сэт Дракон",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 919,
+    "description": "1,100 грамм. 32 кусочка. Ролл красный дракон, ролл дракон с тунцом, ролл филадельфия с угрём, Зеленый Дракон&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3016-384x384.jpg"
+  },
+  {
+    "id": "setu-18",
+    "name": "Сэт Унаги",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 639,
+    "description": "690 грамм. 24 кусочка. Филадельфия с угрем, унаги маки, суши с угрем 2 шт., футомаки унаги",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3021-384x384.jpg"
+  },
+  {
+    "id": "setu-19",
+    "name": "Сэт с лососем",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 789,
+    "description": "850 грамм. 31 кусочек. Филадельфия с лососем, ролл Кентукки, маки с лососем, маки с копченным лососем, суши с лососем -3 шт.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3020-384x384.jpg"
+  },
+  {
+    "id": "setu-20",
+    "name": "Сэт Осака",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 918,
+    "description": "1200 грамм. 40 кусочков . Сяке яки, ролл обжаренный с лососем, футомаки с лососем тереяки ,зеленый дракон , ролл с тунцом тереяки",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3369-384x384.jpg"
+  },
+  {
+    "id": "setu-21",
+    "name": "Сэт Самурай",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 999,
+    "description": "1, 120грамм. 38 кусочков. Ролл, сырный с лососем,Зеленый дракон, Калифорния с угрем, ролл с угрем в кунжуте, ролл мураками",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3370-384x384.jpg"
+  },
+  {
+    "id": "setu-22",
+    "name": "Лаки сэт",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 1029,
+    "description": "1270 грамм. 46 кусочков. Филадельфия с креветкой и икрой, филадельфия с лососем, калифорния с лососем, иньянь, маки с копченным лососем, канадский ролл.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3260-384x384.jpg"
+  },
+  {
+    "id": "setu-23",
+    "name": "Сэт Гранд",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 759,
+    "description": "1 кг . 32 кусочков. Красный дракон с лососем,Злеленый Дракон, калифорния с лососем, калифорния унаги",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3259-384x384.jpg"
+  },
+  {
+    "id": "setu-24",
+    "name": "Сэт Киото",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 1149,
+    "description": "1,370 кг. 44 кусочка. Черный дракон,&nbsp;Калифорния Краб, суши с лососем,&nbsp;Александровский&nbsp; Дракон,&nbsp;Ролл Эмми, Калифорния с лососем.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3316-384x384.jpg"
+  },
+  {
+    "id": "setu-25",
+    "name": "Сэт Микадо",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 1959,
+    "description": "2,445&nbsp; грамм. 80 кусочка. Ролл Золотой дракон,ролл Калифорния Краб, ролл Авокадосяке, ролл Голд, ролл Сакура, ролл Харумай, ролл Хидеяки, ролл Зеленый дракон, ролл красный дракон, футомаки с лососем.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3317-384x384.jpg"
+  },
+  {
+    "id": "setu-26",
+    "name": "Сэт Окинава",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 1139,
+    "description": "1300 грамм. 46 кусочков. Дракон с креветкой, футомаки с креветками, калифорния с лососем, маки с копченным лососем, филадельфия с лососем, сырный с креветкой.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3261-384x384.jpg"
+  },
+  {
+    "id": "setu-27",
+    "name": "Сэт Токио",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 2449,
+    "description": "3 кг. 100 кусочков. Феликс с тобико, Красный дракон с лососем, Черный&nbsp; Дракон, Ролл Эдем,&nbsp;Ролл Хакумай острый,&nbsp;Ролл Эмми,&nbsp;Калифорния с лососем,&nbsp;Икура нигири,&nbsp;Суши с лососем,&nbsp;Ролл с огурцом,&nbsp;Калифорния Краб,&nbsp;Ролл Сакура,&nbsp;Калифорния Краб,&nbsp;Футомаки",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3314-384x384.jpg"
+  },
+  {
+    "id": "setu-28",
+    "name": "Сэт фирменный VIP",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 2044,
+    "description": "2,325 кг. 72 кусочка. Ролл дракон с креветкой, Ролл красный дракон с лососем, Калифорния с лососем, Суши с угрем, Калифорния Краб, Александровский&nbsp; Дракон, Ролл Эмми, Черный&nbsp; Дракон, Нигири&nbsp; с лососем и красной икрой, Икура нигири",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3263-384x384.jpg"
+  },
+  {
+    "id": "setu-29",
+    "name": "Сэт Лав",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 749,
+    "description": "980 гр. 36&nbsp; кусочка&nbsp; Филадельфия с лососем, ролл с креветкой и манго, дракон с манго, маки с креветкой, маки с лососем",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/5100-384x384.jpg"
+  },
+  {
+    "id": "setu-30",
+    "name": "Summer сэт",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 553,
+    "description": "795 грамм. 34 кусочка. Ролл майами, ролл Бостон, маки с лососем, маки с огурцом, маки с тунцом.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3309-384x384.jpg"
+  },
+  {
+    "id": "setu-31",
+    "name": "Снековое плато",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 579,
+    "description": "620г/100г грам. Кальмари фрі, курячі стріпси, сирні палички, картопля фрі. соус тартар та кисло-солодкий",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3326-384x384.jpg"
+  },
+  {
+    "id": "setu-32",
+    "name": "Сэт Гункан",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 539,
+    "description": "540 грамм.&nbsp;&nbsp;9 кусочков.&nbsp;гунканы с угрем, лососем, хияши, беконм, тунцом, креветками, копченным лососем, снежным крабом, мидиями.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3280-384x384.jpg"
+  },
+  {
+    "id": "setu-33",
+    "name": "Сэт Гурман",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 599,
+    "description": "925 грамм.&nbsp;32 кусочка.&nbsp;Ролл кораловый, ролл браво, футомаки с тунцом, футомаки снежный краб",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3022-384x384.jpg"
+  },
+  {
+    "id": "setu-34",
+    "name": "Сэт Хот",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 579,
+    "description": "1 кг. 32 кусочка. Футомаки горячие: с крабовым мясом и лососем, с беконом, с мидиями, с крабовым мясом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3379-384x384.jpg"
+  },
+  {
+    "id": "setu-35",
+    "name": "Сэт Вегетарианский",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 249,
+    "description": "500 грамм.&nbsp;&nbsp;20 кусочка.&nbsp;Маки с авокадо, маки с огурцом, Весенний ролл.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3264-384x384.jpg"
+  },
+  {
+    "id": "setu-36",
+    "name": "Гриль сэт",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 1199,
+    "description": "1600/200 . Шашлык свиной,  крылья гриль, купаты на углях, ребрышки джорджия, ростбиф Hanger, картофель по-селянски",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/1610-384x384.jpg"
+  },
+  {
+    "id": "setu-37",
+    "name": "Александровский сэт",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 949,
+    "description": "1,200 кг. 36 кусочков. Филадельфия с лососем, ролл Токио, ролл Индиана, ролл Кентуки, лаки маки.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3306-384x384.jpg"
+  },
+  {
+    "id": "setu-38",
+    "name": "Сэт Cherry blossom",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 509,
+    "description": "900 грамм. 24 кусочка.&nbsp;Ролл Сяке-Магура, ролл Эдем и ролл Банзай",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/4 790-384x384.jpg"
+  },
+  {
+    "id": "setu-39",
+    "name": "Суши сэт",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 479,
+    "description": "460 грамм. 10 кусочков. Сяке нигири, унаги нигири, тай нигири, магуро нигири, эби нигири",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3037-384x384.jpg"
+  },
+  {
+    "id": "setu-40",
+    "name": "Сэт Вокруг света",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 819,
+    "description": "1370 грамм. 46 кусочков. Ролл Тайланд, ролл Техас, ролл Кентукки, Зеленый дракон , ролл Алабама, ролл Нью-Йорк",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3018-384x384.jpg"
+  },
+  {
+    "id": "setu-41",
+    "name": "Сэт Горячий",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 459,
+    "description": "1 кг. 32 кусочка. Ролл горячий с лососем, ролл горячий унаги, ролл горячий с мидиями, ролл горячий с курицей",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3017-384x384.jpg"
+  },
+  {
+    "id": "setu-42",
+    "name": "Сэт Калифорния",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 682,
+    "description": "880 грамм. 32 кусочка. Калифорния с тунцом, калифорния с мидиями, калифорния с лососем, калифорния с крабовым мясом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/3024-384x384.jpg"
+  },
+  {
+    "id": "setu-43",
+    "name": "Сэт Бонито",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 666,
+    "description": "720 грамм.&nbsp;&nbsp;24 кусочка.&nbsp;Кани бонито, сяке бонито, ролл&nbsp; Золотой дракон",
+    "originalImage": "https://ambar.net.ua/image/cache/data/set/2995-384x384.jpg"
+  },
+  {
+    "id": "setu-44",
+    "name": "Сэт из крылы��ек",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 859,
+    "description": "1500///200грамм. Крылья, соусы: маскания ,кисло-сладкий , чили,&nbsp; и медово-горчичный,",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/1768-384x384.jpg"
+  },
+  {
+    "id": "setu-45",
+    "name": "Сэт мясной",
+    "category": "setu",
+    "categoryName": "Сети суші",
+    "price": 1290,
+    "description": "1600/200 Рулька свинная, ребро BBQ, оссобуко , купаты свино-говяжие ,соуса: аджика, горчица, хрен, BBQ&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/mangal/3 533-384x384.jpg"
+  },
+  {
+    "id": "burgers-1",
+    "name": "Фиш энд чипс",
+    "category": "burgers",
+    "categoryName": "Бургери",
+    "price": 239,
+    "description": "150/100/50 грамм. Классическое блюдо английской кухни",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3427-384x384.jpg"
+  },
+  {
+    "id": "burgers-2",
+    "name": "Бургер BBQ со свининой",
+    "category": "burgers",
+    "categoryName": "Бургери",
+    "price": 219,
+    "description": "320 грамм. рваная свинина, морковка по-корейски, американская горчица, соус bbq, лук, чедр, соленый огурец",
+    "originalImage": "https://ambar.net.ua/image/cache/data/burgers/2 050-384x384.jpeg"
+  },
+  {
+    "id": "burgers-3",
+    "name": "Бургер с курицей",
+    "category": "burgers",
+    "categoryName": "Бургери",
+    "price": 204,
+    "description": "310 грамм. Филе курицы в панировке, сыр чеддер, соус медово-горчичный, микс салат, помидор, огурец соленый",
+    "originalImage": "https://ambar.net.ua/image/cache/data/burgers/2820-384x384.jpg"
+  },
+  {
+    "id": "burgers-4",
+    "name": "Grill Burger",
+    "category": "burgers",
+    "categoryName": "Бургери",
+    "price": 219,
+    "description": "310 грамм.свежий огурец ,помидор,чеддер ,салат,лук,фирменный соус,бифштекс говяжий",
+    "originalImage": "https://ambar.net.ua/image/cache/data/burgers/2906-384x384.jpg"
+  },
+  {
+    "id": "burgers-5",
+    "name": "Чизбургер",
+    "category": "burgers",
+    "categoryName": "Бургери",
+    "price": 214,
+    "description": "260 грамм. Бифштекс говяжий с беконом, маринованным огурцом, соусом Биг Тести, сыром Чеддер, салатом, луком.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/burgers/2436-384x384.jpg"
+  },
+  {
+    "id": "burgers-6",
+    "name": "Картофель по-селянски",
+    "category": "burgers",
+    "categoryName": "Бургери",
+    "price": 69,
+    "description": "200/50 грамм. Картофель жареный с&nbsp; чесночным соусом и соуcом BBQ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/1851-384x384.jpg"
+  },
+  {
+    "id": "burgers-7",
+    "name": "Картофель Техас",
+    "category": "burgers",
+    "categoryName": "Бургери",
+    "price": 129,
+    "description": "220/50 грамм. Картофель ,бекон ,сырный соус&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/3543-384x384.jpg"
+  },
+  {
+    "id": "burgers-8",
+    "name": "Картофель Фри",
+    "category": "burgers",
+    "categoryName": "Бургери",
+    "price": 89,
+    "description": "150/50 грамм. Картофель фри подается с кетчупом&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/1057-384x384.jpg"
+  },
+  {
+    "id": "burgers-9",
+    "name": "Бургер с медовым соусом",
+    "category": "burgers",
+    "categoryName": "Бургери",
+    "price": 219,
+    "description": "320 грамм. Бифштекс говяжий, бекон ,&nbsp;помидор, шампиньоны, соус медово-горчичный, сыр чеддер, салат, лук&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/burgers/2398-384x384.jpg"
+  },
+  {
+    "id": "burgers-10",
+    "name": "Бургер со свининой",
+    "category": "burgers",
+    "categoryName": "Бургери",
+    "price": 219,
+    "description": "320 грамм. Пачелос из свинины, салат , помидор, соленый огурец, соус релиш, чипс, лук",
+    "originalImage": "https://ambar.net.ua/image/cache/data/burgers/2829-384x384.jpg"
+  },
+  {
+    "id": "wok-1",
+    "name": "Мексиканский гарнир",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 99,
+    "description": "Кукуруза, красная фасоль, морковь, стручковая фасоль, болгарский перец, брокколи.&nbsp; перец чили.С заправкой из оливкового масла с соусом свит&nbsp; чили",
+    "originalImage": "https://ambar.net.ua/image/cache/data/ НОВ/IMG-9b8e0dbc0ffeb4fb9fb4c95a5469dd204-V-384x384.jpg"
+  },
+  {
+    "id": "wok-2",
+    "name": "Сковородка с лососем",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 199,
+    "description": "350 грамм. Лосось,картофель,помидор,зелень",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3576-384x384.jpg"
+  },
+  {
+    "id": "wok-3",
+    "name": "Овощи гриль",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 179,
+    "description": "220 грамм. Баклажан перец болгарский, шампиньоны, помидоры",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3434-384x384.jpg"
+  },
+  {
+    "id": "wok-4",
+    "name": "Овощное соте",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 169,
+    "description": "200 грамм. Весовое блюдо. Баклажан, кабачок, шампиньоны, помидор.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3435-384x384.jpg"
+  },
+  {
+    "id": "wok-5",
+    "name": "Сковородочка с колбасками и овощами",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 189,
+    "description": "320 грамм. Картофель, охотничьи колбаски, грибы, стрючковая фасоль, болгарский перец, лук, сыр, томат, кинза, часнок",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/5 251-384x384.jpg"
+  },
+  {
+    "id": "wok-6",
+    "name": "Пюре картофельное",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 69,
+    "description": "200грамм. Картофель, молоко, сливки,зелень",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/1059-384x384.jpg"
+  },
+  {
+    "id": "wok-7",
+    "name": "Вок с индейкой",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 159,
+    "description": "350 грамм. Филе индейки, лук, болгарский перец, рис, морковь, соус терияки, мирин, соевый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/5 384-384x384.png"
+  },
+  {
+    "id": "wok-8",
+    "name": "Вок с курицей",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 154,
+    "description": "350 грамм. Куриное филе, лук, болгарский перец, рис, морковь, соус терияки, мирин, соевый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3442-384x384.jpg"
+  },
+  {
+    "id": "wok-9",
+    "name": "Вок с лососем",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 174,
+    "description": "350 грамм. Лосось, лук, болгарский перец, рис, морковь, соус терияки, мирин, соевый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3555-384x384.jpg"
+  },
+  {
+    "id": "wok-10",
+    "name": "Вок с морепродуктами",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 209,
+    "description": "350 грамм. Креветка, кальмар, осьминог, лук,болгарский перец , рис, морковь, соус терияки, мирин, соевый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3443-384x384.jpg"
+  },
+  {
+    "id": "wok-11",
+    "name": "Вок со свининой",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 164,
+    "description": "350 грамм. Свиная вырезка, лук,болгарский перец , рис, морковь, соус терияки, мирин, соевый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3441-384x384.jpg"
+  },
+  {
+    "id": "wok-12",
+    "name": "Фиш энд чипс",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 239,
+    "description": "150/100/50 грамм. Классическое блюдо английской кухни",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3427-384x384.jpg"
+  },
+  {
+    "id": "wok-13",
+    "name": "Ризотто с креветками и кальмарами",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 229,
+    "description": "350 грамм. Ризотто с креветками и кальмарами под пармезаном и сливочным соусом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3421-384x384.jpg"
+  },
+  {
+    "id": "wok-14",
+    "name": "Ризотто с лососем",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 185,
+    "description": "350 грамм. Ризотто с лососем под пармезаном и сливочным соусом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3556-384x384.jpg"
+  },
+  {
+    "id": "wok-15",
+    "name": "Ризотто с овощами",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 159,
+    "description": "350 грамм. Ризотто с шпинатом и бейби овощами под пармезаном и соусом песто",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3420-384x384.jpg"
+  },
+  {
+    "id": "wok-16",
+    "name": "Паста Болоньез",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 199,
+    "description": "300 грамм. Классическая итальянская паста под соусом болоньез.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3418-384x384.jpg"
+  },
+  {
+    "id": "wok-17",
+    "name": "Паста Карбонара",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 189,
+    "description": "300 грамм. Класичесская итальянская паста под ароматным сливочным соусом.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3417-384x384.jpg"
+  },
+  {
+    "id": "wok-18",
+    "name": "Паста Маринара сливочная",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 225,
+    "description": "300 грамм. Паста с креветками, кальмарами и мидиями под ароматным сливочным соусом.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3415-384x384.jpg"
+  },
+  {
+    "id": "wok-19",
+    "name": "Паста Маринара томатная",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 225,
+    "description": "300 грамм. Паста с креветками, кальмарами и мидиями под ароматным томатным соусом.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3414-384x384.jpg"
+  },
+  {
+    "id": "wok-20",
+    "name": "Паста с курицей и грибами",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 189,
+    "description": "300 грамм. Паста с курицей и грибами под ароматным сливочным соусом.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3416-384x384.jpg"
+  },
+  {
+    "id": "wok-21",
+    "name": "Паста с лососем",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 209,
+    "description": "300 грамм. Классическая итальянская паста под сливочно-шпинатным соусом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3419-384x384.jpg"
+  },
+  {
+    "id": "wok-22",
+    "name": "Соба с индейкой",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 159,
+    "description": "320 грамм. Филе индейки, лук, морковь, лапша гречневая, болгарский перец&nbsp; ,соус терияки, мирин, соевый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/5 386-384x384.png"
+  },
+  {
+    "id": "wok-23",
+    "name": "Соба с курицей",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 154,
+    "description": "320 грамм. Куриное филе, лук, морковь, лапша гречневая, болгарский перец&nbsp; ,соус терияки, мирин, соевый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3064-384x384.jpg"
+  },
+  {
+    "id": "wok-24",
+    "name": "Соба со свининой",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 164,
+    "description": "320 грамм. Свиная вырезка, лук, морковь, лапша гречневая, болгарский перец , соус терияки, мирин, соевый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3067-384x384.jpg"
+  },
+  {
+    "id": "wok-25",
+    "name": "Удон с индейкой",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 159,
+    "description": "320 грамм.Филе индейки лук,болгарский перец , морковь, лапша, соус терияки, мирин, соевый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/5 385-384x384.jpeg"
+  },
+  {
+    "id": "wok-26",
+    "name": "Удон с курицей",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 154,
+    "description": "320 грамм.Лапша с куриным филе, луком, болгарским перцем, морковью с соусом терияки, мирином и соевым соусом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3063-384x384.jpg"
+  },
+  {
+    "id": "wok-27",
+    "name": "Удон со свининой",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 164,
+    "description": "320 грамм. Свиная вырезка, лук,болгарский перец , морковь, лапша, соус терияки, мирин, соевый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3066-384x384.jpg"
+  },
+  {
+    "id": "wok-28",
+    "name": "Фунчоза с индейкой",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 159,
+    "description": "320 грамм. Рисовая лапша с&nbsp; филе индейки&nbsp; , луком, болгарским перцем,&nbsp; морковью, соусом терияки, мирином и соевым соусом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/5 387-384x384.jpeg"
+  },
+  {
+    "id": "wok-29",
+    "name": "Фунчоза с курицей",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 154,
+    "description": "320 грамм. Рисовая лапша с куриным филе, луком, болгарским перцем,&nbsp; морковью, соусом терияки, мирином и соевым соусом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3065-384x384.jpg"
+  },
+  {
+    "id": "wok-30",
+    "name": "Фунчоза со свининой",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 164,
+    "description": "320 грамм. свинина, лук,болгарский перец , морковь, лапша рисовая, соус терияки, мирин, соевый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/3068-384x384.jpg"
+  },
+  {
+    "id": "wok-31",
+    "name": "Капуста тушеная",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 89,
+    "description": "200 грамм. Капуста тушеная с морковкой",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/2891-384x384.jpg"
+  },
+  {
+    "id": "wok-32",
+    "name": "Картофель по-селянски",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 69,
+    "description": "200/50 грамм. Картофель жареный с&nbsp; чесночным соусом и соуcом BBQ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/1851-384x384.jpg"
+  },
+  {
+    "id": "wok-33",
+    "name": "Картофель Техас",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 129,
+    "description": "220/50 грамм. Картофель ,бекон ,сырный соус&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/3543-384x384.jpg"
+  },
+  {
+    "id": "wok-34",
+    "name": "Картофель Фри",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 89,
+    "description": "150/50 грамм. Картофель фри подается с кетчупом&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/1057-384x384.jpg"
+  },
+  {
+    "id": "wok-35",
+    "name": "Сковородочка Ассорти",
+    "category": "wok",
+    "categoryName": "WOK & Паста",
+    "price": 199,
+    "description": "320 грамм. Картофель, свинина, филе куриное, телятина ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/past/1125-384x384.jpg"
+  },
+  {
+    "id": "supov-1",
+    "name": "Окрошка",
+    "category": "supov",
+    "categoryName": "Супи",
+    "price": 129,
+    "description": "300 грамм. Классический холодный суп на сыроватке с говядиной.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/sup/3297-384x384.jpg"
+  },
+  {
+    "id": "supov-2",
+    "name": "Том-ям",
+    "category": "supov",
+    "categoryName": "Супи",
+    "price": 269,
+    "description": "350 грамм. Классический тайский суп с тигровой креветкой, лососем, шампиньонами, луком, черри, рисом, кокосовым молоком и лаймом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/sup/3355-384x384.jpg"
+  },
+  {
+    "id": "supov-3",
+    "name": "Солянка сборная",
+    "category": "supov",
+    "categoryName": "Супи",
+    "price": 119,
+    "description": "350 грамм. Томатный суп с копченостями , курица,  говядина, с сметаной",
+    "originalImage": "https://ambar.net.ua/image/cache/data/sup/2013-384x384.jpg"
+  },
+  {
+    "id": "supov-4",
+    "name": "Чили кон карне",
+    "category": "supov",
+    "categoryName": "Супи",
+    "price": 119,
+    "description": "350 грамм. Бульон с говядиной обжаренной с луком, томатами, болгарским перцем, чесноком и фасолью.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/sup/3542-384x384.jpg"
+  },
+  {
+    "id": "supov-5",
+    "name": "Борщ украинский",
+    "category": "supov",
+    "categoryName": "Супи",
+    "price": 149,
+    "description": "400 граммПодается с сметаной, перетертым салом, луком, чесноком, острым перцем, серым хлебом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/sup/2883-384x384.jpg"
+  },
+  {
+    "id": "supov-6",
+    "name": "Куриный бульйон",
+    "category": "supov",
+    "categoryName": "Супи",
+    "price": 84,
+    "description": "350 грамм. Куриный бульон,куриное&nbsp; филе, лапша,&nbsp; перепелинное яйцо,  рубленная зелень",
+    "originalImage": "https://ambar.net.ua/image/cache/data/sup/1049-384x384.jpg"
+  },
+  {
+    "id": "supov-7",
+    "name": "Суп с фрикадельками с индейки",
+    "category": "supov",
+    "categoryName": "Супи",
+    "price": 119,
+    "description": "350 грамм Бульон с индейки с фрикадельками, морковкой и перепелиным яйцом&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/sup/5 318-384x384.jpeg"
+  },
+  {
+    "id": "salaty-1",
+    "name": "Салат из индейки и овощами",
+    "category": "salaty",
+    "categoryName": "Салати",
+    "price": 179,
+    "description": "295 грамм. Филе индейки, с томатами черри, огурцом, болгарским перцем, миксом салата, тыквенными семечками и йогуртовой заправкой",
+    "originalImage": "https://ambar.net.ua/image/cache/data/salat/4 764-384x384.jpg"
+  },
+  {
+    "id": "salaty-2",
+    "name": "Салат с хрустящими баклажанами",
+    "category": "salaty",
+    "categoryName": "Салати",
+    "price": 189,
+    "description": "250 грамм.&nbsp; Баклажаны&nbsp; в крахмале, жареные во фритюре, с томатами черри, луком, кинзой, в соусе \"свит чили\", на подушке из брынзы со сливками, подается с зеленым маслом&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/salat/4 925-384x384.jpg"
+  },
+  {
+    "id": "salaty-3",
+    "name": "Салат с морепродуктами",
+    "category": "salaty",
+    "categoryName": "Салати",
+    "price": 399,
+    "description": "190 грамм. Микс салата, черри, огурец, осьминог, гребешок, мидии, креветка, чеснок, миндальные хлопья&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/salat/4 530-384x384.jpg"
+  },
+  {
+    "id": "salaty-4",
+    "name": "Овощи гриль",
+    "category": "salaty",
+    "categoryName": "Салати",
+    "price": 179,
+    "description": "220 грамм. Баклажан перец болгарский, шампиньоны, помидоры",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3434-384x384.jpg"
+  },
+  {
+    "id": "salaty-5",
+    "name": "Овощное соте",
+    "category": "salaty",
+    "categoryName": "Салати",
+    "price": 169,
+    "description": "200 грамм. Весовое блюдо. Баклажан, кабачок, шампиньоны, помидор.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3435-384x384.jpg"
+  },
+  {
+    "id": "salaty-6",
+    "name": "Салат с грушей и прошутто",
+    "category": "salaty",
+    "categoryName": "Салати",
+    "price": 229,
+    "description": "260 грамм. Прошутто, груша, помидор, сыр Дор-Блю, микс салат,соус песто ,грецкий орех заправка цитрусовая",
+    "originalImage": "https://ambar.net.ua/image/cache/data/salat/3359-384x384.jpg"
+  },
+  {
+    "id": "salaty-7",
+    "name": "Салат Греческий",
+    "category": "salaty",
+    "categoryName": "Салати",
+    "price": 169,
+    "description": "270 грамм. Помидор, перец болгарский, огурец, сыр фета, маслины, лист салата",
+    "originalImage": "https://ambar.net.ua/image/cache/data/salat/1119-384x384.jpg"
+  },
+  {
+    "id": "salaty-8",
+    "name": "Салат Нисуаз",
+    "category": "salaty",
+    "categoryName": "Салати",
+    "price": 239,
+    "description": "210 грамм. Тунец, томаты черри, яйцо перепелиное, микс салат,маслины ,заправка медово-горчичная",
+    "originalImage": "https://ambar.net.ua/image/cache/data/salat/3389-384x384.jpg"
+  },
+  {
+    "id": "salaty-9",
+    "name": "Салат с лососем и тыквенными семечками",
+    "category": "salaty",
+    "categoryName": "Салати",
+    "price": 249,
+    "description": "180 грамм. микс салата, авокадо,тыквенные семечки ,слабосоленая семга",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3357-384x384.jpg"
+  },
+  {
+    "id": "salaty-10",
+    "name": "Салат Цезарь с креветками",
+    "category": "salaty",
+    "categoryName": "Салати",
+    "price": 279,
+    "description": "200 грамм. Креветки, томаты, пармезан, микс салат",
+    "originalImage": "https://ambar.net.ua/image/cache/data/salat/1720-384x384.jpg"
+  },
+  {
+    "id": "salaty-11",
+    "name": "Салат Цезарь с лососем",
+    "category": "salaty",
+    "categoryName": "Салати",
+    "price": 219,
+    "description": "220 грамм. Обжаренный Лосось, томаты, пармезан, микс салат",
+    "originalImage": "https://ambar.net.ua/image/cache/data/salat/3388-384x384.jpg"
+  },
+  {
+    "id": "salaty-12",
+    "name": "Салат грузинский",
+    "category": "salaty",
+    "categoryName": "Салати",
+    "price": 169,
+    "description": "250 грамм. Огурец , лук Марс, помидор, кинза , орех , перец Чили, чеснок , микрогрин&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/salat/4 845-384x384.jpeg"
+  },
+  {
+    "id": "salaty-13",
+    "name": "Салат из языка",
+    "category": "salaty",
+    "categoryName": "Салати",
+    "price": 179,
+    "description": "275 грамм. Язык говяжий,  шампиньоны,  помидор,&nbsp; свежий огурец,  лук,  майонез",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/2838-384x384.jpg"
+  },
+  {
+    "id": "salaty-14",
+    "name": "Салат Теплый с телятиной и французским соусом",
+    "category": "salaty",
+    "categoryName": "Салати",
+    "price": 209,
+    "description": "140/80/40 грамм. Телятина,  перец, помидор, микс  салата,соус маскания,огурец,лук&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/salat/1120-384x384.jpg"
+  },
+  {
+    "id": "salaty-15",
+    "name": "Салат Цезарь с курицей и беконом",
+    "category": "salaty",
+    "categoryName": "Салати",
+    "price": 189,
+    "description": "220 грамм. Филе куриное, томаты чери,  пармезан, микс салата, бекон",
+    "originalImage": "https://ambar.net.ua/image/cache/data/salat/5 242-384x384.jpeg"
+  },
+  {
+    "id": "zakuski-1",
+    "name": "Мексиканский гарнир",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 99,
+    "description": "Кукуруза, красная фасоль, морковь, стручковая фасоль, болгарский перец, брокколи.&nbsp; перец чили.С заправкой из оливкового масла с соусом свит&nbsp; чили",
+    "originalImage": "https://ambar.net.ua/image/cache/data/ НОВ/IMG-9b8e0dbc0ffeb4fb9fb4c95a5469dd204-V-384x384.jpg"
+  },
+  {
+    "id": "zakuski-2",
+    "name": "Козацкая закуска",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 25,
+    "description": "50 гр Сало",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/5 181-384x384.jpg"
+  },
+  {
+    "id": "zakuski-3",
+    "name": "Рыбка-фри",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 129,
+    "description": "230 грамм. Черноморская рыбка в панировке, обжаренная во фритюре",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/2413-384x384.jpg"
+  },
+  {
+    "id": "zakuski-4",
+    "name": "Сэт Темпура",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 769,
+    "description": "650/100 грамм. Креветки темпура, кольца кальмара , мидии темпура, кольца лука, соус тартар",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3313-384x384.jpg"
+  },
+  {
+    "id": "zakuski-5",
+    "name": "Снековое плато",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 579,
+    "description": "620г/100г грам. Кальмари фрі, курячі стріпси, сирні палички, картопля фрі. соус тартар та кисло-солодкий",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3326-384x384.jpg"
+  },
+  {
+    "id": "zakuski-6",
+    "name": "Кольца Кальмара",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 179,
+    "description": "150/50 грамм. Кальмары в панировке темпура с соусом тартар",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3310-384x384.jpg"
+  },
+  {
+    "id": "zakuski-7",
+    "name": "Креветки Темпура",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 355,
+    "description": "150/50 грамм. Креветки Темпура подаются с соусом тартар",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3312-384x384.jpg"
+  },
+  {
+    "id": "zakuski-8",
+    "name": "Мидии Темпура",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 159,
+    "description": "150/50 грамм. Мидии темпура, соус тартар",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3311-384x384.jpg"
+  },
+  {
+    "id": "zakuski-9",
+    "name": "Овощи гриль",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 179,
+    "description": "220 грамм. Баклажан перец болгарский, шампиньоны, помидоры",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3434-384x384.jpg"
+  },
+  {
+    "id": "zakuski-10",
+    "name": "Овощное соте",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 169,
+    "description": "200 грамм. Весовое блюдо. Баклажан, кабачок, шампиньоны, помидор.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3435-384x384.jpg"
+  },
+  {
+    "id": "zakuski-11",
+    "name": "Лаваш",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 25,
+    "description": "5 квадратиков",
+    "originalImage": "https://ambar.net.ua/image/cache/data/ НОВ/lavash-1-384x384.jpg"
+  },
+  {
+    "id": "zakuski-12",
+    "name": "Хлебная тарелка",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 25,
+    "description": "3 белого 3 черного кусочка&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3584-384x384.jpg"
+  },
+  {
+    "id": "zakuski-13",
+    "name": "Фиш энд чипс",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 239,
+    "description": "150/100/50 грамм. Классическое блюдо английской кухни",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3427-384x384.jpg"
+  },
+  {
+    "id": "zakuski-14",
+    "name": "Ассорти лосося",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 179,
+    "description": "100 грамм. Лосось слабосоленый, лосось холодного копчения&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/1278-384x384.jpg"
+  },
+  {
+    "id": "zakuski-15",
+    "name": "Ассорти закусок под  водку",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 379,
+    "description": "600 гр Сельдь собственного просола, сало,&nbsp; соления: капуста, помидор, огурец, лист салата, зелень,лаваш",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/2881-384x384.jpg"
+  },
+  {
+    "id": "zakuski-16",
+    "name": "Мидии по бельгийски",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 169,
+    "description": "180 грамм. Мидии, соус соевый, бальзамический крем, сливки, лук, чеснок",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/1728-384x384.jpg"
+  },
+  {
+    "id": "zakuski-17",
+    "name": "Просол из телятины",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 249,
+    "description": "200 /50грамм. Просол из телятины, гренки",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/1276-384x384.jpg"
+  },
+  {
+    "id": "zakuski-18",
+    "name": "Сырное плато",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 279,
+    "description": "200/50 грамм. Сыр бри,  дорблю, пармезан, грецкий орех, мед",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/1152-384x384.jpg"
+  },
+  {
+    "id": "zakuski-19",
+    "name": "Ушки-хрюшки",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 159,
+    "description": "150/30 грамм. Свиные ушки с французским соусом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/2045-384x384.jpg"
+  },
+  {
+    "id": "zakuski-20",
+    "name": "Ассорти из сала",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 189,
+    "description": "200/50/50грамм. Сало, зелень, помидор свежий, лист салата, бальзамический крем",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/1142-384x384.jpg"
+  },
+  {
+    "id": "zakuski-21",
+    "name": "Домашние разносолы",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 159,
+    "description": "500 грамм. Соления: капуста, помидор, огурец, грибы маринованные&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/1138-384x384.jpg"
+  },
+  {
+    "id": "zakuski-22",
+    "name": "Сельдь собственного просола",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 125,
+    "description": "200 грамм. Сельдь, лук, масло",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/2073-384x384.jpg"
+  },
+  {
+    "id": "zakuski-23",
+    "name": "Сырные наггетсы",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 159,
+    "description": "150/30 грамм. Сыр&nbsp; классический, соус кисло-сладкий",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/2905-384x384.jpg"
+  },
+  {
+    "id": "zakuski-24",
+    "name": "Сэт мясних деликатесов",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 349,
+    "description": "220 грамм. Колбаски охотничьи, махан, бастурма, прама, микс салата, помидоры черри.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/4 256-384x384.jpg"
+  },
+  {
+    "id": "zakuski-25",
+    "name": "Форшмак",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 135,
+    "description": "Форшмак из селедки подается с черным хлебом",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/4 924-384x384.jpg"
+  },
+  {
+    "id": "zakuski-26",
+    "name": "Капуста тушеная",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 89,
+    "description": "200 грамм. Капуста тушеная с морковкой",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/2891-384x384.jpg"
+  },
+  {
+    "id": "zakuski-27",
+    "name": "Картофель по-селянски",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 69,
+    "description": "200/50 грамм. Картофель жареный с&nbsp; чесночным соусом и соуcом BBQ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/1851-384x384.jpg"
+  },
+  {
+    "id": "zakuski-28",
+    "name": "Картофель Техас",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 129,
+    "description": "220/50 грамм. Картофель ,бекон ,сырный соус&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/hot/3543-384x384.jpg"
+  },
+  {
+    "id": "zakuski-29",
+    "name": "Картофель Фри",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 89,
+    "description": "150/50 грамм. Картофель фри подается с кетчупом&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/1057-384x384.jpg"
+  },
+  {
+    "id": "zakuski-30",
+    "name": "Вяленая курица",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 89,
+    "description": "50 грамм. Филе куриное вяленое",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/2421-384x384.jpg"
+  },
+  {
+    "id": "zakuski-31",
+    "name": "Вяленая свинина",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 99,
+    "description": "50 грамм. Свиная  мякоть вяленая",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/1765-384x384.jpg"
+  },
+  {
+    "id": "zakuski-32",
+    "name": "Вяленая телятина",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 119,
+    "description": "50 грамм. Вяленая телятина",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/1766-384x384.jpg"
+  },
+  {
+    "id": "zakuski-33",
+    "name": "Куриные наггетсы",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 189,
+    "description": "200/50 грамм. Куриные наггетсы с соусом тартар",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3395-384x384.jpg"
+  },
+  {
+    "id": "zakuski-34",
+    "name": "Луковые кольца",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 129,
+    "description": "150/50 грамм. Луковые кольца",
+    "originalImage": "https://ambar.net.ua/image/cache/data/zakuski/3393-384x384.jpg"
+  },
+  {
+    "id": "zakuski-35",
+    "name": "Фисташки",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 89,
+    "description": "50 грамм. Фисташки",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/1835-384x384.jpg"
+  },
+  {
+    "id": "zakuski-36",
+    "name": "Аджика",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 25,
+    "description": "50 грамм. Аджика собственного приготовления",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/1156-384x384.jpg"
+  },
+  {
+    "id": "zakuski-37",
+    "name": "Гранатовый соус",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 30,
+    "description": "50 грамм. Гранатовый соус",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/2827-384x384.jpg"
+  },
+  {
+    "id": "zakuski-38",
+    "name": "Кетчуп",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 25,
+    "description": "50 горамм. Закуска",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/1839-384x384.jpg"
+  },
+  {
+    "id": "zakuski-39",
+    "name": "Соус Барбекю BBQ",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 25,
+    "description": "50 грамм. Соус Барбекю BBQ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/1178-384x384.jpg"
+  },
+  {
+    "id": "zakuski-40",
+    "name": "Соус сырный",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 25,
+    "description": "50 грамм. Соус сырный ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/2799-384x384.jpg"
+  },
+  {
+    "id": "zakuski-41",
+    "name": "Соус тартар",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 25,
+    "description": "50 грамм. Соус тартар",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/1767-384x384.jpg"
+  },
+  {
+    "id": "zakuski-42",
+    "name": "Соус Чили",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 25,
+    "description": "50 грамм. Соус Чили",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/1177-384x384.jpg"
+  },
+  {
+    "id": "zakuski-43",
+    "name": "Соус ягодный",
+    "category": "zakuski",
+    "categoryName": "Закуски",
+    "price": 25,
+    "description": "50 грамм. Соус Кисло-сладкий ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/cold/1840-384x384.jpg"
+  },
+  {
+    "id": "deserty-1",
+    "name": "Торт муссовий",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 525,
+    "description": "700 грамм&nbsp; Декор + 100 гривен",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/5 373-384x384.jpeg"
+  },
+  {
+    "id": "deserty-2",
+    "name": "Торт муссовий",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 300,
+    "description": "400 гр.&nbsp; &nbsp;Декор + 100 гривен",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/5 373(3)-384x384.jpeg"
+  },
+  {
+    "id": "deserty-3",
+    "name": "Торт муссовый",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 300,
+    "description": "400 грамм&nbsp; Декор + 100 гривен",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/5 373(2)-384x384.jpeg"
+  },
+  {
+    "id": "deserty-4",
+    "name": "Торт муссовый",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 300,
+    "description": "400 грамм&nbsp; Декор + 100 гривен",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/5 373-384x384.jpeg"
+  },
+  {
+    "id": "deserty-5",
+    "name": "Чизкейк Дубайский шоколад",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 169,
+    "description": "150 грамм.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/5 378-384x384.jpeg"
+  },
+  {
+    "id": "deserty-6",
+    "name": "Красный бархат",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 109,
+    "description": "150 грамм",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/4 627-384x384.jpeg"
+  },
+  {
+    "id": "deserty-7",
+    "name": "Эклер",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 45,
+    "description": "",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/3577-384x384.jpg"
+  },
+  {
+    "id": "deserty-8",
+    "name": "Фисташко-малиновый торт",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 109,
+    "description": "150 грамм.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/5 340-384x384.jpg"
+  },
+  {
+    "id": "deserty-9",
+    "name": "Йогурт-персик-маракуйя торт",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 99,
+    "description": "150 грамм.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/4 358-384x384.jpg"
+  },
+  {
+    "id": "deserty-10",
+    "name": "Макаруны",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 189,
+    "description": "150 грамм&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/3541-384x384.jpg"
+  },
+  {
+    "id": "deserty-11",
+    "name": "Торт Моцарт",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 109,
+    "description": "150 грамм.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/3540-384x384.jpg"
+  },
+  {
+    "id": "deserty-12",
+    "name": "Торт Эстерхази",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 129,
+    "description": "150 грамм.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/3538-384x384.jpg"
+  },
+  {
+    "id": "deserty-13",
+    "name": "Меренговый рулет",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 99,
+    "description": "150 грамм.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/3539-384x384.jpg"
+  },
+  {
+    "id": "deserty-14",
+    "name": "Торт Сникерс",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 119,
+    "description": "150&nbsp; грамм.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/4 671-384x384.jpeg"
+  },
+  {
+    "id": "deserty-15",
+    "name": "Торт Три шоколада",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 99,
+    "description": "150 грамм.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/3456-384x384.jpg"
+  },
+  {
+    "id": "deserty-16",
+    "name": "Чизкейк клубничный",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 99,
+    "description": "150 грамм.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/3459-384x384.jpg"
+  },
+  {
+    "id": "deserty-17",
+    "name": "Чизкейк Орео",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 99,
+    "description": "150 грамм.",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/3489-384x384.jpg"
+  },
+  {
+    "id": "deserty-18",
+    "name": "Сырники",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 85,
+    "description": "150 грамм. Сырники со сметаной",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/2136-384x384.jpg"
+  },
+  {
+    "id": "deserty-19",
+    "name": "Тирамису",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 99,
+    "description": "150 грамм Сыр маскарпоне, шоколад, сливки, масло,. ликер, топинг",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/2174-384x384.jpg"
+  },
+  {
+    "id": "deserty-20",
+    "name": "Штрудель яблочный",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 139,
+    "description": "200 грамм. Фруктовый штрудель",
+    "originalImage": "https://ambar.net.ua/image/cache/data/desert/1602-384x384.jpg"
+  },
+  {
+    "id": "deserty-21",
+    "name": "Торт Предзаказ",
+    "category": "deserty",
+    "categoryName": "Десерти",
+    "price": 750,
+    "description": "1 килограмм. Минимальный заказ 2 кг",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tort/3566-384x384.jpg"
+  },
+  {
+    "id": "napitki-1",
+    "name": "Сок Rich томатный",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 220,
+    "description": "",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/1362-384x384.jpg"
+  },
+  {
+    "id": "napitki-2",
+    "name": "Пиво  Сarlsberg Non-Alcoholis",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 94,
+    "description": "0,5 л. Пиво  Сarlsberg Non-Alcoholis ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/2928-384x384.jpg"
+  },
+  {
+    "id": "napitki-3",
+    "name": "Пиво Corona Extra 0,33л.",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 129,
+    "description": "0,33 л. Пиво Corona Extra ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/1920-384x384.jpg"
+  },
+  {
+    "id": "napitki-4",
+    "name": "Пиво Pilsner Craft",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 80,
+    "description": "0,5 л. Пиво Pilsner Craft (4.0) светлое, фильтрованное, с легкой горчинкой",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/2260-384x384.jpg"
+  },
+  {
+    "id": "napitki-5",
+    "name": "Пиво Ополье Жигулевское",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 74,
+    "description": "0,5 л. Пиво Ополье Жигулевское  ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/2583-384x384.jpg"
+  },
+  {
+    "id": "napitki-6",
+    "name": "Пиво Ополье кеговое",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 70,
+    "description": "Светлое фильтрованное (4.3) легкое, без горчинки, мягкое&nbsp;",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/2926-384x384.jpg"
+  },
+  {
+    "id": "napitki-7",
+    "name": "Пиво Ополье Классическое",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 74,
+    "description": "0,5 л. Пиво Ополье Классическое ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/2567-384x384.jpg"
+  },
+  {
+    "id": "napitki-8",
+    "name": "Пиво Ополье Корифей",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 74,
+    "description": "0,5 л.Пиво Ополье Корифей  ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/2570-384x384.jpg"
+  },
+  {
+    "id": "napitki-9",
+    "name": "Водка Немироф Оригинал",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 250,
+    "description": "500 грамм. Водка Немироф Оригинал",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/3553-384x384.jpg"
+  },
+  {
+    "id": "napitki-10",
+    "name": "Водка Финляндия",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 500,
+    "description": "500 грамм. Водка Финляндия",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/1815-384x384.jpg"
+  },
+  {
+    "id": "napitki-11",
+    "name": "Кока-кола 0.500",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 70,
+    "description": "",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/1987-384x384.jpg"
+  },
+  {
+    "id": "napitki-12",
+    "name": "Коньяк 3* Ужгород",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 470,
+    "description": "0,500.Коньяк 3* Ужгород",
+    "originalImage": "https://ambar.net.ua/image/cache/data/ новое/59246.970-384x384.jpg"
+  },
+  {
+    "id": "napitki-13",
+    "name": "Коньяк 4* Закарпатский",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 550,
+    "description": "0,500. Коньяк 4* Закарпатский ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/1854-384x384.jpg"
+  },
+  {
+    "id": "napitki-14",
+    "name": "Коньяк 5* Старый  Кахети",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 550,
+    "description": "0.5л. Коньяк 5*Стар. Кахети ",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/1857-384x384.jpg"
+  },
+  {
+    "id": "napitki-15",
+    "name": "Сок Rich Ананасовый",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 220,
+    "description": "",
+    "originalImage": "https://ambar.net.ua/image/cache/data/sok-ananasovyy-1l-rich0-middle-size-384x384.jpg"
+  },
+  {
+    "id": "napitki-16",
+    "name": "Сок Rich апельсиновый",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 220,
+    "description": "",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/1360-384x384.jpg"
+  },
+  {
+    "id": "napitki-17",
+    "name": "Сок Rich вишня нектар",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 220,
+    "description": "",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/1213-384x384.jpg"
+  },
+  {
+    "id": "napitki-18",
+    "name": "Сок Rich гранат нектар",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 220,
+    "description": "",
+    "originalImage": "https://ambar.net.ua/image/cache/data/46bbd330-11fb-11eb-8d8d-058a4e66246a.jpg-384x384.jpg"
+  },
+  {
+    "id": "napitki-19",
+    "name": "Сок Rich экзотик",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 220,
+    "description": "",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/1358-384x384.jpg"
+  },
+  {
+    "id": "napitki-20",
+    "name": "Сок Rich яблочный",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 220,
+    "description": "",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/1359-384x384.jpg"
+  },
+  {
+    "id": "napitki-21",
+    "name": "Спрайт 0.500",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 70,
+    "description": "",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/1991-384x384.jpg"
+  },
+  {
+    "id": "napitki-22",
+    "name": "Фанта апельсин 0.500",
+    "category": "napitki",
+    "categoryName": "Напої",
+    "price": 70,
+    "description": "",
+    "originalImage": "https://ambar.net.ua/image/cache/data/tovar/1989-384x384.jpg"
+  }
+]

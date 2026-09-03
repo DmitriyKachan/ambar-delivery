@@ -1,0 +1,226 @@
+/* ==========================================================================
+   AMBAR GASTRO CAFE & DELIVERY — DESIGN SYSTEM: OBSIDIAN & AMBER
+   Visual Movement: Modern Dark Gourmet & Craft Grill
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg-base: #121214;
+  --bg-card: #18181c;
+  --bg-card-hover: #202026;
+  --bg-surface-elevated: #24242c;
+  --bg-glass: rgba(24, 24, 28, 0.85);
+  
+  --primary-amber: #f59e0b;
+  --primary-amber-hover: #d97706;
+  --primary-amber-glow: rgba(245, 158, 11, 0.35);
+
+  --accent-fiery: #e11d48;
+  --accent-fiery-hover: #be123c;
+  --accent-fiery-glow: rgba(225, 29, 72, 0.35);
+
+  --text-primary: #ffffff;
+  --text-secondary: #e5e1e4;
+  --text-muted: #9ca3af;
+  --text-dim: #6b7280;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-amber: rgba(245, 158, 11, 0.35);
+  --border-focus: #f59e0b;
+
+  --radius-card: 20px;
+  --radius-button: 9999px;
+  --radius-input: 16px;
+}
+
+/* Base Body Styles */
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Glassmorphism Classes */
+.glass-header {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.glass-panel {
+  background: var(--bg-glass);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-subtle);
+}
+
+/* Cards & Surfaces */
+.food-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.food-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(245, 158, 11, 0.3);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6), 0 0 20px -4px var(--primary-amber-glow);
+}
+
+.food-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-top-left-radius: var(--radius-card);
+  border-top-right-radius: var(--radius-card);
+}
+
+.food-image-gradient {
+  background: linear-gradient(to top, rgba(24, 24, 28, 0.5) 0%, transparent 25%);
+}
+
+/* Amber Glow & Interactive States */
+.amber-glow:focus-within {
+  border-color: var(--primary-amber);
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.25);
+}
+
+.btn-amber {
+  background-color: var(--primary-amber);
+  color: #000000;
+  font-weight: 700;
+  border-radius: var(--radius-button);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-amber:hover {
+  background-color: #fbbf24;
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px -4px var(--primary-amber-glow);
+}
+
+.btn-amber:active {
+  transform: scale(0.97);
+}
+
+.btn-fiery {
+  background-color: var(--accent-fiery);
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: var(--radius-button);
+  transition: all 0.2s ease;
+}
+
+.btn-fiery:hover {
+  background-color: var(--accent-fiery-hover);
+  box-shadow: 0 8px 24px -4px var(--accent-fiery-glow);
+}
+
+/* Category Pills */
+.category-pill {
+  transition: all 0.2s ease;
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-card);
+  color: var(--text-muted);
+}
+
+.category-pill:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-primary);
+  background-color: var(--bg-surface-elevated);
+}
+
+.category-pill.active {
+  background-color: var(--primary-amber);
+  color: #000000;
+  border-color: var(--primary-amber);
+  font-weight: 700;
+  box-shadow: 0 4px 16px -2px var(--primary-amber-glow);
+}
+
+/* Sauce Chips & Option Selectors */
+.sauce-chip {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--border-subtle);
+  background-color: #202026;
+  color: #d1d5db;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.sauce-chip:hover {
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.sauce-chip.active {
+  background-color: #f59e0b !important;
+  color: #000000 !important;
+  border-color: #f59e0b !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 14px -2px rgba(245, 158, 11, 0.5);
+  transform: scale(1.03);
+}
+
+/* Interactive Radio & Checkbox Card Highlighting */
+label:has(input[type="radio"]:checked),
+label:has(input[type="checkbox"]:checked) {
+  border-color: var(--primary-amber) !important;
+  background-color: rgba(245, 158, 11, 0.14) !important;
+  box-shadow: 0 0 0 1.5px var(--primary-amber) !important;
+  color: #ffffff !important;
+}
+
+label:has(input[type="radio"]:checked) span,
+label:has(input[type="checkbox"]:checked) span {
+  color: #ffffff !important;
+}
+
+/* Hide Scrollbars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom Modal Animation */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-enter {
+  animation: fadeInScale 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Grill Embers Pulse */
+@keyframes embersPulse {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(225, 29, 72, 0.8));
+  }
+}
+
+.animate-embers {
+  animation: embersPulse 2.5s infinite ease-in-out;
+}

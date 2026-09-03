@@ -1,0 +1,40 @@
+# OS metadata
+.DS_Store
+*.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Environment variables & secrets
+.env
+.env.*
+*.env
+*.key
+*.pem
+*.cert
+*.pfx
+*.p12
+id_rsa
+id_ecdsa
+id_ed25519
+
+# Logs & temporary files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.temp
+.tmp
+
+# Editor & IDE configs
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Node modules & build artifacts (if used in future)
+node_modules/
+dist/
+.cache/

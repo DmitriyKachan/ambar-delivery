@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="uk" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>АМБАР — Ресторан & Гриль | Доставка їжі в Запоріжжі</title>
+  <meta name="description" content="Повне оновлене меню кафе «Амбар» у Запоріжжі: 351 страва. Справжній мангал на вугіллі, соковиті бургери Black Angus, неаполітанська піца та свіжі суші." />
+  
+  <!-- Політика безпеки та захисту даних -->
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+
+  <!-- Фавіконки ресторану «Амбар» для вкладки браузера -->
+  <link rel="icon" type="image/png" href="assets/original_logo_sq.png" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="assets/original_logo_sq.png" />
+  
+  <!-- Шрифти Google: Montserrat та Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  
+  <!-- Іконки Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary-amber": "#f59e0b",
+            "accent-fiery": "#e11d48",
+            "surface-base": "#121214",
+            "surface-card": "#18181c",
+            "surface-elevated": "#222228"
+          },
+          fontFamily: {
+            "sans": ["Inter", "sans-serif"],
+            "heading": ["Montserrat", "sans-serif"]
+          },
+          maxWidth: {
+            "container-max": "1280px"
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="bg-[#121214] text-white antialiased min-h-screen flex flex-col selection:bg-[#f59e0b] selection:text-black">
+
+  <!-- ========================================================================= -->
+  <!-- 1. ШАПКА САЙТУ (GLASS HEADER)                                             -->
+  <!-- ========================================================================= -->
+  <header class="glass-header fixed top-0 inset-x-0 z-50 h-20 transition-all">
+    <div class="max-w-container-max mx-auto h-full px-4 sm:px-8 flex items-center justify-between gap-4">
+      
+      <!-- Логотип бренду (Оригінальний логотип Амбар) -->
+      <a href="#" onclick="setCategory('all'); return false;" class="flex items-center gap-3 group shrink-0">
+        <img 
+          src="assets/original_logo.png" 
+          alt="АМБАР — Кафе та Доставка їжі" 
+          class="h-9 sm:h-11 w-auto object-contain brightness-0 invert opacity-95 group-hover:opacity-100 group-hover:scale-105 transition-all"
+        />
+        <div class="hidden xl:flex flex-col border-l border-white/15 pl-3 leading-tight whitespace-nowrap">
+          <span class="text-xs font-bold text-white tracking-wider uppercase">Кафе & Гриль</span>
+          <span class="text-[10px] text-gray-400 font-medium tracking-wider uppercase">Доставка в Запоріжжі</span>
+        </div>
+      </a>
+
+      <!-- Центральна плашка: адреса ресторану та контакти кафе «Амбар» (ідеально відцентрована) -->
+      <div class="hidden lg:flex items-center gap-2.5 xl:gap-3 bg-[#1e1e24] px-4 py-2 rounded-full border border-white/10 text-xs shadow-sm mx-auto shrink-0">
+        <!-- Місто та адреса -->
+        <div class="flex items-center gap-1.5 text-white whitespace-nowrap">
+          <span class="material-symbols-outlined text-sm text-[#f59e0b]">location_on</span>
+          <span class="font-bold">м. Запоріжжя</span>
+          <span class="text-white/20">•</span>
+          <span class="text-gray-300 font-medium">вул. Олександрівська, 88</span>
+        </div>
+
+        <span class="text-white/20">|</span>
+
+        <!-- Номери телефонів -->
+        <div class="flex items-center gap-2 whitespace-nowrap">
+          <a href="tel:+380676130088" class="hover:text-[#f59e0b] transition-colors flex items-center gap-1 font-bold text-white whitespace-nowrap">
+            <span class="material-symbols-outlined text-sm text-[#f59e0b]">phone_iphone</span>
+            <span>067 613-00-88</span>
+          </a>
+          <span class="hidden 2xl:inline text-white/20">|</span>
+          <a href="tel:+380507021888" class="hidden 2xl:inline hover:text-[#f59e0b] transition-colors font-bold text-gray-300 hover:text-white whitespace-nowrap">
+            <span>050 70-21-888</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Висувний пошуковий рядок у шапці (відкривається при кліку на іконку) -->
+      <div id="header-search-expanded" class="hidden absolute inset-x-3 sm:inset-x-6 top-2.5 bottom-2.5 bg-[#18181c] rounded-full border border-[#f59e0b] shadow-2xl z-30 flex items-center px-4 gap-3 modal-enter">
+        <span class="material-symbols-outlined text-[#f59e0b] text-xl shrink-0">search</span>
+        <input 
+          id="header-search-field" 
+          type="text" 
+          placeholder="Пошук піци, суші, шашлику, стейків..." 
+          class="flex-1 bg-transparent text-xs sm:text-sm text-white focus:outline-none placeholder-gray-400"
+          oninput="handleSearch(this.value)"
+        />
+        <button onclick="clearAndCloseHeaderSearch()" class="w-7 h-7 rounded-full bg-[#24242c] hover:bg-white/10 text-gray-400 hover:text-white flex items-center justify-center transition-colors shrink-0" title="Закрити пошук (Esc)">
+          <span class="material-symbols-outlined text-base">close</span>
+        </button>
+      </div>
+
+      <!-- Кнопки дій -->
+      <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+        
+        <!-- Кнопка пошуку (іконка) -->
+        <button 
+          id="header-search-btn"
+          onclick="openHeaderSearch()" 
+          class="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 hover:border-[#f59e0b] bg-[#1e1e24] text-gray-200 hover:text-[#f59e0b] transition-all active:scale-95 shadow-sm cursor-pointer"
+          title="Пошук страв"
+          aria-label="Пошук страв"
+        >
+          <span class="material-symbols-outlined text-lg">search</span>
+        </button>
+
+        <!-- Кнопка Улюблені страви (інтуїтивна іконка з бейджем) -->
+        <button 
+          id="header-fav-btn"
+          onclick="toggleFavoritesView()" 
+          class="relative flex items-center justify-center w-10 h-10 rounded-full border border-white/10 hover:border-[#f59e0b] bg-[#1e1e24] text-[#f59e0b] hover:text-[#fbbf24] transition-all active:scale-95 shadow-sm cursor-pointer"
+          title="Улюблені страви"
+          aria-label="Улюблені страви"
+        >
+          <span class="material-symbols-outlined text-lg text-[#f59e0b]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+          <span id="fav-badge-count" class="hidden absolute -top-1 -right-1 bg-[#f59e0b] text-black text-[10px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center border-2 border-[#121216]">0</span>
+        </button>
+
+        <!-- Кнопка Особистий кабінет (інтуїтивна іконка з індикатором) -->
+        <button 
+          id="header-cabinet-btn"
+          onclick="openCabinetModal()" 
+          class="relative flex items-center justify-center w-10 h-10 rounded-full border border-white/10 hover:border-[#f59e0b] bg-[#1e1e24] text-gray-200 hover:text-white transition-all active:scale-95 shadow-sm cursor-pointer"
+          title="Особистий кабінет"
+          aria-label="Особистий кабінет"
+        >
+          <span class="material-symbols-outlined text-xl text-[#f59e0b]">account_circle</span>
+          <span id="cabinet-badge-dot" class="hidden absolute top-0.5 right-0.5 w-2.5 h-2.5 rounded-full bg-[#f59e0b] border-2 border-[#121216]"></span>
+          <span id="header-cabinet-label" class="sr-only">Кабінет</span>
+        </button>
+
+        <!-- Замовити стіл (адаптивна кнопка) -->
+        <button 
+          onclick="openTableBookingModal()" 
+          class="flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-full border border-[#f59e0b]/60 hover:border-[#f59e0b] text-[#f59e0b] hover:bg-[#f59e0b] hover:text-black font-heading text-xs font-bold transition-all active:scale-95 shadow-sm whitespace-nowrap cursor-pointer"
+          title="Забронювати стіл"
+        >
+          <span class="material-symbols-outlined text-base">restaurant</span>
+          <span class="hidden xl:inline">Замовити стіл</span>
+        </button>
+
+        <!-- Кнопка кошика -->
+        <button 
+          onclick="openCartDrawer()" 
+          class="relative flex items-center gap-2 px-4 py-2 rounded-full btn-amber text-xs font-bold shadow-lg whitespace-nowrap cursor-pointer"
+          aria-label="Відкрити кошик"
+        >
+          <span class="material-symbols-outlined text-lg">shopping_bag</span>
+          <span>Кошик</span>
+          <span class="cart-badge-count hidden bg-black text-[#f59e0b] text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+        </button>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 2. ОСНОВНИЙ ВМІСТ                                                         -->
+  <!-- ========================================================================= -->
+  <main class="flex-1 max-w-container-max mx-auto px-4 sm:px-8 pt-24 pb-32 w-full space-y-10">
+
+    <!-- Бейдж статусу доставки -->
+    <section class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#18181c] border border-white/10 text-xs shadow-md">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="text-gray-300 font-medium">Швидка доставка по Запоріжжю:</span>
+        <span class="font-bold text-[#f59e0b]">35–45 хвилин</span>
+        <span class="text-gray-600">•</span>
+        <span class="text-emerald-400 font-bold">Безкоштовно від 400 ₴</span>
+      </div>
+
+      <!-- Мобільний рядок пошуку -->
+      <div class="w-full sm:w-80 lg:hidden relative amber-glow rounded-full shrink-0">
+        <input 
+          id="mobile-search-input"
+          type="text" 
+          placeholder="Пошук у меню (шашлик, піца...)" 
+          oninput="handleSearch(this.value)"
+          class="w-full pl-9 pr-4 py-2 rounded-full bg-[#18181c] border border-white/10 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-[#f59e0b]"
+        />
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-base">search</span>
+      </div>
+    </section>
+
+    <!-- ПРОМО-БАНЕРИ (ОРИГІНАЛЬНІ ФОТОГРАФІЇ РЕСТОРАНУ АМБАР) -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      
+      <!-- Головний банер: Мангал тиждень -->
+      <div class="md:col-span-2 rounded-3xl overflow-hidden relative group cursor-pointer border border-white/10 min-h-[260px] sm:min-h-[340px] p-6 sm:p-8 flex flex-col justify-end shadow-2xl" onclick="setCategory('mangal')">
+        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('assets/banner_grill_steaks.jpg');"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#121214] via-[#121214]/65 to-transparent"></div>
+        
+        <div class="relative z-10">
+          <span class="inline-block px-3 py-1 rounded-full bg-accent-fiery text-white font-heading text-[11px] font-extrabold uppercase tracking-wider mb-3 shadow-lg">СПРАВЖНІЙ МАНГАЛ НА ВУГІЛЛІ</span>
+          <h2 class="font-heading text-2xl sm:text-4xl font-extrabold text-white leading-tight">Шашлик, Стейки & Гриль</h2>
+          <p class="text-[#f59e0b] font-heading text-xl sm:text-2xl font-bold mt-1">Знижка -20% за промокодом GRILL20</p>
+          <div class="mt-4 flex items-center gap-3">
+            <button class="px-6 py-2.5 btn-amber text-xs font-bold uppercase tracking-wider">Переглянути меню</button>
+            <span class="text-xs text-gray-300 font-medium">Свинячий ошийок, реберця, люля-кебаб</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Бокові банери: Піца 1+1 та Крильця / Бургери -->
+      <div class="flex flex-col gap-5">
+        
+        <!-- Піца 1+1 -->
+        <div class="flex-1 rounded-3xl overflow-hidden relative group cursor-pointer border border-white/10 p-6 flex flex-col justify-end min-h-[155px]" onclick="setCategory('pizza')">
+          <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('assets/banner_artisan_pizza.jpg');"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"></div>
+          <div class="relative z-10">
+            <span class="text-[10px] font-bold text-[#f59e0b] tracking-wider uppercase">Вівторок & Четвер</span>
+            <h3 class="font-heading text-xl font-bold text-white">Неаполітанська піца</h3>
+            <p class="text-xs text-gray-300">Класичні та авторські рецепти на живому вогні</p>
+          </div>
+        </div>
+
+        <!-- Крильця & Бургери -->
+        <div class="flex-1 rounded-3xl overflow-hidden relative group cursor-pointer border border-white/10 p-6 flex flex-col justify-end min-h-[155px]" onclick="setCategory('burgers')">
+          <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('assets/banner_wings_burgers.jpg');"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"></div>
+          <div class="relative z-10">
+            <span class="text-[10px] font-bold text-accent-fiery tracking-wider uppercase">Фірмові хіти кафе</span>
+            <h3 class="font-heading text-xl font-bold text-white">Крильця на углях & Бургери</h3>
+            <p class="text-xs text-gray-300">Соковита яловичина, пікантні соуси та свіжа булочка</p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- 3. ЗАЛИПАЮЧЕ МЕНЮ КАТЕГОРІЙ (ВСІ КАТЕГОРІЇ АМБАР + УЛЮБЛЕНЕ)              -->
+    <!-- ======================================================================= -->
+    <nav class="sticky top-20 z-40 bg-[#121214]/95 backdrop-blur-xl py-3 border-b border-white/10 -mx-4 sm:-mx-8 px-4 sm:px-8">
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+        
+        <button data-cat="all" onclick="setCategory('all')" class="category-pill active shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-base">restaurant_menu</span>
+          <span>Всі страви</span>
+        </button>
+
+        <button data-cat="favorites" onclick="setCategory('favorites')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5 border border-[#f59e0b]/40 text-white hover:text-[#f59e0b]">
+          <span class="material-symbols-outlined text-base text-[#f59e0b]" style="font-variation-settings: 'FILL' 1;">favorite</span>
+          <span>Улюблені страви</span>
+          <span id="fav-tab-badge" class="hidden text-[10px] bg-[#f59e0b] text-black px-1.5 py-0.2 rounded-full font-bold">0</span>
+        </button>
+
+        <button data-cat="mangal" onclick="setCategory('mangal')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-base">outdoor_grill</span>
+          <span>Мангал & Гриль</span>
+        </button>
+
+        <button data-cat="pizza" onclick="setCategory('pizza')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-base">local_pizza</span>
+          <span>Піца</span>
+        </button>
+
+        <button data-cat="sushi" onclick="setCategory('sushi')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-base">set_meal</span>
+          <span>Суші</span>
+        </button>
+
+        <button data-cat="setu" onclick="setCategory('setu')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-base">bento</span>
+          <span>Сети</span>
+        </button>
+
+        <button data-cat="burgers" onclick="setCategory('burgers')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-base">lunch_dining</span>
+          <span>Бургери</span>
+        </button>
+
+        <button data-cat="wok" onclick="setCategory('wok')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-base">ramen_dining</span>
+          <span>WOK & Паста</span>
+        </button>
+
+        <button data-cat="supov" onclick="setCategory('supov')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-base">soup_kitchen</span>
+          <span>Супи</span>
+        </button>
+
+        <button data-cat="salaty" onclick="setCategory('salaty')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-base">eco</span>
+          <span>Салати</span>
+        </button>
+
+        <button data-cat="zakuski" onclick="setCategory('zakuski')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-base">tapas</span>
+          <span>Закуски</span>
+        </button>
+
+        <button data-cat="deserty" onclick="setCategory('deserty')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-base">icecream</span>
+          <span>Десерти</span>
+        </button>
+
+        <button data-cat="napitki" onclick="setCategory('napitki')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-base">local_bar</span>
+          <span>Напої</span>
+        </button>
+
+      </div>
+    </nav>
+
+    <!-- ======================================================================= -->
+    <!-- 4. СІТКА СТРАВ (КАТАЛОГ)                                                -->
+    <!-- ======================================================================= -->
+    <section>
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="font-heading text-2xl sm:text-3xl font-bold text-white flex items-center gap-2">
+            <span>Каталог страв</span>
+          </h2>
+          <p id="catalog-items-count" class="text-xs text-gray-400 mt-1">Знайдено: 351 страва</p>
+        </div>
+      </div>
+
+      <div id="food-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Завантажується динамічно через app.js -->
+      </div>
+
+      <!-- Кнопка Показати ще -->
+      <div id="load-more-container" class="pt-10 flex justify-center">
+        <button onclick="loadMoreItems()" class="px-8 py-3.5 rounded-full bg-[#18181c] border border-white/10 hover:border-[#f59e0b] text-white hover:text-[#f59e0b] font-heading text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg active:scale-95">
+          <span class="material-symbols-outlined text-lg">expand_more</span>
+          <span id="load-more-btn-text">Показати ще страви</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ======================================================================= -->
+    <!-- 5. ПЕРЕВАГИ КАФЕ АМБАР                                                  -->
+    <!-- ======================================================================= -->
+    <section class="rounded-3xl bg-[#18181c] border border-white/5 p-6 sm:p-10">
+      <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-6 text-center">Чому обирають «Амбар» у Запоріжжі</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-[#f59e0b]/10 text-[#f59e0b] flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-2xl">outdoor_grill</span>
+          </div>
+          <div>
+            <h4 class="font-heading font-bold text-white text-base">Справжній мангал на вугіллі</h4>
+            <p class="text-xs text-gray-400 mt-1 leading-relaxed">Смажимо м'ясо виключно на натуральному деревному вугіллі без рідкого диму та напівфабрикатів.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-[#e11d48]/10 text-[#e11d48] flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-2xl">two_wheeler</span>
+          </div>
+          <div>
+            <h4 class="font-heading font-bold text-white text-base">Термосумки та швидкі кур'єри</h4>
+            <p class="text-xs text-gray-400 mt-1 leading-relaxed">Ваша піца приїде з тягучим гарячим сиром, а шашлик — із димком прямо з мангалу.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-2xl">workspace_premium</span>
+          </div>
+          <div>
+            <h4 class="font-heading font-bold text-white text-base">Фермерські інгредієнти</h4>
+            <p class="text-xs text-gray-400 mt-1 leading-relaxed">Охолоджене м'ясо з українських ферм, свіжий лосось щоденної поставки та авторські соуси.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- 6. ПЛАВАЮЧИЙ ВІДЖЕТ КОШИКА (FLOATING BAR)                                 -->
+  <!-- ========================================================================= -->
+  <aside id="floating-cart-bar" class="hidden fixed bottom-6 inset-x-0 mx-auto w-[calc(100%-2rem)] max-w-md z-40">
+    <div class="p-2.5 pl-4 rounded-full bg-[#18181c] text-white border border-[#f59e0b]/40 shadow-2xl backdrop-blur-2xl flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-[#f59e0b] text-black flex items-center justify-center font-bold">
+          <span class="material-symbols-outlined text-xl">shopping_bag</span>
+        </div>
+        <div>
+          <span id="floating-cart-count" class="font-heading text-xs font-bold block">1 страва</span>
+          <span id="floating-cart-total" class="text-sm font-extrabold text-[#f59e0b]">265 ₴</span>
+        </div>
+      </div>
+      <button onclick="openCartDrawer()" class="px-6 py-2.5 btn-amber text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+        <span>Оформити</span>
+        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ========================================================================= -->
+  <!-- 7. ПАНЕЛЬ ОФОРМЛЕННЯ ЗАМОВЛЕННЯ (CHECKOUT DRAWER)                         -->
+  <!-- ========================================================================= -->
+  <div id="cart-drawer-backdrop" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300 opacity-0" onclick="closeCartDrawer()"></div>
+
+  <aside id="cart-drawer" class="hidden fixed top-0 right-0 bottom-0 w-full sm:w-[480px] z-50 bg-[#121214] border-l border-white/10 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-out">
+    
+    <!-- Шапка кошика -->
+    <div class="h-20 px-6 border-b border-white/10 flex items-center justify-between bg-[#18181c]">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-[#f59e0b] text-2xl">shopping_cart</span>
+        <h3 class="font-heading text-lg font-bold text-white">Кошик замовлення</h3>
+      </div>
+      <button onclick="closeCartDrawer()" class="w-9 h-9 rounded-full bg-[#24242c] text-gray-300 hover:text-white flex items-center justify-center transition-colors">
+        <span class="material-symbols-outlined text-lg">close</span>
+      </button>
+    </div>
+
+    <!-- Вміст кошика -->
+    <div class="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar">
+      
+      <!-- Пустий кошик -->
+      <div id="drawer-empty-cart" class="py-20 text-center text-gray-400 space-y-3">
+        <span class="material-symbols-outlined text-6xl text-gray-600">remove_shopping_cart</span>
+        <h4 class="font-heading text-lg text-white font-bold">Ваш кошик порожній</h4>
+        <p class="text-xs max-w-xs mx-auto">Оберіть соковитий шашлик, піцу або суші у нашому меню, щоб розпочати замовлення.</p>
+        <button onclick="closeCartDrawer()" class="px-6 py-2.5 btn-amber text-xs font-bold uppercase mt-2">До каталогу</button>
+      </div>
+
+      <!-- Список обраних страв -->
+      <div id="drawer-cart-items" class="space-y-3">
+        <!-- Генерується через app.js -->
+      </div>
+
+      <!-- Секція чекауту -->
+      <div id="drawer-checkout-section" class="hidden space-y-6 pt-2">
+        
+        <!-- 1. Адреса та контакти -->
+        <div class="p-4 rounded-2xl bg-[#18181c] border border-white/5 space-y-3">
+          <label class="text-xs font-heading font-bold text-gray-300 uppercase tracking-wider block">1. Адреса та контакти</label>
+          
+          <div>
+            <label class="text-[11px] text-gray-400 block mb-1">Номер телефону для зв'язку</label>
+            <input 
+              id="order-phone" 
+              type="tel" 
+              placeholder="+38 (0__) ___-__-__"
+              class="w-full px-3.5 py-2 rounded-xl bg-[#22222a] border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]"
+            />
+          </div>
+
+          <div>
+            <label class="text-[11px] text-gray-400 block mb-1">Вулиця та номер будинку</label>
+            <div class="relative">
+              <input 
+                id="order-address" 
+                type="text" 
+                autocomplete="off"
+                oninput="handleAddressInput(this.value)"
+                onfocus="handleAddressFocus()"
+                placeholder="наприклад: Соборний 142 або Перемоги 30"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-[#22222a] border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]"
+              />
+
+              <!-- Випадаючий список підказок адрес -->
+              <div id="address-suggestions" class="hidden absolute top-full left-0 right-0 mt-1.5 max-h-56 overflow-y-auto rounded-2xl bg-[#1e1e28] border border-white/15 shadow-2xl z-50 divide-y divide-white/5 backdrop-blur-md">
+              </div>
+            </div>
+
+            <!-- Під'їзд, Поверх, Квартира окремими полями -->
+            <div class="grid grid-cols-3 gap-2 mt-2.5">
+              <div>
+                <label class="text-[10px] text-gray-400 block mb-1">Під'їзд</label>
+                <input 
+                  id="order-entrance" 
+                  type="text" 
+                  placeholder="1" 
+                  class="w-full px-3 py-2 rounded-xl bg-[#22222a] border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]" 
+                />
+              </div>
+              <div>
+                <label class="text-[10px] text-gray-400 block mb-1">Поверх</label>
+                <input 
+                  id="order-floor" 
+                  type="text" 
+                  placeholder="3" 
+                  class="w-full px-3 py-2 rounded-xl bg-[#22222a] border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]" 
+                />
+              </div>
+              <div>
+                <label class="text-[10px] text-gray-400 block mb-1">Кв. / Офіс</label>
+                <input 
+                  id="order-apt" 
+                  type="text" 
+                  placeholder="24" 
+                  class="w-full px-3 py-2 rounded-xl bg-[#22222a] border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]" 
+                />
+              </div>
+            </div>
+            
+            <!-- Автоматично розпізнана зона доставки -->
+            <div id="detected-zone-box" class="mt-2.5 p-2.5 rounded-xl bg-[#202026] border border-white/10 flex items-center justify-between text-xs transition-all">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-base text-[#f59e0b]">location_on</span>
+                <div>
+                  <span class="text-[10px] text-gray-400 block leading-tight">Зона доставки (визначено за адресою):</span>
+                  <span id="detected-zone-name" class="font-bold text-white text-xs">Вознесенівський (Центр)</span>
+                </div>
+              </div>
+              <span id="detected-zone-tariff" class="text-[11px] font-bold text-[#f59e0b] bg-[#2a2a34] px-2.5 py-1 rounded-lg">від 400 ₴ безкоштовно</span>
+            </div>
+
+            <p id="free-delivery-threshold" class="text-[11px] text-gray-400 mt-2"></p>
+          </div>
+
+          <!-- Час доставки -->
+          <div class="pt-2">
+            <label class="text-[11px] text-gray-400 block mb-1.5">Час доставки</label>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <label class="flex items-center gap-2 p-2.5 rounded-xl bg-[#22222a] border border-white/10 cursor-pointer">
+                <input type="radio" name="delivery_time" value="asap" checked onchange="toggleDeliveryTimeSelector(false)" class="accent-[#f59e0b]" />
+                <span>Якнайшвидше</span>
+              </label>
+              <label class="flex items-center gap-2 p-2.5 rounded-xl bg-[#22222a] border border-white/10 cursor-pointer">
+                <input type="radio" name="delivery_time" value="exact" onchange="toggleDeliveryTimeSelector(true)" class="accent-[#f59e0b]" />
+                <span>На точний час</span>
+              </label>
+            </div>
+
+            <!-- Вибір точного часу та дати доставки -->
+            <div id="exact-delivery-time-block" class="hidden mt-2.5 p-3 rounded-xl bg-[#1c1c22] border border-white/10 space-y-2">
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <div>
+                  <label class="text-[10px] text-gray-400 block mb-1">Дата доставки</label>
+                  <select id="exact-delivery-date" class="w-full px-2.5 py-2 rounded-lg bg-[#262630] border border-white/10 text-white focus:outline-none focus:border-[#f59e0b] cursor-pointer text-xs">
+                    <option value="Сьогодні">Сьогодні</option>
+                    <option value="Завтра">Завтра</option>
+                    <option value="Післязавтра">Післязавтра</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="text-[10px] text-gray-400 block mb-1">Точний час</label>
+                  <select id="exact-delivery-time" class="w-full px-2.5 py-2 rounded-lg bg-[#262630] border border-white/10 text-white focus:outline-none focus:border-[#f59e0b] cursor-pointer text-xs">
+                    <option value="12:00">12:00</option>
+                    <option value="12:30">12:30</option>
+                    <option value="13:00">13:00</option>
+                    <option value="13:30">13:30</option>
+                    <option value="14:00">14:00</option>
+                    <option value="14:30">14:30</option>
+                    <option value="15:00">15:00</option>
+                    <option value="15:30">15:30</option>
+                    <option value="16:00">16:00</option>
+                    <option value="16:30">16:30</option>
+                    <option value="17:00">17:00</option>
+                    <option value="17:30">17:30</option>
+                    <option value="18:00">18:00</option>
+                    <option value="18:30">18:30</option>
+                    <option value="19:00" selected>19:00</option>
+                    <option value="19:30">19:30</option>
+                    <option value="20:00">20:00</option>
+                    <option value="20:30">20:30</option>
+                    <option value="21:00">21:00</option>
+                    <option value="21:30">21:30</option>
+                    <option value="22:00">22:00</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Оплата та промокод -->
+        <div class="p-4 rounded-2xl bg-[#18181c] border border-white/5 space-y-3">
+          <label class="text-xs font-heading font-bold text-gray-300 uppercase tracking-wider block">2. Спосіб оплати</label>
+          <div class="space-y-2 text-xs">
+            <label class="flex items-center gap-2 p-2.5 rounded-xl bg-[#22222a] border border-white/10 cursor-pointer">
+              <input type="radio" name="payment_method" value="Готівкою кур'єру" checked class="accent-[#f59e0b]" />
+              <span>Готівкою кур'єру</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-xl bg-[#22222a] border border-white/10 cursor-pointer">
+              <input type="radio" name="payment_method" value="Карткою при отриманні" class="accent-[#f59e0b]" />
+              <span>Терміналом кур'єру при отриманні</span>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-xl bg-[#22222a] border border-white/10 cursor-pointer">
+              <input type="radio" name="payment_method" value="Онлайн (Apple Pay / Google Pay)" class="accent-[#f59e0b]" />
+              <span>Онлайн оплата (Apple Pay / Google Pay)</span>
+            </label>
+          </div>
+
+          <!-- Промокод (без підказок або варіантів) -->
+          <div class="pt-2">
+            <label class="text-[11px] text-gray-400 block mb-1">Промокод на знижку</label>
+            <div class="flex gap-2">
+              <input 
+                id="promo-input" 
+                type="text" 
+                placeholder="Введіть промокод" 
+                class="flex-1 px-3 py-2 text-xs rounded-xl bg-[#22222a] border border-white/10 uppercase tracking-wider focus:outline-none focus:border-[#f59e0b]"
+              />
+              <button onclick="applyPromoCode()" class="px-4 py-2 bg-[#2a2a34] hover:bg-[#343440] text-xs font-bold rounded-xl transition-colors cursor-pointer">
+                Застосувати
+              </button>
+            </div>
+            <p id="promo-msg" class="hidden"></p>
+          </div>
+        </div>
+
+        <!-- Підсумок чека -->
+        <div class="p-4 rounded-2xl bg-[#18181c] border border-white/5 space-y-2 text-xs">
+          <div class="flex justify-between text-gray-400">
+            <span>Вартість страв:</span>
+            <span id="summary-subtotal" class="text-white font-semibold">0 ₴</span>
+          </div>
+          <div id="summary-discount-row" class="hidden flex justify-between text-emerald-400">
+            <span>Знижка:</span>
+            <span id="summary-discount-value" class="font-bold">-0 ₴</span>
+          </div>
+          <div class="flex justify-between text-gray-400">
+            <span>Доставка:</span>
+            <span id="summary-delivery" class="text-white font-semibold">Безкоштовно</span>
+          </div>
+          <div class="pt-3 border-t border-white/10 flex justify-between items-baseline">
+            <span class="font-heading text-base font-bold text-white">Разом до сплати:</span>
+            <span id="summary-total" class="font-heading text-2xl font-extrabold text-[#f59e0b]">0 ₴</span>
+          </div>
+        </div>
+
+        <!-- Кнопка відправки -->
+        <button 
+          id="submit-order-btn"
+          onclick="submitFinalOrder(event)" 
+          class="w-full py-4 btn-amber font-heading text-sm font-extrabold uppercase tracking-wider shadow-xl active:scale-[0.98] transition-all"
+        >
+          Підтвердити замовлення
+        </button>
+
+      </div>
+
+    </div>
+
+  </aside>
+
+  <!-- ========================================================================= -->
+  <!-- 8. МОДАЛЬНЕ ВІКНО КОНФІГУРАТОРА СТРАВИ (DISH CONFIGURATOR)                -->
+  <!-- ========================================================================= -->
+  <div id="modal-backdrop" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4" onclick="closeDishConfigurator()">
+    <div id="dish-configurator-modal" class="hidden w-full max-w-2xl bg-[#18181c] border border-white/10 rounded-3xl overflow-hidden shadow-2xl modal-enter max-h-[90vh] flex flex-col" onclick="event.stopPropagation()">
+      
+      <!-- Шапка модалки: повнорозмірне фото страви без обрізання та стискання -->
+      <div class="relative w-full max-h-[360px] sm:max-h-[420px] bg-[#101014] overflow-hidden shrink-0 flex items-center justify-center">
+        <!-- Атмосферний м'який блюр страви на фоні -->
+        <img id="modal-dish-image-blur" src="" alt="" class="absolute inset-0 w-full h-full object-cover blur-2xl opacity-20 scale-110 pointer-events-none" />
+        
+        <!-- Оригінальна фотографія страви з сайту (без обрізання та деформації) -->
+        <img id="modal-dish-image" src="" alt="Страва" class="relative z-10 w-full max-h-[360px] sm:max-h-[420px] aspect-square object-contain mx-auto" />
+        
+        <button onclick="closeDishConfigurator()" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/65 backdrop-blur-md text-white flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-lg cursor-pointer">
+          <span class="material-symbols-outlined text-lg">close</span>
+        </button>
+      </div>
+
+      <!-- Тіло налаштування -->
+      <div class="p-6 overflow-y-auto space-y-6 flex-1 no-scrollbar">
+        <div>
+          <div class="flex items-center justify-between">
+            <h3 id="modal-dish-title" class="font-heading text-2xl font-extrabold text-white">Назва страви</h3>
+            <span id="modal-dish-weight" class="text-xs px-2.5 py-1 rounded-md bg-[#24242c] text-[#f59e0b] font-bold">500г</span>
+          </div>
+          <p id="modal-dish-desc" class="text-xs text-gray-400 mt-2 leading-relaxed">Опис страви...</p>
+        </div>
+
+        <!-- Опції піци з оригінального сайту: 30 см або 41 см (тільки для піци) -->
+        <div id="modal-sizes-section" class="space-y-2">
+          <label id="modal-sizes-title" class="text-xs font-heading font-bold text-gray-300 uppercase tracking-wider block">Розмір піци</label>
+          <div id="modal-sizes-grid" class="grid grid-cols-2 gap-3">
+            <!-- Генерується через app.js: 30 см та 41 см -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Футер модалки з лічильником та кнопкою -->
+      <div class="p-5 bg-[#141418] border-t border-white/10 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3 bg-[#202026] rounded-full p-1.5 border border-white/10">
+          <button onclick="changeModalQty(-1)" class="w-8 h-8 rounded-full flex items-center justify-center text-white hover:bg-white/10 font-bold active:scale-95">−</button>
+          <span id="modal-qty-count" class="font-heading font-bold text-sm text-white px-2">1</span>
+          <button onclick="changeModalQty(1)" class="w-8 h-8 rounded-full flex items-center justify-center text-white hover:bg-white/10 font-bold active:scale-95">+</button>
+        </div>
+
+        <button onclick="addConfiguredItemToCart()" class="flex-1 py-3.5 btn-amber font-heading text-xs sm:text-sm font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg">
+          <span>Додати до кошика</span>
+          <span>•</span>
+          <span id="modal-add-btn-price">265 ₴</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 9. МОДАЛЬНЕ ВІКНО БРОНЮВАННЯ СТОЛИКА В КАФЕ АМБАР                         -->
+  <!-- ========================================================================= -->
+  <div id="table-booking-backdrop" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4" onclick="closeTableBookingModal()">
+    <div id="table-booking-modal" class="hidden w-full max-w-lg bg-[#18181c] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl modal-enter" onclick="event.stopPropagation()">
+      
+      <div class="flex items-center justify-between border-b border-white/10 pb-4">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[#f59e0b] text-2xl">restaurant</span>
+          <h3 class="font-heading text-xl font-bold text-white">Замовити стіл в «Амбар»</h3>
+        </div>
+        <button onclick="closeTableBookingModal()" class="w-8 h-8 rounded-full bg-[#24242c] text-gray-400 hover:text-white flex items-center justify-center">
+          <span class="material-symbols-outlined text-base">close</span>
+        </button>
+      </div>
+
+      <form onsubmit="submitTableBooking(event)" class="space-y-4 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="text-gray-400 block mb-1">Ваше ім'я</label>
+            <input id="booking-name" type="text" required placeholder="Введіть ім'я" class="w-full px-3.5 py-2.5 rounded-xl bg-[#22222a] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]" />
+          </div>
+          <div>
+            <label class="text-gray-400 block mb-1">Номер телефону</label>
+            <input id="booking-phone" type="tel" required placeholder="+38 (0__) ___-__-__" class="w-full px-3.5 py-2.5 rounded-xl bg-[#22222a] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="text-gray-400 block mb-1">Кількість гостей</label>
+            <select id="booking-guests" class="w-full px-3.5 py-2.5 rounded-xl bg-[#22222a] border border-white/10 text-white focus:outline-none focus:border-[#f59e0b] cursor-pointer">
+              <option value="1 персона">1 персона</option>
+              <option value="2 персони" selected>2 персони</option>
+              <option value="3 персони">3 персони</option>
+              <option value="4 персони">4 персони</option>
+              <option value="5 персон">5 персон</option>
+              <option value="6 персон">6 персон</option>
+              <option value="7–8 персон">7–8 персон</option>
+              <option value="10+ персон (Банкет)">10+ персон (Банкет)</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-gray-400 block mb-1">Вибір залу</label>
+            <select id="booking-hall" class="w-full px-3.5 py-2.5 rounded-xl bg-[#22222a] border border-white/10 text-white focus:outline-none focus:border-[#f59e0b] cursor-pointer">
+              <option value="Основний лофт-зал">Основний лофт-зал</option>
+              <option value="Мангал-тераса">Мангал-тераса на свіжому повітрі</option>
+              <option value="Затишна лаунж-зона">Затишна лаунж-зона</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="text-gray-400 block mb-1">Дата візиту</label>
+            <input 
+              id="booking-date" 
+              type="date" 
+              required 
+              class="w-full px-3.5 py-2 rounded-xl bg-[#22222a] border border-white/10 text-white focus:outline-none focus:border-[#f59e0b] cursor-pointer [color-scheme:dark]" 
+            />
+            <div class="flex items-center gap-1.5 mt-1.5">
+              <button type="button" onclick="setBookingDateQuick(0)" class="text-[10px] px-2 py-0.5 rounded-md bg-[#22222a] hover:bg-[#2e2e38] text-gray-300 hover:text-white border border-white/10 transition-colors">Сьогодні</button>
+              <button type="button" onclick="setBookingDateQuick(1)" class="text-[10px] px-2 py-0.5 rounded-md bg-[#22222a] hover:bg-[#2e2e38] text-gray-300 hover:text-white border border-white/10 transition-colors">Завтра</button>
+              <button type="button" onclick="setBookingDateQuick(2)" class="text-[10px] px-2 py-0.5 rounded-md bg-[#22222a] hover:bg-[#2e2e38] text-gray-300 hover:text-white border border-white/10 transition-colors">Післязавтра</button>
+            </div>
+          </div>
+          <div>
+            <label class="text-gray-400 block mb-1">Точний час</label>
+            <select id="booking-time" class="w-full px-3.5 py-2 rounded-xl bg-[#22222a] border border-white/10 text-white focus:outline-none focus:border-[#f59e0b] cursor-pointer">
+              <option value="12:00">12:00</option>
+              <option value="12:30">12:30</option>
+              <option value="13:00">13:00</option>
+              <option value="13:30">13:30</option>
+              <option value="14:00">14:00</option>
+              <option value="14:30">14:30</option>
+              <option value="15:00">15:00</option>
+              <option value="15:30">15:30</option>
+              <option value="16:00">16:00</option>
+              <option value="16:30">16:30</option>
+              <option value="17:00">17:00</option>
+              <option value="17:30">17:30</option>
+              <option value="18:00">18:00</option>
+              <option value="18:30">18:30</option>
+              <option value="19:00" selected>19:00</option>
+              <option value="19:30">19:30</option>
+              <option value="20:00">20:00</option>
+              <option value="20:30">20:30</option>
+              <option value="21:00">21:00</option>
+              <option value="21:30">21:30</option>
+              <option value="22:00">22:00</option>
+            </select>
+            <div class="flex items-center gap-1.5 mt-1.5">
+              <button type="button" onclick="setBookingTimeQuick('18:00')" class="text-[10px] px-2 py-0.5 rounded-md bg-[#22222a] hover:bg-[#2e2e38] text-gray-300 hover:text-white border border-white/10 transition-colors">18:00</button>
+              <button type="button" onclick="setBookingTimeQuick('19:00')" class="text-[10px] px-2 py-0.5 rounded-md bg-[#22222a] hover:bg-[#2e2e38] text-gray-300 hover:text-white border border-white/10 transition-colors">19:00</button>
+              <button type="button" onclick="setBookingTimeQuick('20:00')" class="text-[10px] px-2 py-0.5 rounded-md bg-[#22222a] hover:bg-[#2e2e38] text-gray-300 hover:text-white border border-white/10 transition-colors">20:00</button>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="text-gray-400 block mb-1">Особливі побажання</label>
+          <textarea placeholder="Потрібен стілець для дитини або тихе місце біля вікна..." rows="2" class="w-full px-4 py-2 rounded-xl bg-[#22222a] border border-white/10 text-white focus:outline-none focus:border-[#f59e0b]"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-3.5 btn-amber font-heading font-bold text-xs uppercase tracking-wider shadow-lg active:scale-95">
+          Підтвердити бронь столу
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Підтвердження броні столу -->
+  <div id="booking-confirm-modal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-[#18181c] border border-white/10 rounded-3xl p-6 text-center space-y-4 shadow-2xl modal-enter">
+      <div class="w-14 h-14 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
+        <span class="material-symbols-outlined text-3xl">check_circle</span>
+      </div>
+      <h3 class="font-heading text-xl font-bold text-white">Стіл успішно заброньовано!</h3>
+      <p id="booking-conf-summary" class="text-xs text-gray-300 leading-relaxed"></p>
+      <button onclick="closeBookingConfirmModal()" class="w-full py-3 btn-amber font-heading text-xs font-bold uppercase">Чудово</button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 10. ПІДТВЕРДЖЕННЯ ОФОРМЛЕННЯ ЗАМОВЛЕННЯ                                    -->
+  <!-- ========================================================================= -->
+  <div id="order-success-modal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-[#18181c] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-5 shadow-2xl modal-enter">
+      
+      <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto animate-pulse">
+        <span class="material-symbols-outlined text-3xl">moped</span>
+      </div>
+
+      <div class="text-center">
+        <span class="text-xs font-heading font-bold uppercase tracking-widest text-[#f59e0b]">Замовлення прийнято</span>
+        <h3 class="font-heading text-2xl font-extrabold text-white mt-1">Кухня вже готує!</h3>
+        <p class="text-xs text-gray-400 mt-1">Кур'єр доставить гарячі страви протягом 35–45 хвилин.</p>
+      </div>
+
+      <div class="bg-[#202026] rounded-2xl p-4 space-y-2.5 text-xs">
+        <div class="flex justify-between items-center gap-3">
+          <span class="text-gray-400 shrink-0">Номер чека:</span>
+          <span id="success-order-id" class="font-bold text-white text-right font-mono">AB-849204</span>
+        </div>
+        <div class="flex justify-between items-start gap-3">
+          <span class="text-gray-400 shrink-0">Адреса доставки:</span>
+          <span id="success-address" class="text-white font-semibold text-right break-words leading-relaxed">Вознесенівський, просп. Соборний 142</span>
+        </div>
+        <div class="flex justify-between items-center gap-3">
+          <span class="text-gray-400 shrink-0">Телефон:</span>
+          <span id="success-phone" class="text-white text-right font-medium">+38 (067) 613-00-88</span>
+        </div>
+        <div class="flex justify-between items-start gap-3">
+          <span class="text-gray-400 shrink-0">Час:</span>
+          <span id="success-time" class="text-emerald-400 font-bold text-right break-words">Якнайшвидше (35–45 хв)</span>
+        </div>
+        <div class="flex justify-between items-center gap-3">
+          <span class="text-gray-400 shrink-0">Оплата:</span>
+          <span id="success-payment" class="text-white text-right">Готівкою кур'єру</span>
+        </div>
+      </div>
+
+      <button onclick="closeOrderSuccessModal()" class="w-full py-3.5 btn-amber font-heading font-bold text-xs uppercase tracking-wider">
+        Повернутися до меню
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 10.1 ОСОБИСТИЙ КАБІНЕТ КЛІЄНТА (ПРОФІЛЬ, ІСТОРІЯ ЗАМОВЛЕНЬ, БРОНЮВАННЯ)  -->
+  <!-- ========================================================================= -->
+  <div id="user-cabinet-backdrop" class="hidden fixed inset-0 bg-black/70 backdrop-blur-md z-50 transition-opacity" onclick="closeCabinetModal()"></div>
+  <div id="user-cabinet-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto pointer-events-none">
+    <div class="w-full max-w-2xl bg-[#16161a] border border-white/10 rounded-3xl p-5 sm:p-8 space-y-6 shadow-2xl modal-enter pointer-events-auto max-h-[90vh] flex flex-col my-auto">
+      
+      <!-- Шапка кабінету -->
+      <div class="flex items-center justify-between pb-4 border-b border-white/10 shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-[#f59e0b]">
+            <span class="material-symbols-outlined text-2xl">account_circle</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 id="cabinet-user-title" class="font-heading font-extrabold text-lg text-white">Особистий кабінет</h3>
+              <span id="cabinet-bonus-badge" class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-bold">
+                🪙 <span id="cabinet-bonus-amount">0</span> ₴ бонусів
+              </span>
+            </div>
+            <p id="cabinet-user-phone-display" class="text-xs text-gray-400">Клієнт кафе «Амбар»</p>
+          </div>
+        </div>
+
+        <button onclick="closeCabinetModal()" class="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white flex items-center justify-center transition-colors">
+          <span class="material-symbols-outlined text-xl">close</span>
+        </button>
+      </div>
+
+      <!-- Вкладки кабінету -->
+      <div class="flex gap-2 p-1 bg-[#202028] rounded-2xl shrink-0 text-xs font-heading font-semibold">
+        <button id="cab-tab-btn-orders" onclick="switchCabinetTab('orders')" class="flex-1 py-2.5 rounded-xl bg-[#f59e0b] text-black font-bold transition-all flex items-center justify-center gap-1.5 shadow">
+          <span class="material-symbols-outlined text-base">receipt_long</span>
+          <span>Замовлення (<span id="cab-tab-orders-count">0</span>)</span>
+        </button>
+        <button id="cab-tab-btn-profile" onclick="switchCabinetTab('profile')" class="flex-1 py-2.5 rounded-xl text-gray-400 hover:text-white transition-all flex items-center justify-center gap-1.5">
+          <span class="material-symbols-outlined text-base">person</span>
+          <span>Мої дані & адреса</span>
+        </button>
+        <button id="cab-tab-btn-bookings" onclick="switchCabinetTab('bookings')" class="flex-1 py-2.5 rounded-xl text-gray-400 hover:text-white transition-all flex items-center justify-center gap-1.5">
+          <span class="material-symbols-outlined text-base">table_restaurant</span>
+          <span>Бронь столиків (<span id="cab-tab-bookings-count">0</span>)</span>
+        </button>
+      </div>
+
+      <!-- Вміст вкладок (з прокруткою) -->
+      <div class="flex-1 overflow-y-auto space-y-4 pr-1 no-scrollbar">
+        
+        <!-- Вкладка 1: Історія замовлень -->
+        <div id="cab-tab-content-orders" class="space-y-3">
+          <div id="cabinet-orders-list" class="space-y-3">
+            <!-- Генерується динамічно або показує порожній стан -->
+          </div>
+        </div>
+
+        <!-- Вкладка 2: Профіль та збережені адреси -->
+        <div id="cab-tab-content-profile" class="hidden space-y-4">
+          <form onsubmit="saveUserProfile(event)" class="space-y-4 text-xs">
+            <div class="p-4 rounded-2xl bg-[#1e1e26] border border-white/5 space-y-3">
+              <label class="font-heading font-bold text-gray-200 uppercase tracking-wider block text-xs">Особисті дані</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="text-gray-400 block mb-1">Ваше ім'я</label>
+                  <input id="cab-input-name" type="text" placeholder="Як до вас звертатися" class="w-full px-3.5 py-2.5 rounded-xl bg-[#282834] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]" />
+                </div>
+                <div>
+                  <label class="text-gray-400 block mb-1">Номер телефону</label>
+                  <input id="cab-input-phone" type="tel" placeholder="+38 (0__) ___-__-__" class="w-full px-3.5 py-2.5 rounded-xl bg-[#282834] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]" />
+                </div>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-[#1e1e26] border border-white/5 space-y-3">
+              <label class="font-heading font-bold text-gray-200 uppercase tracking-wider block text-xs">Основна адреса доставки в Запоріжжі</label>
+              <div class="relative">
+                <label class="text-gray-400 block mb-1">Вулиця та номер будинку</label>
+                <input 
+                  id="cab-input-address" 
+                  type="text" 
+                  autocomplete="off"
+                  oninput="handleProfileAddressInput(this.value)"
+                  onfocus="handleProfileAddressFocus()"
+                  placeholder="наприклад: просп. Соборний 142" 
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-[#282834] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]" 
+                />
+                <!-- Випадаючий список підказок адрес для профілю -->
+                <div id="profile-address-suggestions" class="hidden absolute top-full left-0 right-0 mt-1.5 max-h-56 overflow-y-auto rounded-2xl bg-[#1e1e28] border border-white/15 shadow-2xl z-50 divide-y divide-white/5 backdrop-blur-md">
+                </div>
+              </div>
+              <div class="grid grid-cols-3 gap-2">
+                <div>
+                  <label class="text-gray-400 block mb-1">Під'їзд</label>
+                  <input id="cab-input-entrance" type="text" placeholder="1" class="w-full px-3 py-2 rounded-xl bg-[#282834] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]" />
+                </div>
+                <div>
+                  <label class="text-gray-400 block mb-1">Поверх</label>
+                  <input id="cab-input-floor" type="text" placeholder="3" class="w-full px-3 py-2 rounded-xl bg-[#282834] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]" />
+                </div>
+                <div>
+                  <label class="text-gray-400 block mb-1">Квартира</label>
+                  <input id="cab-input-apt" type="text" placeholder="24" class="w-full px-3 py-2 rounded-xl bg-[#282834] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]" />
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs">
+              <span class="material-symbols-outlined text-base shrink-0">verified_user</span>
+              <span>Збережена адреса автоматично підставляється в кошик при нових замовленнях. Жодні банківські дані тут не зберігаються.</span>
+            </div>
+
+            <button type="submit" class="w-full py-3.5 btn-amber font-heading font-bold text-xs uppercase tracking-wider shadow-lg active:scale-95">
+              Зберегти профіль
+            </button>
+          </form>
+        </div>
+
+        <!-- Вкладка 3: Бронювання столиків -->
+        <div id="cab-tab-content-bookings" class="hidden space-y-3">
+          <div id="cabinet-bookings-list" class="space-y-3">
+            <!-- Генерується динамічно -->
+          </div>
+          <button onclick="closeCabinetModal(); openTableBookingModal();" class="w-full py-3 rounded-2xl bg-[#242430] hover:bg-[#2e2e3c] text-white border border-white/10 font-heading text-xs font-bold transition-colors flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-base text-[#f59e0b]">add_circle</span>
+            <span>Забронювати новий стіл</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Футер кабінету з кнопкою безпечного скидання сесії -->
+      <div class="pt-3 border-t border-white/10 flex items-center justify-between text-xs text-gray-400 shrink-0">
+        <span class="flex items-center gap-1.5 text-gray-500">
+          <span class="material-symbols-outlined text-sm">lock</span>
+          <span>Сесія захищена локально</span>
+        </span>
+        <button onclick="resetCabinetSession()" class="text-red-400 hover:text-red-300 transition-colors font-medium cursor-pointer">
+          Очистити дані сесії
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 10.2 РЕЄСТРАЦІЯ ТА АВТОРИЗАЦІЯ КЛІЄНТА ЗА SMS-КОДОМ                       -->
+  <!-- ========================================================================= -->
+  <div id="client-auth-backdrop" class="hidden fixed inset-0 bg-black/75 backdrop-blur-md z-50 transition-opacity" onclick="closeClientAuthModal()"></div>
+  <div id="client-auth-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto pointer-events-none">
+    <div class="w-full max-w-md bg-[#18181e] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl modal-enter pointer-events-auto my-auto text-white">
+      
+      <!-- Заголовок -->
+      <div class="flex items-center justify-between pb-4 border-b border-white/10">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-[#f59e0b]">
+            <span class="material-symbols-outlined text-xl">sms</span>
+          </div>
+          <div>
+            <h3 class="font-heading font-extrabold text-base text-white">Вхід / Реєстрація</h3>
+            <p class="text-xs text-gray-400">Швидкий доступ за номером телефону</p>
+          </div>
+        </div>
+        <button onclick="closeClientAuthModal()" class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white flex items-center justify-center transition-colors">
+          <span class="material-symbols-outlined text-lg">close</span>
+        </button>
+      </div>
+
+      <!-- Крок 1: Введення номера телефону -->
+      <div id="auth-step-phone" class="space-y-4">
+        <div>
+          <label class="text-xs text-gray-300 block mb-1.5 font-medium">Ваш номер телефону</label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-lg">phone</span>
+            <input 
+              id="auth-phone-input" 
+              type="tel" 
+              placeholder="+38 (0__) ___-__-__" 
+              class="w-full pl-11 pr-4 py-3 rounded-2xl bg-[#22222a] border border-white/10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b] tracking-wide"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label class="text-xs text-gray-300 block mb-1.5 font-medium">Ваше ім'я (для звернення)</label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-lg">person</span>
+            <input 
+              id="auth-name-input" 
+              type="text" 
+              placeholder="наприклад: Олександр" 
+              class="w-full pl-11 pr-4 py-3 rounded-2xl bg-[#22222a] border border-white/10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]"
+            />
+          </div>
+        </div>
+
+        <button 
+          onclick="requestSmsCode()" 
+          class="w-full py-3.5 btn-amber font-heading font-bold text-xs uppercase tracking-wider shadow-lg active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <span>Отримати SMS-код</span>
+          <span class="material-symbols-outlined text-base">arrow_forward</span>
+        </button>
+      </div>
+
+      <!-- Крок 2: Введення 4-значного SMS-коду -->
+      <div id="auth-step-code" class="hidden space-y-4">
+        <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-gray-300 flex items-center gap-3">
+          <span class="material-symbols-outlined text-amber-400 text-xl shrink-0">mark_email_read</span>
+          <div>
+            <p>Код відправлено на номер <b id="auth-code-phone-target" class="text-white"></b></p>
+            <button onclick="backToPhoneStep()" class="text-[#f59e0b] hover:underline text-[11px] mt-0.5 block">Змінити номер</button>
+          </div>
+        </div>
+
+        <div>
+          <label class="text-xs text-gray-300 block mb-2 font-medium text-center">Введіть 4-значний код із SMS</label>
+          <div class="flex justify-center gap-3">
+            <input 
+              id="auth-otp-input" 
+              type="text" 
+              maxlength="4" 
+              placeholder="••••" 
+              class="w-48 py-3 text-center text-2xl font-mono tracking-[0.5em] rounded-2xl bg-[#22222a] border border-white/15 text-amber-400 focus:outline-none focus:border-[#f59e0b] font-bold"
+              oninput="handleOtpInput(this.value)"
+            />
+          </div>
+          <p id="auth-code-error" class="text-xs text-rose-400 text-center mt-2 hidden">Невірний код. Спробуйте ще раз.</p>
+        </div>
+
+        <button 
+          onclick="verifySmsCode()" 
+          class="w-full py-3.5 btn-amber font-heading font-bold text-xs uppercase tracking-wider shadow-lg active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <span class="material-symbols-outlined text-base">verified</span>
+          <span>Підтвердити та увійти</span>
+        </button>
+
+        <div class="text-center">
+          <button id="auth-resend-btn" onclick="requestSmsCode()" class="text-xs text-gray-400 hover:text-white transition-colors cursor-pointer" disabled>
+            Надіслати код повторно (<span id="auth-timer-sec">30</span>с)
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Вспливаюче вікно вхідного SMS (імітація повідомлення телефону) -->
+  <div id="sms-sim-banner" class="hidden fixed top-5 inset-x-4 max-w-sm mx-auto z-50 bg-[#22222c] border border-amber-500/50 rounded-2xl p-4 shadow-2xl modal-enter flex items-start gap-3">
+    <div class="w-9 h-9 rounded-xl bg-[#f59e0b] text-black flex items-center justify-center shrink-0 font-bold font-heading">
+      💬
+    </div>
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center justify-between text-[11px] text-gray-400">
+        <span class="font-bold text-white">AMBAR SECURITY</span>
+        <span>зараз</span>
+      </div>
+      <p class="text-xs text-gray-200 mt-1">
+        Ваш код підтвердження: <b id="sms-sim-code" class="text-amber-400 font-mono text-sm tracking-wider font-bold">7842</b>
+      </p>
+    </div>
+    <button onclick="dismissSmsBanner()" class="text-gray-400 hover:text-white">
+      <span class="material-symbols-outlined text-sm">close</span>
+    </button>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 10.3 АВТОРИЗАЦІЯ В АДМІН-ПАНЕЛЬ РЕСТОРАНУ                                 -->
+  <!-- ========================================================================= -->
+  <div id="admin-login-backdrop" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-50 transition-opacity" onclick="closeAdminLoginModal()"></div>
+  <div id="admin-login-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto pointer-events-none">
+    <div class="w-full max-w-sm bg-[#16161c] border border-white/15 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl modal-enter pointer-events-auto my-auto text-white">
+      
+      <div class="text-center space-y-2">
+        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-[#f59e0b] mx-auto flex items-center justify-center">
+          <span class="material-symbols-outlined text-2xl">admin_panel_settings</span>
+        </div>
+        <h3 class="font-heading font-extrabold text-base text-white">Вхід для персоналу</h3>
+        <p class="text-xs text-gray-400">Панель керування замовленнями кафе «Амбар»</p>
+      </div>
+
+      <form onsubmit="submitAdminLogin(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="text-gray-400 block mb-1">Логін адміністратора</label>
+          <input 
+            id="admin-login-username" 
+            type="text" 
+            placeholder="admin" 
+            class="w-full px-3.5 py-2.5 rounded-xl bg-[#22222a] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]" 
+            required 
+          />
+        </div>
+
+        <div>
+          <label class="text-gray-400 block mb-1">Пароль</label>
+          <input 
+            id="admin-login-password" 
+            type="password" 
+            placeholder="••••••••" 
+            class="w-full px-3.5 py-2.5 rounded-xl bg-[#22222a] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]" 
+            required 
+          />
+        </div>
+
+        <p id="admin-login-error" class="text-rose-400 text-xs text-center hidden">Невірний логін або пароль</p>
+
+        <button type="submit" class="w-full py-3.5 btn-amber font-heading font-bold text-xs uppercase tracking-wider shadow-lg active:scale-95 cursor-pointer">
+          Увійти в панель
+        </button>
+
+        <p class="text-[10px] text-gray-500 text-center">За замовчуванням: admin / ambar2026</p>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 10.4 ПОВНОЦІННИЙ ДАШБОРД АДМІНІСТРАТОРА                                   -->
+  <!-- ========================================================================= -->
+  <div id="admin-dashboard-backdrop" class="hidden fixed inset-0 bg-black/85 backdrop-blur-md z-50 transition-opacity"></div>
+  <div id="admin-dashboard-modal" class="hidden fixed inset-0 z-50 flex flex-col p-2 sm:p-6 overflow-y-auto">
+    <div class="w-full max-w-6xl bg-[#141418] border border-white/10 rounded-3xl p-4 sm:p-8 space-y-6 shadow-2xl modal-enter mx-auto my-auto flex flex-col max-h-[95vh] text-white">
+      
+      <!-- Шапка адмінки -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10 shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-[#f59e0b]">
+            <span class="material-symbols-outlined text-2xl">restaurant_menu</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="font-heading font-extrabold text-lg text-white">Панель керування кафе «Амбар»</h2>
+              <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold">
+                🟢 Онлайн
+              </span>
+            </div>
+            <p class="text-xs text-gray-400">Керування замовленнями, кур'єрами та столиками ресторану</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <button onclick="logoutAdmin()" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-rose-500/20 text-gray-300 hover:text-rose-300 border border-white/10 font-heading text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer">
+            <span class="material-symbols-outlined text-base">logout</span>
+            <span>Вийти</span>
+          </button>
+          <button onclick="closeAdminDashboard()" class="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer">
+            <span class="material-symbols-outlined text-xl">close</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Зведена аналітика за день (Bento grid) -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 shrink-0 text-xs">
+        <div class="p-3.5 rounded-2xl bg-[#1c1c24] border border-white/5 space-y-1">
+          <span class="text-gray-400 block text-[11px]">Загальна виручка</span>
+          <span id="adm-stat-revenue" class="font-heading font-extrabold text-xl text-[#f59e0b]">0 ₴</span>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-[#1c1c24] border border-white/5 space-y-1">
+          <span class="text-gray-400 block text-[11px]">Всього замовлень</span>
+          <span id="adm-stat-orders" class="font-heading font-extrabold text-xl text-white">0</span>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-[#1c1c24] border border-white/5 space-y-1">
+          <span class="text-gray-400 block text-[11px]">Середній чек</span>
+          <span id="adm-stat-avg" class="font-heading font-extrabold text-xl text-emerald-400">0 ₴</span>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-[#1c1c24] border border-white/5 space-y-1">
+          <span class="text-gray-400 block text-[11px]">Броней столиків</span>
+          <span id="adm-stat-bookings" class="font-heading font-extrabold text-xl text-sky-400">0</span>
+        </div>
+      </div>
+
+      <!-- Перемикач розділів -->
+      <div class="flex items-center justify-between gap-3 shrink-0">
+        <div class="flex gap-2 p-1 bg-[#1e1e26] rounded-2xl text-xs font-heading font-bold">
+          <button id="adm-tab-btn-orders" onclick="switchAdminTab('orders')" class="px-5 py-2 rounded-xl bg-[#f59e0b] text-black transition-all flex items-center gap-1.5 shadow">
+            <span class="material-symbols-outlined text-base">local_shipping</span>
+            <span>Замовлення (<span id="adm-count-orders">0</span>)</span>
+          </button>
+          <button id="adm-tab-btn-bookings" onclick="switchAdminTab('bookings')" class="px-5 py-2 rounded-xl text-gray-400 hover:text-white transition-all flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-base">table_bar</span>
+            <span>Бронювання столиків (<span id="adm-count-bookings">0</span>)</span>
+          </button>
+        </div>
+
+        <!-- Швидкий фільтр замовлень за статусом -->
+        <div id="adm-orders-filter-bar" class="hidden sm:flex items-center gap-1.5 text-[11px] overflow-x-auto">
+          <span class="text-gray-500 mr-1">Статус:</span>
+          <button onclick="setAdminOrderFilter('all')" class="adm-filter-btn px-2.5 py-1 rounded-lg bg-white/10 text-white font-medium cursor-pointer" data-filter="all">Всі</button>
+          <button onclick="setAdminOrderFilter('prep')" class="adm-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer" data-filter="prep">👨‍🍳 Готуються</button>
+          <button onclick="setAdminOrderFilter('ready')" class="adm-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer" data-filter="ready">🥡 Очікують кур'єра</button>
+          <button onclick="setAdminOrderFilter('deliv')" class="adm-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer" data-filter="deliv">🛵 В дорозі</button>
+          <button onclick="setAdminOrderFilter('done')" class="adm-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer" data-filter="done">✅ Доставлені</button>
+        </div>
+      </div>
+
+      <!-- Вміст адмінки (з прокруткою) -->
+      <div class="flex-1 overflow-y-auto space-y-4 pr-1 no-scrollbar">
+        <!-- Список замовлень -->
+        <div id="adm-content-orders" class="space-y-3">
+          <div id="adm-orders-list" class="space-y-3">
+            <!-- Генерується динамічно -->
+          </div>
+        </div>
+
+        <!-- Список бронювань -->
+        <div id="adm-content-bookings" class="hidden space-y-3">
+          <div id="adm-bookings-list" class="space-y-3">
+            <!-- Генерується динамічно -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 10.5 РЕДАГУВАННЯ ЗАМОВЛЕННЯ ТА ДОДАВАННЯ СТРАВ З МЕНЮ                     -->
+  <!-- ========================================================================= -->
+  <div id="admin-edit-order-backdrop" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md z-50 transition-opacity" onclick="closeEditOrderModal()"></div>
+  <div id="admin-edit-order-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 overflow-y-auto pointer-events-none">
+    <div class="w-full max-w-2xl bg-[#181820] border border-white/15 rounded-3xl p-5 sm:p-7 space-y-5 shadow-2xl modal-enter pointer-events-auto my-auto text-white max-h-[92vh] flex flex-col">
+      
+      <!-- Шапка модалки -->
+      <div class="flex items-center justify-between pb-3 border-b border-white/10 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-[#f59e0b]">
+            <span class="material-symbols-outlined text-xl">edit_note</span>
+          </div>
+          <div>
+            <h3 class="font-heading font-extrabold text-sm sm:text-base text-white">Редагування замовлення <span id="edit-order-id-title" class="text-[#f59e0b]">#AB-000000</span></h3>
+            <p class="text-xs text-gray-400">Додавання страв або зміна кількості за запитом клієнта</p>
+          </div>
+        </div>
+        <button onclick="closeEditOrderModal()" class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer">
+          <span class="material-symbols-outlined text-lg">close</span>
+        </button>
+      </div>
+
+      <!-- Вміст зі скролом -->
+      <div class="flex-1 overflow-y-auto space-y-4 pr-1 no-scrollbar text-xs">
+        
+        <!-- Секція 1: Поточні позиції у замовленні -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-heading font-bold text-gray-300 uppercase tracking-wider text-[11px]">Поточні страви в чеку:</span>
+            <span id="edit-order-items-count" class="text-gray-400 text-[11px]">0 позицій</span>
+          </div>
+          <div id="edit-order-items-list" class="space-y-2 max-h-52 overflow-y-auto pr-1">
+            <!-- Генерується динамічно -->
+          </div>
+        </div>
+
+        <!-- Секція 2: Пошук та додавання нової страви з меню ресторану -->
+        <div class="p-3.5 rounded-2xl bg-[#20202a] border border-white/10 space-y-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <span class="font-heading font-bold text-[#f59e0b] uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-sm">add_circle</span>
+              <span>Додати нову страву з меню ресторану</span>
+            </span>
+
+            <!-- Кнопка вибору безпосередньо в основному меню сайту -->
+            <button 
+              type="button" 
+              onclick="switchToMainSiteOrderEdit()" 
+              class="px-3 py-1.5 rounded-xl bg-amber-500/20 text-[#f59e0b] hover:bg-[#f59e0b] hover:text-black font-heading font-bold text-[11px] transition-all flex items-center gap-1.5 cursor-pointer border border-amber-500/30 shrink-0"
+              title="Перейти до повного каталогу сайту та вибирати страви наочно"
+            >
+              <span class="material-symbols-outlined text-sm">storefront</span>
+              <span>Вибрати в основному меню на сайті</span>
+            </button>
+          </div>
+
+          <!-- Пошуковий рядок -->
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-base">search</span>
+            <input 
+              id="edit-order-search-input" 
+              type="text" 
+              placeholder="Введіть назву страви (наприклад: шашлик, лаваш, піца, кола)..." 
+              class="w-full pl-9 pr-3 py-2 rounded-xl bg-[#16161c] border border-white/10 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]"
+              oninput="handleEditOrderSearch(this.value)"
+            />
+          </div>
+
+          <!-- Усі категорії як в основному меню ресторану -->
+          <div class="flex items-center gap-1.5 overflow-x-auto pb-1.5 text-[10px] no-scrollbar">
+            <button onclick="filterEditOrderCategory('all')" class="edit-cat-btn px-2.5 py-1 rounded-lg bg-white/15 text-[#f59e0b] font-bold whitespace-nowrap cursor-pointer" data-cat="all">Всі страви</button>
+            <button onclick="filterEditOrderCategory('mangal')" class="edit-cat-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 whitespace-nowrap cursor-pointer" data-cat="mangal">🥩 Мангал</button>
+            <button onclick="filterEditOrderCategory('pizza')" class="edit-cat-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 whitespace-nowrap cursor-pointer" data-cat="pizza">🍕 Піца</button>
+            <button onclick="filterEditOrderCategory('sushi')" class="edit-cat-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 whitespace-nowrap cursor-pointer" data-cat="sushi">🍣 Суші</button>
+            <button onclick="filterEditOrderCategory('setu')" class="edit-cat-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 whitespace-nowrap cursor-pointer" data-cat="setu">🍱 Сети</button>
+            <button onclick="filterEditOrderCategory('burgers')" class="edit-cat-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 whitespace-nowrap cursor-pointer" data-cat="burgers">🍔 Бургери</button>
+            <button onclick="filterEditOrderCategory('wok')" class="edit-cat-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 whitespace-nowrap cursor-pointer" data-cat="wok">🍜 WOK & Паста</button>
+            <button onclick="filterEditOrderCategory('supov')" class="edit-cat-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 whitespace-nowrap cursor-pointer" data-cat="supov">🍲 Супи</button>
+            <button onclick="filterEditOrderCategory('salaty')" class="edit-cat-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 whitespace-nowrap cursor-pointer" data-cat="salaty">🥗 Салати</button>
+            <button onclick="filterEditOrderCategory('zakuski')" class="edit-cat-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 whitespace-nowrap cursor-pointer" data-cat="zakuski">🧀 Закуски</button>
+            <button onclick="filterEditOrderCategory('deserty')" class="edit-cat-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 whitespace-nowrap cursor-pointer" data-cat="deserty">🍰 Десерти</button>
+            <button onclick="filterEditOrderCategory('napitki')" class="edit-cat-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 whitespace-nowrap cursor-pointer" data-cat="napitki">🥤 Напої</button>
+          </div>
+
+          <!-- Список знайдених страв з меню -->
+          <div id="edit-order-menu-results" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto pr-1">
+            <!-- Генерується динамічно -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Футер модалки з фінальним підсумком та кнопкою збереження -->
+      <div class="pt-3 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
+        <div class="text-xs">
+          <span class="text-gray-400 block text-[11px]">Оновлена сума замовлення:</span>
+          <div class="flex items-baseline gap-2">
+            <span id="edit-order-new-total" class="font-heading font-extrabold text-lg text-[#f59e0b]">0 ₴</span>
+            <span id="edit-order-diff" class="text-[11px] text-emerald-400 font-medium"></span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="closeEditOrderModal()" class="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 font-heading text-xs font-bold transition-colors cursor-pointer">
+            Скасувати
+          </button>
+          <button onclick="saveEditOrderChanges()" class="px-5 py-2.5 btn-amber font-heading text-xs font-bold uppercase tracking-wider shadow-lg active:scale-95 flex items-center gap-1.5 cursor-pointer">
+            <span class="material-symbols-outlined text-sm">check_circle</span>
+            <span>Зберегти зміни</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 10.6 ПЛАВАЮЧИЙ БАР РЕДАГУВАННЯ ЗАМОВЛЕННЯ В ОСНОВНОМУ МЕНЮ НА САЙТІ       -->
+  <!-- ========================================================================= -->
+  <div id="main-menu-order-edit-bar" class="hidden fixed bottom-5 inset-x-3 sm:inset-x-auto sm:right-6 sm:left-6 max-w-4xl mx-auto bg-[#181822] border-2 border-[#f59e0b] rounded-2xl shadow-2xl p-3 sm:p-4 z-50 flex flex-col sm:flex-row items-center justify-between gap-3 modal-enter backdrop-blur-xl">
+    <div class="flex items-center gap-3 w-full sm:w-auto">
+      <div class="w-10 h-10 rounded-xl bg-[#f59e0b]/20 text-[#f59e0b] flex items-center justify-center shrink-0 border border-[#f59e0b]/30">
+        <span class="material-symbols-outlined text-xl">restaurant_menu</span>
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="font-heading font-extrabold text-white text-xs sm:text-sm">Режим додавання страв у замовлення <span id="bar-edit-order-id" class="text-[#f59e0b]">#AB-000000</span></span>
+          <span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold uppercase border border-amber-500/30">Адмін</span>
+        </div>
+        <p class="text-[11px] text-gray-300">Вибирайте будь-які страви в меню сайту нижче та натискайте <b class="text-[#f59e0b]">«+»</b></p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end">
+      <div class="text-right mr-2 hidden sm:block">
+        <span class="text-[10px] text-gray-400 block">Сума чека:</span>
+        <span id="bar-edit-order-total" class="font-heading font-extrabold text-sm text-[#f59e0b]">0 ₴</span>
+      </div>
+      <button onclick="openEditOrderModal(editingOrderId)" class="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white font-heading text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
+        <span class="material-symbols-outlined text-sm">receipt_long</span>
+        <span>Чек (<span id="bar-edit-order-count">0</span>)</span>
+      </button>
+      <button onclick="saveEditOrderChanges()" class="px-4 py-2 rounded-xl btn-amber font-heading text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1 cursor-pointer shadow-lg active:scale-95">
+        <span class="material-symbols-outlined text-sm">check_circle</span>
+        <span>Зберегти</span>
+      </button>
+      <button onclick="cancelMainSiteOrderEdit()" class="p-2 rounded-xl bg-white/5 hover:bg-rose-500/20 text-gray-400 hover:text-rose-400 transition-all cursor-pointer" title="Скасувати редагування">
+        <span class="material-symbols-outlined text-base">close</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 11. ФУТЕР САЙТУ                                                           -->
+  <!-- ========================================================================= -->
+  <footer class="bg-[#101012] border-t border-white/10 py-12 px-4 sm:px-8 mt-auto">
+    <div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-xs text-gray-400">
+      
+      <!-- Колонка 1: Бренд -->
+      <div class="space-y-3">
+        <a href="#" onclick="setCategory('all'); return false;" class="inline-block">
+          <img 
+            src="assets/original_logo.png" 
+            alt="АМБАР" 
+            class="h-9 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
+          />
+        </a>
+        <p class="leading-relaxed">Кафе та доставка гарячої їжі у м. Запоріжжя. Справжній мангал на вугіллі, неаполітанська піца, соковиті бургери та суші.</p>
+        <p class="text-[11px] text-gray-500">© 2026 Кафе «Амбар». Всі права захищені.</p>
+      </div>
+
+      <!-- Колонка 2: Меню -->
+      <div class="space-y-2">
+        <h4 class="font-heading font-bold text-white uppercase tracking-wider text-xs">Категорії меню</h4>
+        <ul class="space-y-1.5">
+          <li><a href="#" onclick="setCategory('mangal'); return false;" class="hover:text-[#f59e0b]">Шашлик та мангал гриль</a></li>
+          <li><a href="#" onclick="setCategory('pizza'); return false;" class="hover:text-[#f59e0b]">Піца з дров'яної печі</a></li>
+          <li><a href="#" onclick="setCategory('sushi'); return false;" class="hover:text-[#f59e0b]">Суші та роли</a></li>
+          <li><a href="#" onclick="setCategory('setu'); return false;" class="hover:text-[#f59e0b]">Великі сети суші</a></li>
+          <li><a href="#" onclick="setCategory('burgers'); return false;" class="hover:text-[#f59e0b]">Бургери Black Angus</a></li>
+          <li><a href="#" onclick="setCategory('wok'); return false;" class="hover:text-[#f59e0b]">Локшина WOK та паста</a></li>
+        </ul>
+      </div>
+
+      <!-- Колонка 3: Доставка -->
+      <div class="space-y-2">
+        <h4 class="font-heading font-bold text-white uppercase tracking-wider text-xs">Зони доставки</h4>
+        <ul class="space-y-1.5">
+          <li>Вознесенівський (Центр) — безкоштовно від 400 ₴</li>
+          <li>Дніпровський та Бородінський — від 500 ₴</li>
+          <li>Олександрівський — від 450 ₴</li>
+          <li>Комунарський (Космос) — від 500 ₴</li>
+          <li>Хортицький (Бабурка) — від 550 ₴</li>
+          <li>Заводський та Шевченківський — від 550 ₴</li>
+        </ul>
+      </div>
+
+      <!-- Колонка 4: Контакти кафе -->
+      <div class="space-y-2">
+        <h4 class="font-heading font-bold text-white uppercase tracking-wider text-xs">Контакти та графік</h4>
+        <p class="text-white font-semibold flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[#f59e0b] text-sm">schedule</span>
+          <span>Щодня з 10:00 до 22:00</span>
+        </p>
+        <p class="flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-sm text-[#f59e0b]">location_on</span>
+          <span>м. Запоріжжя, вул. Олександрівська, 88</span>
+        </p>
+        <div class="pt-2 space-y-1">
+          <a href="tel:+380676130088" class="block font-bold text-white hover:text-[#f59e0b]">+38 (067) 613-00-88</a>
+          <a href="tel:+380507021888" class="block font-bold text-white hover:text-[#f59e0b]">+38 (050) 70-21-888</a>
+          <a href="tel:+380737021888" class="block font-bold text-white hover:text-[#f59e0b]">+38 (073) 70-21-888</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Нижня плашка футеру з входом в адмінку -->
+    <div class="max-w-container-max mx-auto pt-8 mt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-gray-500">
+      <p>© 2026 Кафе «Амбар» Запоріжжя. Всі права захищені.</p>
+      <button onclick="openAdminLoginModal()" class="hover:text-gray-300 text-gray-500 transition-colors flex items-center gap-1.5 cursor-pointer py-1 px-2 rounded-lg hover:bg-white/5">
+        <span class="material-symbols-outlined text-sm">lock</span>
+        <span>Панель адміністратора</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- 12. СПОВІЩЕННЯ (TOAST)                                                    -->
+  <!-- ========================================================================= -->
+  <div id="app-toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 translate-y-4 transition-all duration-300 flex items-center gap-2 px-5 py-3 rounded-full bg-[#1e1e24] text-white border border-[#f59e0b] shadow-2xl text-xs font-bold">
+    <span class="material-symbols-outlined text-base text-[#f59e0b]">check_circle</span>
+    <span id="toast-msg">Страва додана</span>
+  </div>
+
+  <!-- Повний довідник вулиць Запоріжжя для автодоповнення -->
+  <script src="streets_data.js"></script>
+  <!-- База даних повного меню з 351 страви -->
+  <script src="menu_data.js"></script>
+  <!-- Основна логіка додатку -->
+  <script src="app.js"></script>
+</body>
+</html>
