@@ -1,0 +1,11 @@
+﻿{
+  "version": 2,
+  "rewrites": [
+    { "source": "/api/orders/:match*", "destination": "/api/orders" },
+    { "source": "/api/orders", "destination": "/api/orders" },
+    { "source": "/api/bookings/:match*", "destination": "/api/bookings" },
+    { "source": "/api/bookings", "destination": "/api/bookings" },
+    { "source": "/api/users/:match*", "destination": "/api/users" },
+    { "source": "/api/users", "destination": "/api/users" }
+  ]
+}
