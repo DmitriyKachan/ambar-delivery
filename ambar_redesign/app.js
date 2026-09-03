@@ -2253,6 +2253,12 @@ function updateCabinetUI() {
 }
 
 function openCabinetModal() {
+  // Якщо клієнт ще не вказав номер телефону — пропонуємо увійти або зареєструватися
+  if (!CabinetState.user || !CabinetState.user.phone) {
+    openClientAuthModal();
+    return;
+  }
+
   const modal = document.getElementById("user-cabinet-modal");
   const backdrop = document.getElementById("user-cabinet-backdrop");
   if (modal && backdrop) {
@@ -2356,9 +2362,17 @@ function renderCabinetOrders() {
         <span class="material-symbols-outlined text-4xl text-gray-500">receipt_long</span>
         <h4 class="font-heading font-bold text-sm text-white">У вас поки немає замовлень</h4>
         <p class="text-xs text-gray-400">Оберіть страви з мангалу, соковиті бургери чи суші та оформіть доставку!</p>
-        <button onclick="closeCabinetModal()" class="px-5 py-2.5 btn-amber text-xs font-bold font-heading rounded-full shadow cursor-pointer">
-          Перейти до меню
-        </button>
+        <div class="flex items-center justify-center gap-2 pt-1 flex-wrap">
+          ${!CabinetState.user.phone ? `
+            <button onclick="openClientAuthModal()" class="px-5 py-2.5 btn-amber text-xs font-bold font-heading rounded-full shadow cursor-pointer">
+              Увійти за номером телефону
+            </button>
+          ` : `
+            <button onclick="closeCabinetModal()" class="px-5 py-2.5 btn-amber text-xs font-bold font-heading rounded-full shadow cursor-pointer">
+              Перейти до меню
+            </button>
+          `}
+        </div>
       </div>
     `;
     return;
