@@ -1359,27 +1359,79 @@ function renderAddressSuggestions(query) {
     return;
   }
 
-  currentAddressSuggestions = searchStreets(query);
+  const rawStreetSuggestions = searchStreets(query);
+  currentAddressSuggestions = [];
 
-  // Якщо варіантів немає - просто ховаємо блок без нав'язливих повідомлень
+  // Якщо у клієнта є збережена адреса в профілі — додаємо її найпершим пунктом!
+  const savedAddress = (CabinetState.user?.address || "").trim();
+  if (savedAddress && !savedAddress.includes("Самовивіз")) {
+    const matchesQuery = !query || savedAddress.toLowerCase().includes(query.toLowerCase());
+    if (matchesQuery) {
+      let extraInfo = [];
+      if (CabinetState.user.entrance) extraInfo.push(`під'їзд ${CabinetState.user.entrance}`);
+      if (CabinetState.user.floor) extraInfo.push(`пов. ${CabinetState.user.floor}`);
+      if (CabinetState.user.apt) extraInfo.push(`кв. ${CabinetState.user.apt}`);
+
+      currentAddressSuggestions.push({
+        isProfileAddress: true,
+        title: savedAddress,
+        address: savedAddress,
+        entrance: CabinetState.user.entrance || "",
+        floor: CabinetState.user.floor || "",
+        apt: CabinetState.user.apt || "",
+        hint: "🏠 З профілю",
+        extraText: extraInfo.length > 0 ? extraInfo.join(", ") : "",
+        zone: detectZoneFromAddress(savedAddress)
+      });
+    }
+  }
+
+  // Додаємо варіанти вулиць без дублювання
+  rawStreetSuggestions.forEach(st => {
+    if (!currentAddressSuggestions.some(cs => cs.title.toLowerCase() === st.title.toLowerCase())) {
+      currentAddressSuggestions.push(st);
+    }
+  });
+
   if (currentAddressSuggestions.length === 0) {
     container.classList.add("hidden");
     return;
   }
 
-  container.innerHTML = currentAddressSuggestions.map((item, idx) => `
-    <button 
-      type="button" 
-      onmousedown="selectAddressSuggestionByIndex(${idx}); event.preventDefault();" 
-      class="w-full text-left px-3.5 py-2.5 hover:bg-[#282834] flex items-center justify-between transition-colors group cursor-pointer"
-    >
-      <div class="flex items-center gap-2.5">
-        <span class="material-symbols-outlined text-sm text-[#f59e0b] group-hover:scale-110 transition-transform">pin_drop</span>
-        <span class="text-xs font-semibold text-white">${item.title}</span>
-      </div>
-      <span class="text-[10px] text-gray-400 bg-white/5 px-2 py-0.5 rounded-md">${item.hint}</span>
-    </button>
-  `).join("");
+  container.innerHTML = currentAddressSuggestions.map((item, idx) => {
+    if (item.isProfileAddress) {
+      return `
+        <button 
+          type="button" 
+          onmousedown="selectAddressSuggestionByIndex(${idx}); event.preventDefault();" 
+          class="w-full text-left px-3.5 py-3 bg-amber-500/10 hover:bg-amber-500/20 border-b border-white/10 flex items-center justify-between transition-colors group cursor-pointer"
+        >
+          <div class="flex items-center gap-2.5 min-w-0">
+            <span class="material-symbols-outlined text-base text-[#f59e0b] group-hover:scale-110 transition-transform shrink-0">home_pin</span>
+            <div class="min-w-0">
+              <span class="text-xs font-bold text-white block truncate">${escapeHtml(item.title)}</span>
+              ${item.extraText ? `<span class="text-[10px] text-gray-400 block truncate">${escapeHtml(item.extraText)}</span>` : ""}
+            </div>
+          </div>
+          <span class="text-[10px] text-[#f59e0b] bg-amber-500/20 border border-amber-500/30 px-2.5 py-0.5 rounded-full font-bold shrink-0 ml-2 shadow">🏠 Збережена адреса</span>
+        </button>
+      `;
+    }
+
+    return `
+      <button 
+        type="button" 
+        onmousedown="selectAddressSuggestionByIndex(${idx}); event.preventDefault();" 
+        class="w-full text-left px-3.5 py-2.5 hover:bg-[#282834] flex items-center justify-between transition-colors group cursor-pointer"
+      >
+        <div class="flex items-center gap-2.5">
+          <span class="material-symbols-outlined text-sm text-[#f59e0b] group-hover:scale-110 transition-transform">pin_drop</span>
+          <span class="text-xs font-semibold text-white">${escapeHtml(item.title)}</span>
+        </div>
+        <span class="text-[10px] text-gray-400 bg-white/5 px-2 py-0.5 rounded-md">${escapeHtml(item.hint)}</span>
+      </button>
+    `;
+  }).join("");
 
   container.classList.remove("hidden");
 }
@@ -1418,15 +1470,30 @@ function selectAddressSuggestionByIndex(idx) {
   if (!item) return;
 
   const addressInput = document.getElementById("order-address");
-  if (addressInput) {
-    addressInput.value = item.title + ", ";
-    setTimeout(() => {
-      addressInput.focus();
-      addressInput.setSelectionRange(addressInput.value.length, addressInput.value.length);
-    }, 50);
-  }
 
-  AppState.selectedDistrict = item.zone;
+  if (item.isProfileAddress) {
+    if (addressInput) addressInput.value = item.address;
+
+    const entInput = document.getElementById("order-entrance");
+    if (entInput && item.entrance) entInput.value = item.entrance;
+
+    const floorInput = document.getElementById("order-floor");
+    if (floorInput && item.floor) floorInput.value = item.floor;
+
+    const aptInput = document.getElementById("order-apt");
+    if (aptInput && item.apt) aptInput.value = item.apt;
+
+    AppState.selectedDistrict = item.zone || detectZoneFromAddress(item.address);
+  } else {
+    if (addressInput) {
+      addressInput.value = item.title + ", ";
+      setTimeout(() => {
+        addressInput.focus();
+        addressInput.setSelectionRange(addressInput.value.length, addressInput.value.length);
+      }, 50);
+    }
+    AppState.selectedDistrict = item.zone;
+  }
   
   const container = document.getElementById("address-suggestions");
   if (container) container.classList.add("hidden");
