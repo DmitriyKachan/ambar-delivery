@@ -159,69 +159,70 @@ function renderMenuGrid() {
     return `
       <div class="food-card flex flex-col justify-between overflow-hidden group">
         <div>
-          <!-- Фото страви (1:1 квадрат з плавним наближенням) -->
-          <div class="food-image-wrapper aspect-square bg-[#151518] cursor-pointer relative overflow-hidden" onclick="openDishConfigurator('${item.id}')">
+          <!-- Фото страви (Оригінал з ambar.net.ua: точний квадрат 1:1, без стискання та обрізання) -->
+          <div class="food-image-wrapper aspect-square bg-[#141418] cursor-pointer relative overflow-hidden" onclick="openDishConfigurator('${item.id}')">
             <img 
               src="${item.image}" 
               alt="${item.name}" 
               loading="lazy"
               onerror="this.onerror=null; this.src='${fallbackImg}';"
-              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <div class="food-image-gradient absolute inset-0 pointer-events-none"></div>
+            <div class="food-image-gradient absolute inset-0"></div>
 
             <!-- Бейджі -->
-            <div class="absolute top-2.5 left-2.5 flex gap-1 items-center">
-              ${badgeHtml ? `<span class="bg-red-600 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md shadow-sm">${item.badge}</span>` : ""}
+            <div class="absolute top-3 left-3 flex gap-1.5 items-center">
+              ${badgeHtml}
             </div>
 
             <!-- Кнопка Обраного -->
             <button 
               onclick="event.stopPropagation(); toggleFavorite('${item.id}')"
-              class="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-black/60 ${isFav ? 'text-amber-500' : 'text-gray-300'} flex items-center justify-center hover:text-amber-500 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+              class="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/60 backdrop-blur-md ${isFav ? 'text-[#f59e0b]' : 'text-white/80'} flex items-center justify-center hover:text-[#f59e0b] hover:scale-110 active:scale-95 transition-all cursor-pointer"
               title="${isFav ? 'Видалити з улюблених' : 'Додати в улюблені'}"
             >
-              <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' ${isFav ? 1 : 0};">
+              <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' ${isFav ? 1 : 0};">
                 favorite
               </span>
             </button>
 
-            <!-- Вага страви -->
-            <div class="absolute bottom-2 left-2.5 text-xs text-gray-300 font-medium">
-              <span class="bg-black/75 px-2 py-0.5 rounded-md text-[11px]">${item.weight}</span>
+            <!-- Вага -->
+            <div class="absolute bottom-2.5 left-3 text-xs text-gray-300 font-medium">
+              <span class="bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10 font-semibold">${item.weight}</span>
             </div>
           </div>
 
           <!-- Опис та назва -->
-          <div class="p-4">
-            <span class="text-[11px] font-semibold uppercase tracking-wider text-amber-500 block mb-1">${item.categoryName || 'Страва ресторану'}</span>
+          <div class="p-4 sm:p-5">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-primary-amber block mb-1">${item.categoryName || 'Страва ресторану'}</span>
             <h3 
-              class="font-bold text-base text-white hover:text-amber-400 transition-colors cursor-pointer leading-snug line-clamp-2"
+              class="font-heading text-base font-bold text-white group-hover:text-primary-amber transition-colors cursor-pointer leading-snug line-clamp-2"
               onclick="openDishConfigurator('${item.id}')"
             >
               ${item.name}
             </h3>
-            <p class="text-xs text-gray-400 mt-1.5 line-clamp-2 leading-relaxed">
+            <p class="text-xs text-gray-400 mt-2 line-clamp-2 leading-relaxed">
               ${item.description}
             </p>
           </div>
         </div>
 
         <!-- Нижній блок з ціною та кнопкою -->
-        <div class="p-4 pt-0 flex items-center justify-between mt-auto">
+        <div class="p-4 sm:p-5 pt-0 flex items-center justify-between mt-auto">
           <div>
+            <span class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold block">Вартість</span>
             <div class="flex items-baseline gap-1">
-              <span class="text-xl sm:text-2xl font-bold text-white">${item.price}</span>
-              <span class="text-sm font-semibold text-gray-400">₴</span>
+              <span class="font-heading text-xl font-extrabold text-primary-amber">${item.price}</span>
+              <span class="text-sm font-semibold text-white">₴</span>
             </div>
           </div>
 
           <button 
             onclick="${item.category === 'pizza' ? `openDishConfigurator('${item.id}')` : `quickAddToCart('${item.id}')`}"
-            class="px-4 py-2 btn-amber text-xs font-semibold rounded-xl flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer"
+            class="px-4 py-2.5 btn-amber text-xs font-bold flex items-center gap-1.5 shadow-md active:scale-95 transition-all cursor-pointer"
           >
-            <span class="material-symbols-outlined text-base">${item.category === 'pizza' ? 'local_pizza' : 'add'}</span>
-            <span>${item.category === 'pizza' ? 'Розмір' : 'В кошик'}</span>
+            <span class="material-symbols-outlined text-base">${item.category === 'pizza' ? 'local_pizza' : 'add_shopping_cart'}</span>
+            <span>${item.category === 'pizza' ? 'Обрати розмір' : 'В кошик'}</span>
           </button>
         </div>
       </div>
@@ -420,8 +421,8 @@ function renderConfiguratorModal() {
           onclick="selectModalSize('${size.name}', ${size.price})"
           class="p-2.5 sm:p-3 rounded-xl border transition-all text-left flex items-center justify-between relative cursor-pointer ${
             isSelected 
-              ? "border-amber-500 bg-amber-500/15 text-white font-bold" 
-              : "border-white/10 bg-[#1e1d22] text-stone-300 hover:text-white hover:border-white/20"
+              ? "border-[#f59e0b] bg-[#f59e0b]/15 text-white font-bold ring-1 ring-[#f59e0b] shadow-md shadow-amber-500/10" 
+              : "border-white/10 bg-[#202026] text-gray-300 hover:text-white hover:border-white/20"
           }"
         >
           <div class="flex items-center gap-1.5 min-w-0">
