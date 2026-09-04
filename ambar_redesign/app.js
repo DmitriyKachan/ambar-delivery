@@ -421,8 +421,8 @@ function renderConfiguratorModal() {
           onclick="selectModalSize('${size.name}', ${size.price})"
           class="p-2.5 sm:p-3 rounded-xl border transition-all text-left flex items-center justify-between relative cursor-pointer ${
             isSelected 
-              ? "border-[#f59e0b] bg-[#f59e0b]/15 text-white font-bold ring-1 ring-[#f59e0b] shadow-md shadow-amber-500/10" 
-              : "border-white/10 bg-[#202026] text-gray-300 hover:text-white hover:border-white/20"
+              ? "border-amber-500 bg-amber-500/15 text-white font-bold" 
+              : "border-white/10 bg-[#1e1d22] text-stone-300 hover:text-white hover:border-white/20"
           }"
         >
           <div class="flex items-center gap-1.5 min-w-0">
@@ -2484,14 +2484,14 @@ function renderCabinetOrders() {
 
     if (isPickup) {
       if (st.includes("Готується")) {
-        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span><span>👨‍🍳 Готується на кухні</span></span>`;
-        statusNoticeHtml = `<div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200/90 flex items-center gap-2"><span class="material-symbols-outlined text-base text-[#f59e0b]">schedule</span><span>Орієнтовний час готовності: <b>~20–30 хв</b>. Чекаємо на вас у кафе «Амбар»!</span></div>`;
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/25 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span><span>👨‍🍳 Готується на кухні</span></span>`;
+        statusNoticeHtml = `<div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200/90 flex items-center gap-2"><span class="material-symbols-outlined text-base text-amber-400">schedule</span><span>Орієнтовний час готовності: <b>~20–30 хв</b>. Чекаємо на вас у кафе «Амбар»!</span></div>`;
       } else if (st.includes("Готовий") || st.includes("видачі") || st.includes("дорозі") || st.includes("очікує")) {
-        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5 shadow-sm"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span><span>🥡 Готово до видачі в кафе!</span></span>`;
-        statusNoticeHtml = `<div class="p-2.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-[11px] text-emerald-200 flex items-center gap-2"><span class="material-symbols-outlined text-base text-emerald-400">storefront</span><span>Замовлення запаковано! Заберіть за адресою: <b>м. Запоріжжя, вул. Олександрівська, 88</b></span></div>`;
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span>🥡 Готово до видачі в кафе!</span></span>`;
+        statusNoticeHtml = `<div class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-[11px] text-emerald-200 flex items-center gap-2"><span class="material-symbols-outlined text-base text-emerald-400">storefront</span><span>Замовлення запаковано! Заберіть за адресою: <b>м. Запоріжжя, вул. Олександрівська, 88</b></span></div>`;
       } else if (st.includes("Видано") || st.includes("Доставлено")) {
-        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1"><span>✅ Видано в кафе</span></span>`;
-        statusNoticeHtml = `<div class="p-2 rounded-xl bg-white/5 text-[11px] text-gray-400 flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-emerald-400">check_circle</span><span>Замовлення успішно отримано. Смачного!</span></div>`;
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-white/5 text-stone-300 border border-white/10 flex items-center gap-1"><span>✅ Видано в кафе</span></span>`;
+        statusNoticeHtml = `<div class="p-2 rounded-xl bg-white/5 text-[11px] text-stone-400 flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-emerald-400">check_circle</span><span>Замовлення успішно отримано. Смачного!</span></div>`;
       } else if (st.includes("Скасовано")) {
         statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20"><span>❌ Скасовано</span></span>`;
       } else {
@@ -2500,14 +2500,14 @@ function renderCabinetOrders() {
     } else {
       // Доставка кур'єром
       if (st.includes("Готується")) {
-        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span><span>👨‍🍳 Готується на кухні</span></span>`;
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/25 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span><span>👨‍🍳 Готується на кухні</span></span>`;
       } else if (st.includes("Готовий") || st.includes("очікує")) {
-        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-sky-500/15 text-sky-300 border border-sky-500/30 flex items-center gap-1"><span>🥡 Очікує передачі кур'єру</span></span>`;
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-stone-800 text-stone-300 border border-white/10 flex items-center gap-1"><span>🥡 Очікує кур'єра</span></span>`;
       } else if (st.includes("дорозі")) {
-        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span><span>🛵 Кур'єр вже в дорозі</span></span>`;
-        statusNoticeHtml = `<div class="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-[11px] text-purple-200 flex items-center gap-2"><span class="material-symbols-outlined text-base text-purple-400">moped</span><span>Кур'єр прямує за адресою: <b>${escapeHtml(order.address)}</b></span></div>`;
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/25 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span><span>🛵 Кур'єр у дорозі</span></span>`;
+        statusNoticeHtml = `<div class="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200 flex items-center gap-2"><span class="material-symbols-outlined text-base text-amber-400">moped</span><span>Кур'єр прямує за адресою: <b>${escapeHtml(order.address)}</b></span></div>`;
       } else if (st.includes("Доставлено") || st.includes("Видано")) {
-        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1"><span>✅ Успішно доставлено</span></span>`;
+        statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-white/5 text-stone-300 border border-white/10 flex items-center gap-1"><span>✅ Успішно доставлено</span></span>`;
       } else if (st.includes("Скасовано")) {
         statusBadgeHtml = `<span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20"><span>❌ Скасовано</span></span>`;
       } else {
@@ -2516,20 +2516,20 @@ function renderCabinetOrders() {
     }
 
     return `
-      <div class="p-4 rounded-2xl bg-[#1e1e26] border border-white/5 space-y-3 transition-all hover:border-white/10">
+      <div class="p-4 rounded-2xl bg-[#17171a] border border-white/10 space-y-3 transition-all hover:border-white/20">
         <div class="flex items-center justify-between gap-2 flex-wrap">
           <div class="flex items-center gap-2">
             <div>
-              <span class="font-heading font-extrabold text-sm text-white">#${escapeHtml(order.id)}</span>
-              <span class="text-[11px] text-gray-400 block">${escapeHtml(order.date)}</span>
+              <span class="font-heading font-extrabold text-sm text-amber-400">#${escapeHtml(order.id)}</span>
+              <span class="text-[11px] text-stone-400 block">${escapeHtml(order.date)}</span>
             </div>
             ${isPickup ? `
-              <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-500/20 text-[#f59e0b] border border-[#f59e0b]/40 flex items-center gap-1">
+              <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/25 flex items-center gap-1">
                 <span class="material-symbols-outlined text-xs">storefront</span>
                 <span>САМОВИВІЗ</span>
               </span>
             ` : `
-              <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-sky-500/20 text-sky-400 border border-sky-500/30 flex items-center gap-1">
+              <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-stone-800 text-stone-300 border border-white/10 flex items-center gap-1">
                 <span class="material-symbols-outlined text-xs">moped</span>
                 <span>ДОСТАВКА</span>
               </span>
@@ -2543,11 +2543,11 @@ function renderCabinetOrders() {
         ${statusNoticeHtml}
 
         <!-- Список страв -->
-        <div class="divide-y divide-white/5 text-xs bg-[#242430] p-3 rounded-xl space-y-1">
+        <div class="divide-y divide-white/5 text-xs bg-[#121215] p-3 rounded-xl space-y-1 border border-white/5">
           ${order.items.map(it => `
-            <div class="py-1 flex justify-between items-center text-gray-300">
+            <div class="py-1 flex justify-between items-center text-stone-300">
               <div class="flex items-center gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-[#f59e0b]"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500/80"></span>
                 <span>${escapeHtml(it.name)} ${it.selectedSize ? `(${escapeHtml(it.selectedSize.label || it.selectedSize.size)})` : ""} × ${it.quantity}</span>
               </div>
               <span class="font-semibold text-white shrink-0">${it.price * it.quantity} ₴</span>
@@ -2557,14 +2557,14 @@ function renderCabinetOrders() {
 
         <div class="pt-2 border-t border-white/5 flex items-center justify-between">
           <div class="min-w-0 pr-2">
-            <span class="text-[11px] text-gray-400 block truncate">${isPickup ? "🏪 Самовивіз: вул. Олександрівська, 88 (кафе «Амбар»)" : `📍 ${escapeHtml(order.address)}`}</span>
+            <span class="text-[11px] text-stone-400 block truncate">${isPickup ? "вул. Олександрівська, 88 (кафе «Амбар»)" : `📍 ${escapeHtml(order.address)}`}</span>
             <div class="flex items-center gap-2 flex-wrap mt-0.5">
-              <span class="text-xs font-heading font-bold text-[#f59e0b]">Разом: ${order.total} ₴</span>
-              ${order.bonusesUsed > 0 ? `<span class="text-[10px] text-amber-400 font-bold bg-amber-500/15 px-1.5 py-0.5 rounded border border-amber-500/30">Бонуси: -${order.bonusesUsed} ₴</span>` : ""}
-              ${order.bonusesEarned > 0 ? `<span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/15 px-1.5 py-0.5 rounded border border-emerald-500/30">🎁 +${order.bonusesEarned} ₴ кешбек</span>` : ""}
+              <span class="text-xs font-heading font-bold text-amber-400">Разом: ${order.total} ₴</span>
+              ${order.bonusesUsed > 0 ? `<span class="text-[10px] text-amber-300 font-bold bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">Бонуси: -${order.bonusesUsed} ₴</span>` : ""}
+              ${order.bonusesEarned > 0 ? `<span class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">🎁 +${order.bonusesEarned} ₴ кешбек</span>` : ""}
             </div>
           </div>
-          <button onclick="repeatOrder('${escapeHtml(order.id)}')" class="px-3.5 py-2 rounded-xl bg-[#282834] hover:bg-[#f59e0b] hover:text-black text-gray-200 text-xs font-heading font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95 shrink-0 cursor-pointer">
+          <button onclick="repeatOrder('${escapeHtml(order.id)}')" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-amber-500 hover:text-stone-950 text-stone-200 text-xs font-heading font-bold transition-all flex items-center gap-1.5 border border-white/10 active:scale-95 shrink-0 cursor-pointer">
             <span class="material-symbols-outlined text-sm">replay</span>
             <span>Повторити</span>
           </button>
@@ -3613,16 +3613,16 @@ function switchAdminTab(tab) {
     bookingsTab?.classList.add("hidden");
     ordersFilterBar?.classList.remove("hidden");
     bookingsFilterBar?.classList.add("hidden");
-    if (btnOrders) btnOrders.className = "px-5 py-2 rounded-xl bg-[#f59e0b] text-black font-bold transition-all flex items-center gap-1.5 shadow";
-    if (btnBookings) btnBookings.className = "px-5 py-2 rounded-xl text-gray-400 hover:text-white transition-all flex items-center gap-1.5";
+    if (btnOrders) btnOrders.className = "py-2.5 rounded-xl btn-amber font-heading font-bold transition-all flex items-center justify-center gap-1.5 shadow";
+    if (btnBookings) btnBookings.className = "py-2.5 rounded-xl text-stone-400 hover:text-white transition-all flex items-center justify-center gap-1.5";
     renderAdminOrders();
   } else {
     ordersTab?.classList.add("hidden");
     bookingsTab?.classList.remove("hidden");
     ordersFilterBar?.classList.add("hidden");
     bookingsFilterBar?.classList.remove("hidden");
-    if (btnBookings) btnBookings.className = "px-5 py-2 rounded-xl bg-[#f59e0b] text-black font-bold transition-all flex items-center gap-1.5 shadow";
-    if (btnOrders) btnOrders.className = "px-5 py-2 rounded-xl text-gray-400 hover:text-white transition-all flex items-center gap-1.5";
+    if (btnBookings) btnBookings.className = "py-2.5 rounded-xl btn-amber font-heading font-bold transition-all flex items-center justify-center gap-1.5 shadow";
+    if (btnOrders) btnOrders.className = "py-2.5 rounded-xl text-stone-400 hover:text-white transition-all flex items-center justify-center gap-1.5";
     renderAdminBookings();
   }
 }
@@ -3631,9 +3631,9 @@ function setAdminOrderFilter(filter) {
   currentAdminOrderFilter = filter;
   document.querySelectorAll(".adm-filter-btn").forEach(btn => {
     if (btn.dataset.filter === filter) {
-      btn.className = "adm-filter-btn shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-amber-500/20 text-[#f59e0b] border border-amber-500/30 font-bold cursor-pointer transition-colors shadow";
+      btn.className = "adm-filter-btn shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold cursor-pointer transition-colors shadow-sm";
     } else {
-      btn.className = "adm-filter-btn shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-[#1e1e28] hover:bg-white/10 text-gray-300 border border-white/5 cursor-pointer transition-colors";
+      btn.className = "adm-filter-btn shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-[#17171a] hover:bg-white/10 text-stone-300 border border-white/5 cursor-pointer transition-colors";
     }
   });
   renderAdminOrders();
@@ -3645,9 +3645,9 @@ function setAdminBookingFilter(filter) {
   currentAdminBookingFilter = filter;
   document.querySelectorAll(".adm-b-filter-btn").forEach(btn => {
     if (btn.dataset.bfilter === filter) {
-      btn.className = "adm-b-filter-btn shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-amber-500/20 text-[#f59e0b] border border-amber-500/30 font-bold cursor-pointer transition-colors shadow";
+      btn.className = "adm-b-filter-btn shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold cursor-pointer transition-colors shadow-sm";
     } else {
-      btn.className = "adm-b-filter-btn shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-[#1e1e28] hover:bg-white/10 text-gray-300 border border-white/5 cursor-pointer transition-colors";
+      btn.className = "adm-b-filter-btn shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-[#17171a] hover:bg-white/10 text-stone-300 border border-white/5 cursor-pointer transition-colors";
     }
   });
   renderAdminBookings();
@@ -3755,19 +3755,16 @@ function renderAdminOrders() {
       saveGlobalOrders(orders);
     }
 
-    let statusClass = "bg-amber-500/15 text-amber-400 border-amber-500/30";
+    let statusClass = "bg-amber-500/15 text-amber-300 border-amber-500/30";
     let nextStepBtn = "";
 
     if (isPickup) {
-      // -------------------------------------------------------------
-      // ЛОГІКА СТАТУСІВ САМОВИВОЗУ
-      // -------------------------------------------------------------
       if (st.includes("Готується")) {
-        statusClass = "bg-amber-500/15 text-amber-400 border-amber-500/30";
+        statusClass = "bg-amber-500/15 text-amber-300 border-amber-500/30";
         nextStepBtn = `
           <button 
             onclick="changeOrderStatus('${escapeHtml(o.id)}', 'Готовий до видачі в кафе 🥡')"
-            class="px-2.5 py-1.5 rounded-xl bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-black font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-amber-500/30 shadow-sm"
+            class="px-2.5 py-1.5 rounded-lg bg-amber-500/15 text-amber-300 hover:bg-amber-500 hover:text-stone-950 font-heading font-bold text-[11px] transition-all flex items-center gap-1 cursor-pointer border border-amber-500/30"
             title="Замовлення зібрано, очікує видачі гостю в кафе"
           >
             <span>➔ До видачі</span>
@@ -3775,11 +3772,11 @@ function renderAdminOrders() {
           </button>
         `;
       } else if (st.includes("Готовий") || st.includes("видачі") || st.includes("очікує")) {
-        statusClass = "bg-amber-500/20 text-[#f59e0b] border-[#f59e0b]/40";
+        statusClass = "bg-amber-500/20 text-amber-300 border-amber-500/40";
         nextStepBtn = `
           <button 
             onclick="changeOrderStatus('${escapeHtml(o.id)}', 'Видано гостю в кафе ✅')"
-            class="px-2.5 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500 hover:text-black font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-emerald-500/30 shadow-sm"
+            class="px-2.5 py-1.5 rounded-lg bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500 hover:text-stone-950 font-heading font-bold text-[11px] transition-all flex items-center gap-1 cursor-pointer border border-emerald-500/30"
             title="Замовлення передано клієнту в кафе"
           >
             <span>➔ Видано гостю</span>
@@ -3787,26 +3784,23 @@ function renderAdminOrders() {
           </button>
         `;
       } else if (st.includes("Видано") || st.includes("Доставлено")) {
-        statusClass = "bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
+        statusClass = "bg-white/5 text-stone-300 border-white/10";
         nextStepBtn = `
-          <span class="text-[10px] text-emerald-400 font-bold flex items-center gap-1 px-2 py-1 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
-            <span class="material-symbols-outlined text-xs">done_all</span>
-            <span>Видано гостю</span>
+          <span class="text-[11px] text-stone-300 font-bold flex items-center gap-1 px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">
+            <span class="material-symbols-outlined text-xs text-emerald-400">done_all</span>
+            <span>Видано</span>
           </span>
         `;
       } else if (st.includes("Скасовано")) {
         statusClass = "bg-rose-500/15 text-rose-400 border-rose-500/30";
       }
     } else {
-      // -------------------------------------------------------------
-      // ЛОГІКА СТАТУСІВ ДОСТАВКИ КУР'ЄРОМ
-      // -------------------------------------------------------------
       if (st.includes("Готується")) {
-        statusClass = "bg-amber-500/15 text-amber-400 border-amber-500/30";
+        statusClass = "bg-amber-500/15 text-amber-300 border-amber-500/30";
         nextStepBtn = `
           <button 
             onclick="changeOrderStatus('${escapeHtml(o.id)}', 'Готовий, очікує кур\\'єра 🥡')"
-            class="px-2.5 py-1.5 rounded-xl bg-sky-500/20 text-sky-300 hover:bg-sky-500 hover:text-black font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-sky-500/30 shadow-sm"
+            class="px-2.5 py-1.5 rounded-lg bg-amber-500/15 text-amber-300 hover:bg-amber-500 hover:text-stone-950 font-heading font-bold text-[11px] transition-all flex items-center gap-1 cursor-pointer border border-amber-500/30"
             title="Замовлення готове, очікує передачі кур'єру"
           >
             <span>➔ Готовий</span>
@@ -3814,11 +3808,11 @@ function renderAdminOrders() {
           </button>
         `;
       } else if (st.includes("Готовий") || st.includes("очікує")) {
-        statusClass = "bg-sky-500/15 text-sky-400 border-sky-500/30";
+        statusClass = "bg-stone-800 text-stone-200 border-white/10";
         nextStepBtn = `
           <button 
             onclick="changeOrderStatus('${escapeHtml(o.id)}', 'Кур\\'єр в дорозі 🛵')"
-            class="px-2.5 py-1.5 rounded-xl bg-purple-500/20 text-purple-300 hover:bg-purple-500 hover:text-white font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-purple-500/30 shadow-sm"
+            class="px-2.5 py-1.5 rounded-lg bg-stone-800 text-stone-200 hover:bg-stone-700 font-heading font-bold text-[11px] transition-all flex items-center gap-1 cursor-pointer border border-white/10"
             title="Передати замовлення кур'єру в дорогу"
           >
             <span>➔ В дорогу</span>
@@ -3826,11 +3820,11 @@ function renderAdminOrders() {
           </button>
         `;
       } else if (st.includes("дорозі")) {
-        statusClass = "bg-purple-500/15 text-purple-400 border-purple-500/30";
+        statusClass = "bg-amber-500/15 text-amber-300 border-amber-500/30";
         nextStepBtn = `
           <button 
             onclick="changeOrderStatus('${escapeHtml(o.id)}', 'Доставлено ✅')"
-            class="px-2.5 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500 hover:text-black font-heading font-bold text-[10px] transition-all flex items-center gap-1 cursor-pointer border border-emerald-500/30 shadow-sm"
+            class="px-2.5 py-1.5 rounded-lg bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500 hover:text-stone-950 font-heading font-bold text-[11px] transition-all flex items-center gap-1 cursor-pointer border border-emerald-500/30"
             title="Позначити успішно доставленим клієнту"
           >
             <span>➔ Доставлено</span>
@@ -3838,10 +3832,10 @@ function renderAdminOrders() {
           </button>
         `;
       } else if (st.includes("Доставлено") || st.includes("Видано")) {
-        statusClass = "bg-emerald-500/15 text-emerald-400 border-emerald-500/30";
+        statusClass = "bg-white/5 text-stone-300 border-white/10";
         nextStepBtn = `
-          <span class="text-[10px] text-emerald-400 font-bold flex items-center gap-1 px-2 py-1 bg-emerald-500/10 rounded-lg border border-emerald-500/20">
-            <span class="material-symbols-outlined text-xs">done_all</span>
+          <span class="text-[11px] text-stone-300 font-bold flex items-center gap-1 px-2.5 py-1 bg-white/5 rounded-lg border border-white/10">
+            <span class="material-symbols-outlined text-xs text-emerald-400">done_all</span>
             <span>Доставлено</span>
           </span>
         `;
@@ -3855,89 +3849,81 @@ function renderAdminOrders() {
     const remainingSec = Math.max(0, Math.ceil((120000 - orderAgeMs) / 1000));
 
     const cardClass = isBrandNew 
-      ? "p-4 rounded-2xl bg-[#1c1c24] border-2 border-[#f59e0b] shadow-xl shadow-amber-500/20 ring-2 ring-[#f59e0b]/40 space-y-3 relative overflow-hidden transition-all"
-      : "p-4 rounded-2xl bg-[#1c1c24] border border-white/10 space-y-3 transition-all";
+      ? "p-4 sm:p-5 rounded-2xl bg-[#17171a] border border-amber-500/30 border-l-4 border-l-amber-500 shadow-md space-y-3 relative overflow-hidden transition-all"
+      : "p-4 sm:p-5 rounded-2xl bg-[#17171a] border border-white/10 shadow-sm space-y-3 transition-all";
 
     return `
       <div class="${cardClass}">
         ${isBrandNew ? `
-          <!-- Банер термінового нового замовлення (перші 2 хвилини) -->
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500/25 via-red-500/20 to-amber-500/25 border border-amber-500/60 text-amber-300 shadow-md">
-            <div class="flex items-center gap-2">
-              <span class="relative flex h-3 w-3 shrink-0">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
-              </span>
-              <span class="material-symbols-outlined text-base text-amber-400">ring_volume</span>
-              <span class="font-heading font-extrabold text-xs text-white tracking-wide">
-                🔥 НОВЕ ЗАМОВЛЕННЯ — ПЕРЕДЗВОНІТЬ КЛІЄНТУ!
+          <!-- Сповіщення про нове замовлення (без агресивного неону) -->
+          <div class="flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl bg-amber-500/10 border border-amber-500/25 text-amber-200">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="w-2 h-2 rounded-full bg-amber-400 shrink-0"></span>
+              <span class="font-heading font-bold text-xs text-stone-100 truncate">
+                Нове замовлення • Очікує дзвінка
               </span>
             </div>
-            <div class="flex items-center gap-2 self-end sm:self-auto shrink-0">
-              <span class="text-[11px] font-mono text-amber-200 bg-black/40 px-2 py-0.5 rounded-md border border-amber-500/30">
-                ⏱️ ${remainingSec}с
-              </span>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-[11px] font-mono text-stone-300 bg-black/40 px-2 py-0.5 rounded border border-white/10">⏱ ${remainingSec}с</span>
               <a 
                 href="tel:${escapeHtml((o.phone || '').replace(/[^0-9+]/g, ''))}" 
-                class="px-3 py-1 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-heading font-extrabold text-[11px] flex items-center gap-1 transition-all shadow-md active:scale-95 cursor-pointer"
-                title="Миттєво зателефонувати клієнту для підтвердження"
+                class="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-stone-950 font-heading font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                title="Миттєво зателефонувати клієнту"
               >
                 <span class="material-symbols-outlined text-xs">call</span>
-                <span>ПОДЗВОНИТИ</span>
+                <span>Подзвонити</span>
               </a>
             </div>
           </div>
         ` : ""}
 
         <!-- Заголовок замовлення -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-white/5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-white/5">
           <div class="flex items-center gap-2 flex-wrap">
-            <span class="font-heading font-extrabold text-sm text-[#f59e0b]">#${escapeHtml(o.id)}</span>
-            <span class="text-xs text-gray-400">${escapeHtml(o.date)}</span>
-            <span class="text-xs text-gray-500">•</span>
+            <span class="font-heading font-extrabold text-sm sm:text-base text-amber-400 tracking-wide">#${escapeHtml(o.id)}</span>
+            <span class="text-xs text-stone-400">${escapeHtml(o.date)}</span>
+            <span class="text-stone-600">•</span>
             ${isPickup ? `
-              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-[#f59e0b] border border-[#f59e0b]/40 flex items-center gap-1 shadow-sm">
+              <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/25 flex items-center gap-1">
                 <span class="material-symbols-outlined text-xs">storefront</span>
                 <span>САМОВИВІЗ</span>
               </span>
             ` : `
-              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-sky-500/20 text-sky-400 border border-sky-500/30 flex items-center gap-1">
+              <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-stone-800 text-stone-300 border border-white/10 flex items-center gap-1">
                 <span class="material-symbols-outlined text-xs">moped</span>
                 <span>${escapeHtml(o.district || "Доставка")}</span>
               </span>
             `}
           </div>
           
-          <div class="flex items-center gap-1.5 flex-wrap sm:flex-nowrap justify-between sm:justify-end w-full sm:w-auto pt-1 sm:pt-0">
+          <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap justify-between sm:justify-end w-full sm:w-auto">
             <!-- Кнопка швидкого переходу на наступний етап -->
-            <div class="shrink-0">
-              ${nextStepBtn}
-            </div>
+            ${nextStepBtn ? `<div class="shrink-0">${nextStepBtn}</div>` : ""}
 
             <div class="flex items-center gap-1.5 shrink-0">
-              <!-- Зручний селектор статусу -->
+              <!-- Селектор статусу -->
               <select 
                 onchange="changeOrderStatus('${escapeHtml(o.id)}', this.value)" 
-                class="px-2 py-1.5 rounded-xl border text-[11px] sm:text-xs font-bold focus:outline-none focus:border-[#f59e0b] cursor-pointer transition-colors max-w-[155px] sm:max-w-[210px] truncate ${statusClass}"
-                title="Змінити статус замовлення вручну"
+                class="px-2.5 py-1.5 rounded-xl border text-[11px] sm:text-xs font-bold focus:outline-none focus:border-amber-500 cursor-pointer transition-colors max-w-[155px] sm:max-w-[210px] truncate ${statusClass}"
+                title="Змінити статус замовлення"
               >
-                <option value="Готується 👨‍🍳" class="bg-[#1c1c24] text-amber-400" ${st.includes("Готується") ? "selected" : ""}>👨‍🍳 Готується</option>
+                <option value="Готується 👨‍🍳" class="bg-[#17171a] text-amber-300" ${st.includes("Готується") ? "selected" : ""}>👨‍🍳 Готується</option>
                 ${isPickup ? `
-                  <option value="Готовий до видачі в кафе 🥡" class="bg-[#1c1c24] text-amber-400" ${st.includes("Готовий") || st.includes("видачі") ? "selected" : ""}>🥡 До видачі</option>
-                  <option value="Видано гостю в кафе ✅" class="bg-[#1c1c24] text-emerald-400" ${st.includes("Видано") || st.includes("Доставлено") ? "selected" : ""}>✅ Видано в кафе</option>
+                  <option value="Готовий до видачі в кафе 🥡" class="bg-[#17171a] text-amber-300" ${st.includes("Готовий") || st.includes("видачі") ? "selected" : ""}>🥡 До видачі</option>
+                  <option value="Видано гостю в кафе ✅" class="bg-[#17171a] text-emerald-400" ${st.includes("Видано") || st.includes("Доставлено") ? "selected" : ""}>✅ Видано в кафе</option>
                 ` : `
-                  <option value="Готовий, очікує кур'єра 🥡" class="bg-[#1c1c24] text-sky-400" ${st.includes("Готовий") || st.includes("очікує") ? "selected" : ""}>🥡 Очікує кур'єра</option>
-                  <option value="Кур'єр в дорозі 🛵" class="bg-[#1c1c24] text-purple-400" ${st.includes("дорозі") ? "selected" : ""}>🛵 В дорозі</option>
-                  <option value="Доставлено ✅" class="bg-[#1c1c24] text-emerald-400" ${st.includes("Доставлено") ? "selected" : ""}>✅ Доставлено</option>
+                  <option value="Готовий, очікує кур'єра 🥡" class="bg-[#17171a] text-amber-300" ${st.includes("Готовий") || st.includes("очікує") ? "selected" : ""}>🥡 Очікує кур'єра</option>
+                  <option value="Кур'єр в дорозі 🛵" class="bg-[#17171a] text-stone-200" ${st.includes("дорозі") ? "selected" : ""}>🛵 В дорозі</option>
+                  <option value="Доставлено ✅" class="bg-[#17171a] text-emerald-400" ${st.includes("Доставлено") ? "selected" : ""}>✅ Доставлено</option>
                 `}
-                <option value="Скасовано ❌" class="bg-[#1c1c24] text-rose-400" ${st.includes("Скасовано") ? "selected" : ""}>❌ Скасовано</option>
+                <option value="Скасовано ❌" class="bg-[#17171a] text-rose-400" ${st.includes("Скасовано") ? "selected" : ""}>❌ Скасовано</option>
               </select>
 
               <!-- Кнопка друку чека -->
               <button 
                 onclick="printOrderReceipt('${escapeHtml(o.id)}')" 
-                class="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-colors cursor-pointer shrink-0" 
-                title="Роздрукувати чек для кур'єра або кухні"
+                class="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-stone-300 hover:text-white transition-colors cursor-pointer shrink-0 border border-white/5" 
+                title="Роздрукувати чек"
               >
                 <span class="material-symbols-outlined text-base">print</span>
               </button>
@@ -3945,48 +3931,41 @@ function renderAdminOrders() {
           </div>
         </div>
 
-        <!-- Інформація про клієнта та доставку (ідеальне вирівнювання) -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-[#242430] p-3 rounded-xl items-start">
-          <div class="space-y-1">
-            <span class="text-[10px] text-gray-400 block font-medium">Клієнт / Телефон:</span>
-            <div class="flex items-center gap-1.5 flex-wrap">
-              <span class="font-bold text-white text-xs">${escapeHtml(o.customerName || o.name || "Гість")}</span>
-              <span class="text-gray-400 font-medium text-[11px]">(${escapeHtml(o.phone)})</span>
-              <a href="tel:${escapeHtml((o.phone || '').replace(/[^0-9+]/g, ''))}" class="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 font-bold hover:bg-emerald-500/30 transition-colors inline-flex items-center gap-1 text-[10px]">
-                <span class="material-symbols-outlined text-xs">call</span>
-                <span>Дзвінок</span>
-              </a>
+        <!-- Інформація про клієнта та доставку (лаконічний ресторанний чек) -->
+        <div class="bg-[#121215] border border-white/5 p-3 sm:p-3.5 rounded-xl space-y-2 text-xs">
+          <!-- Рядок клієнта -->
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-stone-400 text-[11px]">Клієнт:</span>
+              <span class="font-bold text-white text-xs sm:text-sm">${escapeHtml(o.customerName || o.name || "Гість")}</span>
+              <span class="text-stone-400 font-mono text-xs">(${escapeHtml(o.phone)})</span>
             </div>
+            <a 
+              href="tel:${escapeHtml((o.phone || '').replace(/[^0-9+]/g, ''))}" 
+              class="px-2 py-0.5 rounded-md bg-white/5 hover:bg-amber-500 hover:text-stone-950 text-amber-400 font-bold text-[11px] border border-white/5 transition-all inline-flex items-center gap-1"
+            >
+              <span class="material-symbols-outlined text-xs">call</span>
+              <span>Подзвонити</span>
+            </a>
           </div>
 
-          <div class="space-y-1">
-            <span class="text-[10px] text-gray-400 block font-medium">${isPickup ? "Спосіб отримання:" : "Адреса доставки:"}</span>
-            <div class="flex items-center gap-2 flex-wrap text-xs">
-              ${isPickup 
-                ? `
-                  <span class="px-2 py-0.5 rounded-md bg-[#f59e0b]/20 text-[#f59e0b] border border-[#f59e0b]/40 font-bold text-[10px] inline-flex items-center gap-1 shrink-0 shadow-sm">
-                    <span class="material-symbols-outlined text-xs">storefront</span>
-                    <span>САМОВИВІЗ</span>
-                  </span>
-                  <span class="text-gray-200 font-medium leading-tight">вул. Олександрівська, 88 (кафе)</span>
-                ` 
-                : `
-                  <span class="inline-flex items-center gap-1 text-gray-200 font-medium leading-tight">
-                    <span class="text-sky-400 font-bold">📍</span> ${escapeHtml(o.address)}
-                  </span>
-                `
-              }
+          <!-- Рядок адреси -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 pt-2 border-t border-white/5">
+            <div class="flex items-start gap-1.5 text-stone-200 min-w-0">
+              <span class="material-symbols-outlined text-sm text-amber-400 shrink-0 mt-0.5">location_on</span>
+              <span class="leading-snug break-words">
+                ${isPickup 
+                  ? "вул. Олександрівська, 88 (Самовивіз із кафе «Амбар»)" 
+                  : escapeHtml(o.address)}
+              </span>
             </div>
-
-            <!-- Швидкі кнопки навігатора для кур'єра (тільки для доставки) -->
             ${!isPickup ? `
-              <div class="flex items-center gap-1.5 pt-1 flex-wrap">
+              <div class="flex items-center gap-1.5 shrink-0 self-start sm:self-auto pt-0.5 sm:pt-0">
                 <a 
                   href="${googleMapsUrl}" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  class="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-400 hover:bg-blue-500 hover:text-white font-bold text-[10px] transition-all inline-flex items-center gap-1 cursor-pointer border border-blue-500/30 shadow-sm"
-                  title="Відкрити адресу в Google Maps для навігації"
+                  class="px-2 py-0.5 rounded bg-white/5 hover:bg-white/10 text-stone-300 hover:text-white font-medium text-[10px] border border-white/10 transition-colors inline-flex items-center gap-1"
                 >
                   <span>🗺️ Google Maps</span>
                 </a>
@@ -3994,8 +3973,7 @@ function renderAdminOrders() {
                   href="${wazeUrl}" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  class="px-2 py-0.5 rounded-md bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500 hover:text-black font-bold text-[10px] transition-all inline-flex items-center gap-1 cursor-pointer border border-cyan-500/30 shadow-sm"
-                  title="Відкрити навігатор Waze та прокласти маршрут"
+                  class="px-2 py-0.5 rounded bg-white/5 hover:bg-white/10 text-stone-300 hover:text-white font-medium text-[10px] border border-white/10 transition-colors inline-flex items-center gap-1"
                 >
                   <span>🚙 Waze</span>
                 </a>
@@ -4003,51 +3981,44 @@ function renderAdminOrders() {
             ` : ""}
           </div>
 
-          <div class="space-y-1">
-            <span class="text-[10px] text-gray-400 block font-medium">Час та оплата:</span>
-            <div class="flex items-center gap-1.5 flex-wrap">
-              <span class="font-medium text-gray-200 text-xs">${escapeHtml(o.deliveryTime)}</span>
-              <span class="text-gray-500">•</span>
-              <span class="text-[11px] font-bold text-[#f59e0b]">${escapeHtml(o.paymentMethod)}</span>
-            </div>
+          <!-- Рядок часу та оплати -->
+          <div class="flex items-center justify-between gap-2 pt-2 border-t border-white/5 text-[11px] text-stone-400 flex-wrap">
+            <div>Час: <span class="text-stone-200 font-medium">${escapeHtml(o.deliveryTime)}</span></div>
+            <div>Оплата: <span class="text-amber-400 font-semibold">${escapeHtml(o.paymentMethod)}</span></div>
           </div>
         </div>
 
-        <!-- Деталізація страв та кнопка редагування замовлення -->
+        <!-- Склад замовлення -->
         <div class="space-y-1.5 text-xs">
-          <div class="flex items-center justify-between pb-1 gap-2 flex-wrap">
-            <span class="text-[10px] text-gray-400 uppercase tracking-wider block font-bold">Склад замовлення:</span>
+          <div class="flex items-center justify-between pb-0.5 gap-2">
+            <span class="text-[10px] text-stone-400 uppercase tracking-wider font-bold">Склад замовлення (${o.items.length}):</span>
             ${isOrderEditable(st) ? `
               <button 
                 onclick="openEditOrderModal('${escapeHtml(o.id)}')" 
-                class="px-2.5 py-1 rounded-lg bg-[#f59e0b]/15 text-[#f59e0b] hover:bg-[#f59e0b] hover:text-black font-bold text-[11px] transition-all flex items-center gap-1 cursor-pointer"
-                title="Додати страву з меню або змінити кількість (доступно, поки замовлення готується)"
+                class="text-stone-400 hover:text-amber-400 text-[11px] font-medium transition-colors flex items-center gap-1 cursor-pointer"
+                title="Змінити або додати страву"
               >
-                <span class="material-symbols-outlined text-sm">edit_note</span>
-                <span>Змінити / Додати страву з меню</span>
+                <span class="material-symbols-outlined text-xs">edit_note</span>
+                <span>Змінити склад</span>
               </button>
             ` : `
-              <button 
-                disabled
-                class="px-2.5 py-1 rounded-lg bg-white/5 text-gray-500 font-bold text-[11px] flex items-center gap-1 cursor-not-allowed opacity-60 border border-white/5 select-none"
-                title="Зміна замовлення недоступна: замовлення вже готове до видачі або передане кур'єру (статус: ${escapeHtml(st)})"
-              >
-                <span class="material-symbols-outlined text-sm">lock</span>
-                <span>Змінити / Додати страву з меню</span>
-              </button>
+              <span class="text-stone-600 text-[10px] flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs">lock</span>
+                <span>Зафіксовано</span>
+              </span>
             `}
           </div>
 
-          <div class="divide-y divide-white/5 bg-[#1a1a24] p-2.5 rounded-xl border border-white/5">
+          <div class="divide-y divide-white/5 bg-[#121215] p-2.5 sm:p-3 rounded-xl border border-white/5">
             ${o.items.map(it => `
-              <div class="py-1.5 flex justify-between items-center text-gray-300">
-                <div class="flex items-center gap-2">
-                  <span class="w-1.5 h-1.5 rounded-full bg-[#f59e0b]"></span>
-                  <span class="text-white font-medium">${escapeHtml(it.name)}</span>
-                  ${it.selectedSize ? `<span class="text-gray-400">(${escapeHtml(it.selectedSize.label || it.selectedSize.size)})</span>` : ""}
-                  <span class="text-gray-400 font-bold">× ${it.quantity}</span>
+              <div class="py-1.5 flex justify-between items-center text-stone-300 gap-2">
+                <div class="flex items-center gap-2 min-w-0">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-500/70 shrink-0"></span>
+                  <span class="text-stone-200 font-medium truncate">${escapeHtml(it.name)}</span>
+                  ${it.selectedSize ? `<span class="text-stone-400 text-[11px] shrink-0">(${escapeHtml(it.selectedSize.label || it.selectedSize.size)})</span>` : ""}
+                  <span class="text-stone-400 font-bold shrink-0">× ${it.quantity}</span>
                 </div>
-                <span class="font-bold text-white shrink-0">${it.price * it.quantity} ₴</span>
+                <span class="font-bold text-stone-200 shrink-0">${it.price * it.quantity} ₴</span>
               </div>
             `).join("")}
           </div>
@@ -4055,13 +4026,13 @@ function renderAdminOrders() {
 
         <!-- Підсумок -->
         <div class="pt-2 border-t border-white/5 flex items-center justify-between text-xs font-heading flex-wrap gap-2">
-          <div class="flex items-center gap-2 text-gray-400 flex-wrap">
+          <div class="flex items-center gap-2 text-stone-400 text-[11px] flex-wrap">
             <span>${isPickup ? "Самовивіз: 0 ₴" : `Доставка: ${o.deliveryFee > 0 ? o.deliveryFee + " ₴" : "Безкоштовно"}`}</span>
-            ${o.discountAmount > 0 ? `<span>• Промокод: -${o.discountAmount} ₴</span>` : ""}
-            ${o.bonusesUsed > 0 ? `<span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-[#f59e0b] border border-[#f59e0b]/30 font-bold text-[10px]">Бонуси: -${o.bonusesUsed} ₴</span>` : ""}
-            ${o.bonusesEarned > 0 ? `<span class="px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 font-bold text-[10px]">🎁 Кешбек: +${o.bonusesEarned} ₴</span>` : ""}
+            ${o.discountAmount > 0 ? `<span>• Знижка: -${o.discountAmount} ₴</span>` : ""}
+            ${o.bonusesUsed > 0 ? `<span class="px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20 text-[10px]">Бонуси: -${o.bonusesUsed} ₴</span>` : ""}
+            ${o.bonusesEarned > 0 ? `<span class="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px]">🎁 +${o.bonusesEarned} ₴ кешбек</span>` : ""}
           </div>
-          <span class="font-extrabold text-sm text-[#f59e0b]">До оплати: ${o.total} ₴</span>
+          <span class="font-extrabold text-sm sm:text-base text-amber-400">До сплати: ${o.total} ₴</span>
         </div>
       </div>
     `;
@@ -4649,64 +4620,62 @@ function renderAdminBookings() {
     }
 
     return `
-      <div class="p-4 rounded-2xl bg-[#1c1c24] border border-white/10 space-y-3 transition-all hover:border-white/20">
+      <div class="p-4 sm:p-5 rounded-2xl bg-[#17171a] border border-white/10 space-y-3 transition-all hover:border-white/20">
         <!-- Верхня панель картки -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-white/5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b border-white/5">
           <div class="flex items-center gap-2 flex-wrap">
-            <span class="font-heading font-extrabold text-sm text-[#f59e0b]">#${escapeHtml(b.id)}</span>
-            <span class="text-xs text-gray-400">${escapeHtml(b.createdAt || "")}</span>
-            <span class="text-xs text-gray-500">•</span>
-            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-[#f59e0b] border border-[#f59e0b]/30 flex items-center gap-1">
+            <span class="font-heading font-extrabold text-sm sm:text-base text-amber-400">#${escapeHtml(b.id)}</span>
+            <span class="text-xs text-stone-400">${escapeHtml(b.createdAt || "")}</span>
+            <span class="text-stone-600">•</span>
+            <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/25 flex items-center gap-1">
               <span class="material-symbols-outlined text-xs">table_restaurant</span>
               <span>${escapeHtml(b.hall || "Основний зал")}</span>
             </span>
           </div>
 
-          <div class="flex items-center gap-1.5 flex-wrap sm:flex-nowrap justify-between sm:justify-end w-full sm:w-auto pt-1 sm:pt-0">
+          <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap justify-between sm:justify-end w-full sm:w-auto">
             <!-- Кнопка наступного кроку -->
-            <div class="shrink-0">
-              ${nextStepBtn}
-            </div>
+            ${nextStepBtn ? `<div class="shrink-0">${nextStepBtn}</div>` : ""}
 
             <!-- Селектор статусу -->
             <select 
               onchange="changeBookingStatus('${escapeHtml(b.id)}', this.value)" 
-              class="px-2.5 py-1.5 rounded-xl border text-[11px] sm:text-xs font-bold focus:outline-none focus:border-[#f59e0b] cursor-pointer transition-colors max-w-[170px] sm:max-w-[210px] truncate ${statusClass}"
+              class="px-2.5 py-1.5 rounded-xl border text-[11px] sm:text-xs font-bold focus:outline-none focus:border-amber-500 cursor-pointer transition-colors max-w-[170px] sm:max-w-[210px] truncate ${statusClass}"
               title="Змінити статус броні"
             >
-              <option value="Очікує підтвердження ⏳" class="bg-[#1c1c24] text-amber-400" ${st.includes("Очікує") ? "selected" : ""}>⏳ Очікує</option>
-              <option value="Підтверджено ✅" class="bg-[#1c1c24] text-emerald-400" ${st.includes("Підтверджено") ? "selected" : ""}>✅ Підтверджено</option>
-              <option value="Гості в залі 🍷" class="bg-[#1c1c24] text-purple-400" ${st.includes("прийшли") || st.includes("в залі") ? "selected" : ""}>🍷 В залі</option>
-              <option value="Гості пішли (стіл вільний) ✨" class="bg-[#1c1c24] text-emerald-400" ${st.includes("пішли") || st.includes("вільний") || st.includes("завершено") ? "selected" : ""}>✨ Стіл вільний</option>
-              <option value="Скасовано ❌" class="bg-[#1c1c24] text-rose-400" ${st.includes("Скасовано") ? "selected" : ""}>❌ Скасовано</option>
+              <option value="Очікує підтвердження ⏳" class="bg-[#17171a] text-amber-300" ${st.includes("Очікує") ? "selected" : ""}>⏳ Очікує</option>
+              <option value="Підтверджено ✅" class="bg-[#17171a] text-emerald-400" ${st.includes("Підтверджено") ? "selected" : ""}>✅ Підтверджено</option>
+              <option value="Гості в залі 🍷" class="bg-[#17171a] text-stone-200" ${st.includes("прийшли") || st.includes("в залі") ? "selected" : ""}>🍷 В залі</option>
+              <option value="Гості пішли (стіл вільний) ✨" class="bg-[#17171a] text-emerald-400" ${st.includes("пішли") || st.includes("вільний") || st.includes("завершено") ? "selected" : ""}>✨ Стіл вільний</option>
+              <option value="Скасовано ❌" class="bg-[#17171a] text-rose-400" ${st.includes("Скасовано") ? "selected" : ""}>❌ Скасовано</option>
             </select>
           </div>
         </div>
 
         <!-- Інформація про бронювання та контакт гостя -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+        <div class="bg-[#121215] border border-white/5 p-3 rounded-xl grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
           <div class="space-y-1">
             <div class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-base text-[#f59e0b]">calendar_today</span>
-              <span class="text-white font-bold text-sm">📅 ${escapeHtml(b.date)} о ${escapeHtml(b.time)}</span>
+              <span class="material-symbols-outlined text-sm text-amber-400">calendar_today</span>
+              <span class="text-white font-bold text-xs sm:text-sm">📅 ${escapeHtml(b.date)} о ${escapeHtml(b.time)}</span>
             </div>
-            <div class="flex items-center gap-2 text-gray-300">
-              <span class="material-symbols-outlined text-base text-gray-400">group</span>
+            <div class="flex items-center gap-2 text-stone-300 text-xs">
+              <span class="material-symbols-outlined text-sm text-stone-400">group</span>
               <span>Кількість гостей: <b class="text-white">${escapeHtml(b.guests)}</b></span>
             </div>
           </div>
 
           <div class="space-y-1 sm:text-right">
             <div class="flex sm:justify-end items-center gap-1.5">
-              <span class="material-symbols-outlined text-base text-[#f59e0b]">person</span>
-              <span class="text-white font-bold text-sm">${escapeHtml(b.name)}</span>
+              <span class="material-symbols-outlined text-sm text-amber-400">person</span>
+              <span class="text-white font-bold text-xs sm:text-sm">${escapeHtml(b.name)}</span>
             </div>
             <div class="flex sm:justify-end items-center gap-2">
-              <span class="text-gray-300 font-mono">${escapeHtml(b.phone)}</span>
+              <span class="text-stone-300 font-mono text-xs">${escapeHtml(b.phone)}</span>
               ${b.phone ? `
-                <a href="tel:${escapeHtml(b.phone.replace(/[^0-9+]/g, ""))}" class="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 font-bold hover:bg-emerald-500/30 transition-colors inline-flex items-center gap-1 text-[10px]">
+                <a href="tel:${escapeHtml(b.phone.replace(/[^0-9+]/g, ""))}" class="px-2 py-0.5 rounded-md bg-white/5 hover:bg-amber-500 hover:text-stone-950 text-amber-400 font-bold border border-white/10 transition-colors inline-flex items-center gap-1 text-[10px]">
                   <span class="material-symbols-outlined text-xs">call</span>
-                  <span>Дзвінок</span>
+                  <span>Подзвонити</span>
                 </a>
               ` : ""}
             </div>
