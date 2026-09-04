@@ -1074,7 +1074,7 @@ function recalculateOrderTotals() {
   }
 
   if (toggleBonusBtn) {
-    if (availableBonuses <= 0) {
+    if (userAvailableBonuses <= 0) {
       toggleBonusBtn.classList.add("hidden");
       const bonusBlock = document.getElementById("checkout-bonus-input-block");
       if (bonusBlock) bonusBlock.classList.add("hidden");
@@ -2898,12 +2898,12 @@ function submitInstantAuth(event) {
 
   saveCabinetState();
   updateCabinetUI();
-  if (typeof recalculateOrderTotals === "function") {
-    recalculateOrderTotals();
-  }
+  try {
+    if (typeof recalculateOrderTotals === "function") {
+      recalculateOrderTotals();
+    }
+  } catch(e) {}
   closeClientAuthModal();
-
-  // Відкриваємо особистий кабінет клієнта негайно
   openCabinetModal();
   showToast(`🎉 Вітаємо, ${CabinetState.user.name || phoneVal}! Ви успішно увійшли.`);
 
