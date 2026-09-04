@@ -2240,7 +2240,7 @@ async function syncUserProfileWithCloud(phone) {
     const cloudUser = await AmbarCloudSync.fetchUser(phone);
     if (cloudUser && typeof cloudUser === "object" && cloudUser.phone) {
       let changed = false;
-      if (typeof cloudUser.bonuses === "number" && cloudUser.bonuses !== CabinetState.user.bonuses) {
+      if (typeof cloudUser.bonuses === "number" && cloudUser.bonuses > 0 && cloudUser.bonuses !== CabinetState.user.bonuses) {
         CabinetState.user.bonuses = cloudUser.bonuses;
         changed = true;
       }
@@ -2256,12 +2256,24 @@ async function syncUserProfileWithCloud(phone) {
         changed = true;
       }
       if (changed) {
-        saveCabinetState();
+        saveCabinetState(false);
         updateCabinetUI();
         if (typeof recalculateOrderTotals === "function") {
           recalculateOrderTotals();
         }
       }
+    }
+    // Також зберігаємо актуальний локальний стан на сервер
+    if (CabinetState.user && CabinetState.user.phone) {
+      AmbarCloudSync.saveUser({
+        phone: CabinetState.user.phone,
+        name: CabinetState.user.name,
+        bonuses: CabinetState.user.bonuses || 0,
+        address: CabinetState.user.address,
+        entrance: CabinetState.user.entrance,
+        floor: CabinetState.user.floor,
+        apt: CabinetState.user.apt
+      });
     }
   } catch(e) {}
 }
@@ -2766,7 +2778,7 @@ function closeClientAuthModal() {
   }
 }
 
-async function submitInstantAuth(event) {
+function submitInstantAuth(event) {
   if (event) event.preventDefault();
   const phoneInp = document.getElementById("auth-phone-input");
   const nameInp = document.getElementById("auth-name-input");
@@ -2776,38 +2788,20 @@ async function submitInstantAuth(event) {
   // Базова перевірка валідності номера
   const digits = phoneVal.replace(/\D/g, "");
   if (digits.length < 9) {
-    showToast("Будь ласка, введіть коректний номер телефону");
+    showToast("⚠️ Будь ласка, введіть коректний номер телефону");
     if (phoneInp) phoneInp.focus();
     return;
   }
 
+  // 1. Негайний запис у локальний стан
   CabinetState.user.phone = phoneVal;
   if (nameVal) {
     CabinetState.user.name = nameVal;
   }
 
-  // 1. Спочатку підтягуємо центральний профіль та бонуси з хмарної БД
-  try {
-    if (typeof AmbarCloudSync !== "undefined") {
-      const cloudUser = await AmbarCloudSync.fetchUser(phoneVal);
-      if (cloudUser && typeof cloudUser === "object" && cloudUser.phone) {
-        if (typeof cloudUser.bonuses === "number") {
-          CabinetState.user.bonuses = cloudUser.bonuses;
-        }
-        if (cloudUser.name && !nameVal) CabinetState.user.name = cloudUser.name;
-        if (cloudUser.address) {
-          CabinetState.user.address = cloudUser.address;
-          if (cloudUser.entrance) CabinetState.user.entrance = cloudUser.entrance;
-          if (cloudUser.floor) CabinetState.user.floor = cloudUser.floor;
-          if (cloudUser.apt) CabinetState.user.apt = cloudUser.apt;
-        }
-      }
-    }
-  } catch(e) {}
-
-  // 2. Прив'язка попередніх замовлень та адреси за цим номером
-  const allOrders = getGlobalOrders();
+  // 2. Прив'язка замовлень та адреси за цим номером телефону
   const matchKey = digits.slice(-9);
+  const allOrders = getGlobalOrders();
   const matchingOrders = allOrders.filter(o => o && o.phone && o.phone.replace(/\D/g, "").includes(matchKey));
   
   matchingOrders.forEach(mo => {
@@ -2820,7 +2814,6 @@ async function submitInstantAuth(event) {
       existing.updatedAt = mo.updatedAt;
       existing.bonusesRefunded = mo.bonusesRefunded;
     }
-    // Автоматично підтягуємо збережену адресу, якщо ще немає
     if (!CabinetState.user.address && mo.address && !mo.address.includes("Самовивіз")) {
       CabinetState.user.address = mo.address;
       if (mo.entrance) CabinetState.user.entrance = mo.entrance;
@@ -2849,7 +2842,7 @@ async function submitInstantAuth(event) {
     }
   });
 
-  // 4. Синхронізація бонусів за історією замовлень при першому вході (якщо в хмарі ще 0)
+  // 4. Синхронізація бонусів за історією замовлень при першому вході
   if (!CabinetState.user.bonuses || CabinetState.user.bonuses === 0) {
     let calculatedBonuses = 0;
     matchingOrders.forEach(mo => {
@@ -2863,19 +2856,6 @@ async function submitInstantAuth(event) {
     }
   }
 
-  // 5. Зберігаємо оновлений профіль та бонуси в центральну хмарну БД
-  if (typeof AmbarCloudSync !== "undefined") {
-    AmbarCloudSync.saveUser({
-      phone: CabinetState.user.phone,
-      name: CabinetState.user.name,
-      bonuses: CabinetState.user.bonuses || 0,
-      address: CabinetState.user.address,
-      entrance: CabinetState.user.entrance,
-      floor: CabinetState.user.floor,
-      apt: CabinetState.user.apt
-    });
-  }
-
   CabinetState.orders.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
   CabinetState.bookings.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
 
@@ -2886,9 +2866,14 @@ async function submitInstantAuth(event) {
   }
   closeClientAuthModal();
 
-  // Відкриваємо особистий кабінет клієнта
+  // Відкриваємо особистий кабінет клієнта негайно
   openCabinetModal();
-  showToast(`Вітаємо, ${CabinetState.user.name || phoneVal}! Ви успішно увійшли 🎉`);
+  showToast(`🎉 Вітаємо, ${CabinetState.user.name || phoneVal}! Ви успішно увійшли.`);
+
+  // 5. Фонова синхронізація з хмарою (non-blocking)
+  if (typeof syncUserProfileWithCloud === "function") {
+    syncUserProfileWithCloud(phoneVal);
+  }
 }
 
 // =========================================================================
