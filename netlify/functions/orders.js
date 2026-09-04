@@ -15,7 +15,7 @@ export default async (req, context) => {
   }
 
   try {
-    const store = getStore("ambar_restaurant_v2");
+    const store = getStore("ambar_restaurant_v3");
     const url = new URL(req.url);
     const isResetAll = url.searchParams.get("all") === "true";
 

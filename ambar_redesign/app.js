@@ -2183,7 +2183,7 @@ function getDeclension(number, titles) {
 // =========================================================================
 // 13. ОСОБИСТИЙ КАБІНЕТ КЛІЄНТА ТА ЗАХИСТ ДАНИХ
 // =========================================================================
-const CABINET_STORAGE_KEY = "ambar_cabinet_v2";
+const CABINET_STORAGE_KEY = "ambar_cabinet_v3";
 
 const CabinetState = {
   user: {
@@ -2266,9 +2266,12 @@ async function syncUserProfileWithCloud(phone) {
   } catch(e) {}
 }
 
-function saveCabinetState() {
+function saveCabinetState(broadcast = true) {
   try {
     localStorage.setItem(CABINET_STORAGE_KEY, JSON.stringify(CabinetState));
+    if (broadcast && typeof ambarRealtimeBus !== "undefined" && ambarRealtimeBus) {
+      ambarRealtimeBus.postMessage({ type: "CABINET_SYNC" });
+    }
   } catch (e) {
     console.warn("Помилка збереження кабінету:", e);
   }
@@ -2891,8 +2894,40 @@ async function submitInstantAuth(event) {
 // =========================================================================
 // 15. ГЛОБАЛЬНІ СХОВИЩА ТА АДМІН-ПАНЕЛЬ КЕРУВАННЯ РЕСТОРАНОМ «АМБАР»
 // =========================================================================
-const GLOBAL_ORDERS_KEY = "ambar_all_orders_v2";
-const GLOBAL_BOOKINGS_KEY = "ambar_all_bookings_v2";
+const GLOBAL_ORDERS_KEY = "ambar_all_orders_v3";
+const GLOBAL_BOOKINGS_KEY = "ambar_all_bookings_v3";
+
+// Глобальна шина синхронізації в реальному часі між усіма вкладками та вікнами (Real-time Broadcast Channel)
+const ambarRealtimeBus = typeof BroadcastChannel !== "undefined" ? new BroadcastChannel("ambar_realtime_bus_v3") : null;
+if (ambarRealtimeBus) {
+  ambarRealtimeBus.onmessage = (e) => {
+    if (!e.data) return;
+    if (e.data.type === "ORDERS_SYNC" || e.data.type === "STATUS_CHANGED") {
+      syncOrdersAndBookingsWithCloud(false);
+      renderAdminDashboard();
+      renderAdminOrders();
+      renderAdminBookings();
+    } else if (e.data.type === "DB_RESET") {
+      CabinetState.user = { name: "", phone: "", address: "", entrance: "", floor: "", apt: "", bonuses: 0 };
+      CabinetState.orders = [];
+      CabinetState.bookings = [];
+      adminKnownOrderIds.clear();
+      adminKnownBookingIds.clear();
+      soundedOrderIds.clear();
+      soundedBookingIds.clear();
+      renderAdminOrders();
+      renderAdminBookings();
+      updateCabinetUI();
+      renderCabinetOrders();
+      renderCabinetBookings();
+    } else if (e.data.type === "CABINET_SYNC") {
+      loadCabinetState();
+      updateCabinetUI();
+      renderCabinetOrders();
+      renderCabinetBookings();
+    }
+  };
+}
 
 // =========================================================================
 // 15. ХМАРНА СИНХРОНІЗАЦІЯ В РЕАЛЬНОМУ ЧАСІ (CLOUD SYNC ENGINE)
@@ -3112,12 +3147,9 @@ async function adminResetEntireDatabase() {
       localStorage.removeItem(GLOBAL_ORDERS_KEY);
       localStorage.removeItem(GLOBAL_BOOKINGS_KEY);
       localStorage.removeItem(CABINET_STORAGE_KEY);
-      localStorage.removeItem("ambar_all_orders_v1");
-      localStorage.removeItem("ambar_all_bookings_v1");
-      localStorage.removeItem("ambar_cabinet_v1");
-      localStorage.removeItem("ambar_orders");
-      localStorage.removeItem("ambar_bookings");
-      localStorage.removeItem("ambar_cabinet_state");
+      ["ambar_all_orders_v1", "ambar_all_orders_v2", "ambar_all_bookings_v1", "ambar_all_bookings_v2", "ambar_cabinet_v1", "ambar_cabinet_v2", "ambar_orders", "ambar_bookings", "ambar_cabinet_state"].forEach(k => {
+        try { localStorage.removeItem(k); } catch(e) {}
+      });
 
       CabinetState.user = { name: "", phone: "", address: "", entrance: "", floor: "", apt: "", bonuses: 0 };
       CabinetState.orders = [];
@@ -3127,6 +3159,10 @@ async function adminResetEntireDatabase() {
       adminKnownBookingIds.clear();
       soundedOrderIds.clear();
       soundedBookingIds.clear();
+
+      if (typeof ambarRealtimeBus !== "undefined" && ambarRealtimeBus) {
+        ambarRealtimeBus.postMessage({ type: "DB_RESET" });
+      }
 
       renderAdminOrders();
       renderAdminBookings();
@@ -3149,9 +3185,12 @@ function getGlobalOrders() {
   }
 }
 
-function saveGlobalOrders(orders) {
+function saveGlobalOrders(orders, broadcast = true) {
   try {
     localStorage.setItem(GLOBAL_ORDERS_KEY, JSON.stringify(orders));
+    if (broadcast && typeof ambarRealtimeBus !== "undefined" && ambarRealtimeBus) {
+      ambarRealtimeBus.postMessage({ type: "ORDERS_SYNC" });
+    }
   } catch(e) {}
 }
 
@@ -3178,9 +3217,12 @@ function getGlobalBookings() {
   }
 }
 
-function saveGlobalBookings(bookings) {
+function saveGlobalBookings(bookings, broadcast = true) {
   try {
     localStorage.setItem(GLOBAL_BOOKINGS_KEY, JSON.stringify(bookings));
+    if (broadcast && typeof ambarRealtimeBus !== "undefined" && ambarRealtimeBus) {
+      ambarRealtimeBus.postMessage({ type: "ORDERS_SYNC" });
+    }
   } catch(e) {}
 }
 
@@ -3411,10 +3453,10 @@ function startCloudSyncLoop() {
   // Перший запуск синхронізації
   syncOrdersAndBookingsWithCloud(false);
 
-  // Регулярне фонове опитування кожні 3.5 секунди
+  // Регулярне фонове опитування кожні 2.5 секунди (гарантія постійної асинхронної актуальності)
   cloudSyncInterval = setInterval(() => {
     syncOrdersAndBookingsWithCloud(false);
-  }, 3500);
+  }, 2500);
 }
 
 // Миттєва синхронізація при поверненні на вкладку браузера
@@ -4891,8 +4933,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.documentElement.scrollTop = 0;
   document.body.scrollTop = 0;
 
-  // Автоматичне очищення застарілих тестових ключів v1 на всіх браузерах
-  ["ambar_all_orders_v1", "ambar_all_bookings_v1", "ambar_cabinet_v1", "ambar_orders", "ambar_bookings", "ambar_cabinet_state"].forEach(k => {
+  // Автоматичне очищення застарілих тестових ключів v1 та v2 на всіх браузерах
+  ["ambar_all_orders_v1", "ambar_all_orders_v2", "ambar_all_bookings_v1", "ambar_all_bookings_v2", "ambar_cabinet_v1", "ambar_cabinet_v2", "ambar_orders", "ambar_bookings", "ambar_cabinet_state"].forEach(k => {
     try { localStorage.removeItem(k); } catch(e) {}
   });
 
