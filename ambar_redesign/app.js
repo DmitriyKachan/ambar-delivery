@@ -5,6 +5,14 @@
  * Data: Full 351 items from ambar.net.ua
  */
 
+// Завжди повертаємо сторінку на самий верх після оновлення або відкриття
+if (typeof history !== "undefined" && "scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+if (typeof window !== "undefined") {
+  window.scrollTo(0, 0);
+}
+
 // 0. БЕЗПЕКА ТА ЗАХИСТ ВІД XSS
 function escapeHtml(str) {
   if (str === null || str === undefined) return "";
@@ -4799,6 +4807,14 @@ window.addEventListener("storage", (e) => {
 
 // ІНІЦІАЛІЗАЦІЯ ПРИ ЗАВАНТАЖЕННІ
 document.addEventListener("DOMContentLoaded", () => {
+  // Гарантоване прокручування на самий верх сайту при оновленні сторінки
+  if (typeof history !== "undefined" && "scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+
   // Автоматичне очищення застарілих тестових ключів v1 на всіх браузерах
   ["ambar_all_orders_v1", "ambar_all_bookings_v1", "ambar_cabinet_v1", "ambar_orders", "ambar_bookings", "ambar_cabinet_state"].forEach(k => {
     try { localStorage.removeItem(k); } catch(e) {}
@@ -4839,4 +4855,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+});
+
+// Додатковий захист від збереження позиції прокрутки браузером
+window.addEventListener("beforeunload", () => {
+  window.scrollTo(0, 0);
+});
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, 20);
 });
