@@ -1308,7 +1308,7 @@
       </div>
 
       <!-- Форма миттєвого входу за номером телефону (100% БЕЗКОШТОВНО, БЕЗ SMS) -->
-      <form onsubmit="submitInstantAuth(event); return false;" class="space-y-4">
+      <form id="client-auth-form" onsubmit="submitInstantAuth(event); return false;" class="space-y-4">
         <div>
           <label class="text-xs text-gray-300 block mb-1.5 font-medium">Ваш номер телефону <span class="text-[#f59e0b]">*</span></label>
           <div class="relative">
@@ -1317,10 +1317,11 @@
               id="auth-phone-input" 
               type="tel" 
               placeholder="+38 (0__) ___-__-__" 
+              autocomplete="tel"
               class="w-full pl-11 pr-4 py-3 rounded-2xl bg-[#22222a] border border-white/10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b] tracking-wide"
             />
           </div>
-          <p id="auth-error-msg" class="text-[11px] text-rose-400 mt-1 hidden font-medium"></p>
+          <p id="auth-error-msg" class="text-[11px] text-rose-400 mt-1.5 hidden font-bold"></p>
           <p class="text-[11px] text-gray-400 mt-1">Введіть номер для зв'язку під час доставки або броні</p>
         </div>
 
@@ -1332,15 +1333,17 @@
               id="auth-name-input" 
               type="text" 
               placeholder="наприклад: Дмитро" 
+              autocomplete="name"
               class="w-full pl-11 pr-4 py-3 rounded-2xl bg-[#22222a] border border-white/10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b]"
             />
           </div>
         </div>
 
         <button 
-          type="submit" 
+          id="btn-auth-submit"
+          type="button" 
           onclick="submitInstantAuth(event)"
-          class="w-full py-3.5 btn-amber font-heading font-bold text-xs uppercase tracking-wider shadow-lg active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+          class="w-full py-3.5 btn-amber font-heading font-bold text-xs uppercase tracking-wider shadow-lg active:scale-95 flex items-center justify-center gap-2 cursor-pointer select-none"
         >
           <span>Увійти / Зареєструватися</span>
           <span class="material-symbols-outlined text-base">arrow_forward</span>
@@ -1768,10 +1771,10 @@
   </div>
 
   <!-- Повний довідник вулиць Запоріжжя для автодоповнення -->
-  <script src="streets_data.js"></script>
+  <script src="streets_data.js?v=20260904_2"></script>
   <!-- База даних повного меню з 351 страви -->
-  <script src="menu_data.js"></script>
+  <script src="menu_data.js?v=20260904_2"></script>
   <!-- Основна логіка додатку -->
-  <script src="app.js"></script>
+  <script src="app.js?v=20260904_2"></script>
 </body>
 </html>

@@ -4996,6 +4996,31 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  // Слухачі для форми входу клієнта
+  const authPhoneInp = document.getElementById("auth-phone-input");
+  const authNameInp = document.getElementById("auth-name-input");
+  if (authPhoneInp) {
+    authPhoneInp.addEventListener("input", () => {
+      const err = document.getElementById("auth-error-msg");
+      if (err) err.classList.add("hidden");
+      authPhoneInp.classList.remove("border-rose-500", "ring-1", "ring-2", "ring-rose-500");
+    });
+    authPhoneInp.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        submitInstantAuth(e);
+      }
+    });
+  }
+  if (authNameInp) {
+    authNameInp.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        submitInstantAuth(e);
+      }
+    });
+  }
 });
 
 // Додатковий захист від збереження позиції прокрутки браузером
