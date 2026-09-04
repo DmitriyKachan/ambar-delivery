@@ -15,10 +15,10 @@
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
   <link rel="apple-touch-icon" href="assets/original_logo_sq.png" />
   
-  <!-- Шрифти Google: Oswald, Montserrat та Inter -->
+  <!-- Шрифти Google: Montserrat та Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet" />
   
   <!-- Іконки Material Symbols -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
@@ -31,15 +31,15 @@
       theme: {
         extend: {
           colors: {
-            "primary-amber": "#f59e0b",
+            "primary-amber": "#d97706",
             "accent-fiery": "#dc2626",
-            "surface-base": "#0c0b09",
-            "surface-card": "#151310",
-            "surface-elevated": "#221d18"
+            "surface-base": "#121214",
+            "surface-card": "#1c1c22",
+            "surface-elevated": "#24242c"
           },
           fontFamily: {
             "sans": ["Inter", "sans-serif"],
-            "heading": ["Oswald", "Montserrat", "sans-serif"]
+            "heading": ["Montserrat", "sans-serif"]
           },
           maxWidth: {
             "container-max": "1280px"
@@ -49,162 +49,140 @@
     };
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=20260904_ambar_v3" />
+  <link rel="stylesheet" href="styles.css?v=20260904_ambar_v4" />
 </head>
 
-<body class="text-[#f5f4f0] antialiased min-h-screen flex flex-col selection:bg-[#f59e0b] selection:text-black">
-  <!-- Верхній крафтовий акцент (дубове вугілля та бурштин) -->
-  <div class="fixed top-0 inset-x-0 z-[60] h-1 bg-gradient-to-r from-amber-950 via-amber-500 to-amber-950"></div>
+<body class="bg-[#121214] text-white antialiased min-h-screen flex flex-col selection:bg-amber-600 selection:text-white">
 
   <!-- ========================================================================= -->
-  <!-- 1. ШАПКА САЙТУ (GLASS HEADER)                                             -->
+  <!-- 1. ШАПКА САЙТУ (ПРОФЕСІЙНИЙ РЕСТОРАННИЙ HEADER)                           -->
   <!-- ========================================================================= -->
-  <header class="glass-header fixed top-0 inset-x-0 z-50 h-20 transition-all">
-    <div class="max-w-[1440px] mx-auto h-full px-4 sm:px-6 xl:px-8 relative flex items-center justify-between lg:grid lg:grid-cols-[auto_1fr_auto] gap-4 xl:gap-6">
+  <header class="sticky top-0 inset-x-0 z-50 h-20 bg-[#18181c] border-b border-white/10 transition-all">
+    <div class="max-w-[1440px] mx-auto h-full px-4 sm:px-6 xl:px-8 flex items-center justify-between gap-4">
       
-      <!-- 1. Логотип бренду (Колонка 1: ліворуч) -->
-      <div class="flex items-center justify-start shrink-0 z-10">
-        <a href="#" onclick="setCategory('all'); return false;" class="flex items-center gap-2.5 sm:gap-3 group shrink-0 transition-transform duration-300 hover:scale-105 origin-left cursor-pointer">
+      <!-- Логотип бренду та назва -->
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="#" onclick="setCategory('all'); return false;" class="flex items-center gap-3 group cursor-pointer">
           <img 
             src="assets/original_logo.png" 
-            alt="АМБАР — Кафе та Доставка їжі" 
-            class="h-9 sm:h-11 w-auto object-contain brightness-0 invert opacity-95 group-hover:opacity-100 transition-all duration-300"
+            alt="АМБАР — Кафе та Гриль" 
+            class="h-10 w-auto object-contain brightness-0 invert opacity-95 group-hover:opacity-100 transition-opacity"
           />
-          <div class="hidden xl:flex flex-col border-l border-amber-500/25 pl-2.5 sm:pl-3 leading-tight whitespace-nowrap transition-colors duration-300">
-            <span class="text-xs font-bold text-amber-400 tracking-widest uppercase font-heading">М'ясо на вугіллі • Смокхаус & Гриль</span>
-            <span class="text-[10px] text-stone-400 group-hover:text-stone-200 font-medium tracking-wider uppercase transition-colors duration-300">Запоріжжя • Доставка їжі</span>
+          <div class="hidden sm:flex flex-col border-l border-white/15 pl-3 leading-tight whitespace-nowrap">
+            <span class="text-xs font-bold text-white tracking-wider uppercase font-heading">Кафе & Гриль</span>
+            <span class="text-[10px] text-gray-400 font-medium">Запоріжжя • Доставка</span>
           </div>
         </a>
       </div>
 
-      <!-- 2. Центральна плашка: адреса та контакти кафе (Колонка 2: центр) -->
-      <div class="hidden lg:flex items-center justify-center min-w-0">
-        <div class="header-pill px-3.5 xl:px-4 py-2 rounded-full text-xs flex items-center gap-2 xl:gap-3 select-none shrink-0">
-          <!-- Місто та адреса (підсвічується повністю при наведенні) -->
+      <!-- Центральна плашка: адреса, графік та телефон кафе -->
+      <div class="hidden lg:flex items-center gap-6 text-xs text-gray-300">
+        <a 
+          href="https://maps.google.com/?q=%D0%97%D0%B0%D0%BF%D0%BE%D1%80%D1%96%D0%B6%D0%B6%D1%8F,+%D0%B2%D1%83%D0%BB.+%D0%9E%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B0,+88" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="flex items-center gap-1.5 hover:text-amber-500 transition-colors"
+          title="Локація ресторану"
+        >
+          <span class="material-symbols-outlined text-base text-amber-500">location_on</span>
+          <span>вул. Олександрівська, 88</span>
+        </a>
+
+        <div class="flex items-center gap-1.5 text-gray-400">
+          <span class="material-symbols-outlined text-base text-amber-500">schedule</span>
+          <span>Щодня 10:00–22:00</span>
+        </div>
+
+        <div class="relative group/phone">
           <a 
-            href="https://maps.google.com/?q=%D0%97%D0%B0%D0%BF%D0%BE%D1%80%D1%96%D0%B6%D0%B6%D1%8F,+%D0%B2%D1%83%D0%BB.+%D0%9E%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B0,+88" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            class="group/addr flex items-center gap-1.5 text-gray-300 hover:text-[#f59e0b] transition-colors py-0.5 rounded-full cursor-pointer"
-            title="Відкрити локацію кафе на карті Запоріжжя"
+            href="tel:+380676130088" 
+            class="flex items-center gap-1.5 font-bold text-white hover:text-amber-500 transition-colors"
           >
-            <span class="material-symbols-outlined text-sm text-[#f59e0b] group-hover/addr:scale-110 transition-transform">location_on</span>
-            <span class="font-bold text-white group-hover/addr:text-[#f59e0b] transition-colors whitespace-nowrap">м. Запоріжжя</span>
-            <span class="text-white/20 group-hover/addr:text-[#f59e0b] transition-colors">•</span>
-            <span class="text-gray-300 font-medium group-hover/addr:text-[#f59e0b] transition-colors whitespace-nowrap"><span class="hidden 2xl:inline">вул. </span>Олександрівська, 88</span>
+            <span class="material-symbols-outlined text-base text-amber-500">phone</span>
+            <span>067 613-00-88</span>
+            <span class="material-symbols-outlined text-xs text-gray-400">expand_more</span>
           </a>
-
-          <!-- Тонкий розділювач -->
-          <span class="w-px h-3.5 bg-white/15"></span>
-
-          <!-- Телефон та випадаюче меню номерів -->
-          <div class="relative group/phone">
-            <a 
-              href="tel:+380676130088" 
-              class="flex items-center gap-1.5 font-bold text-white hover:text-[#f59e0b] transition-colors py-0.5 rounded-full cursor-pointer whitespace-nowrap"
-              title="Зателефонувати до кафе «Амбар»"
-            >
-              <span class="material-symbols-outlined text-sm text-[#f59e0b]">phone_in_talk</span>
-              <span class="font-heading tracking-wide">067 613-00-88</span>
-              <span class="material-symbols-outlined text-xs text-gray-400 group-hover/phone:text-[#f59e0b] transition-transform group-hover/phone:rotate-180">expand_more</span>
-            </a>
-
-            <!-- Випадаюче вікно контактів при наведенні -->
-            <div class="absolute top-full right-0 xl:left-1/2 xl:-translate-x-1/2 pt-2.5 hidden group-hover/phone:block z-50 pointer-events-auto">
-              <div class="bg-[#18181c]/95 backdrop-blur-xl border border-white/15 rounded-2xl p-3 shadow-2xl min-w-[210px] space-y-2">
-                <div class="text-[10px] uppercase font-bold text-gray-400 tracking-wider flex items-center justify-between border-b border-white/10 pb-1.5">
-                  <span>Прийом замовлень</span>
-                  <span class="text-[#f59e0b] font-semibold">10:00–22:00</span>
-                </div>
-                <a href="tel:+380676130088" class="flex items-center justify-between p-1.5 rounded-xl hover:bg-white/5 text-white hover:text-[#f59e0b] transition-all font-heading font-bold">
-                  <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> 067 613-00-88</span>
-                  <span class="text-[10px] text-gray-400 font-normal">Kyivstar</span>
-                </a>
-                <a href="tel:+380507021888" class="flex items-center justify-between p-1.5 rounded-xl hover:bg-white/5 text-white hover:text-[#f59e0b] transition-all font-heading font-bold">
-                  <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> 050 70-21-888</span>
-                  <span class="text-[10px] text-gray-400 font-normal">Vodafone</span>
-                </a>
-              </div>
+          <!-- Випадаюче вікно контактів -->
+          <div class="absolute top-full right-0 pt-2 hidden group-hover/phone:block z-50">
+            <div class="bg-[#1e1e24] border border-white/15 rounded-xl p-3 shadow-xl min-w-[200px] space-y-2">
+              <a href="tel:+380676130088" class="flex items-center justify-between p-1.5 rounded-lg hover:bg-white/5 text-white hover:text-amber-500 transition-colors font-semibold text-xs">
+                <span>067 613-00-88</span>
+                <span class="text-[10px] text-gray-400">Kyivstar</span>
+              </a>
+              <a href="tel:+380507021888" class="flex items-center justify-between p-1.5 rounded-lg hover:bg-white/5 text-white hover:text-amber-500 transition-colors font-semibold text-xs">
+                <span>050 70-21-888</span>
+                <span class="text-[10px] text-gray-400">Vodafone</span>
+              </a>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Висувний пошуковий рядок у шапці (відкривається при кліку на іконку) -->
-      <div id="header-search-expanded" class="hidden absolute inset-x-3 sm:inset-x-6 top-2.5 bottom-2.5 bg-[#18181c] rounded-full border border-[#f59e0b] shadow-2xl z-30 flex items-center px-4 gap-3 modal-enter">
-        <span class="material-symbols-outlined text-[#f59e0b] text-xl shrink-0">search</span>
+      <!-- Висувний рядок пошуку в шапці -->
+      <div id="header-search-expanded" class="hidden absolute inset-x-3 sm:inset-x-6 top-2.5 bottom-2.5 bg-[#1e1e24] rounded-xl border border-amber-500 shadow-2xl z-30 flex items-center px-4 gap-3 modal-enter">
+        <span class="material-symbols-outlined text-amber-500 text-xl shrink-0">search</span>
         <input 
           id="header-search-field" 
           type="text" 
-          placeholder="Пошук піци, суші, шашлику, стейків..." 
+          placeholder="Пошук піци, суші, шашлику, бургерів..." 
           class="flex-1 bg-transparent text-xs sm:text-sm text-white focus:outline-none placeholder-gray-400"
           oninput="handleSearch(this.value)"
         />
-        <button onclick="clearAndCloseHeaderSearch()" class="w-7 h-7 rounded-full bg-[#24242c] hover:bg-white/10 text-gray-400 hover:text-white flex items-center justify-center transition-colors shrink-0" title="Закрити пошук (Esc)">
+        <button onclick="clearAndCloseHeaderSearch()" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white flex items-center justify-center transition-colors shrink-0" title="Закрити пошук (Esc)">
           <span class="material-symbols-outlined text-base">close</span>
         </button>
       </div>
 
-      <!-- 3. Кнопки дій (Колонка 3: праворуч) -->
-      <div class="flex items-center justify-end gap-1.5 sm:gap-2 xl:gap-2.5 shrink-0 z-10">
-        
-        <!-- Кнопка пошуку (іконка) -->
+      <!-- Кнопки дій: Пошук, Улюблене, Кабінет, Бронь, Кошик -->
+      <div class="flex items-center gap-2 shrink-0">
         <button 
           id="header-search-btn"
           onclick="openHeaderSearch()" 
-          class="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/10 hover:border-[#f59e0b] bg-[#1e1e24] text-gray-200 hover:text-[#f59e0b] transition-all active:scale-95 shadow-sm cursor-pointer"
+          class="w-10 h-10 rounded-xl bg-[#222228] border border-white/5 hover:border-white/20 text-gray-200 hover:text-white flex items-center justify-center transition-all cursor-pointer"
           title="Пошук страв"
-          aria-label="Пошук страв"
         >
-          <span class="material-symbols-outlined text-base sm:text-lg">search</span>
+          <span class="material-symbols-outlined text-lg">search</span>
         </button>
 
-        <!-- Кнопка Улюблені страви (інтуїтивна іконка з бейджем) -->
         <button 
           id="header-fav-btn"
           onclick="toggleFavoritesView()" 
-          class="relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/10 hover:border-[#f59e0b] bg-[#1e1e24] text-[#f59e0b] hover:text-[#fbbf24] transition-all active:scale-95 shadow-sm cursor-pointer"
+          class="relative w-10 h-10 rounded-xl bg-[#222228] border border-white/5 hover:border-white/20 text-gray-200 hover:text-amber-500 flex items-center justify-center transition-all cursor-pointer"
           title="Улюблені страви"
-          aria-label="Улюблені страви"
         >
-          <span class="material-symbols-outlined text-base sm:text-lg text-[#f59e0b]" style="font-variation-settings: 'FILL' 1;">favorite</span>
-          <span id="fav-badge-count" class="hidden absolute -top-1 -right-1 bg-[#f59e0b] text-black text-[10px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center border-2 border-[#121216]">0</span>
+          <span class="material-symbols-outlined text-lg text-amber-500" style="font-variation-settings: 'FILL' 1;">favorite</span>
+          <span id="fav-badge-count" class="hidden absolute -top-1 -right-1 bg-amber-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
         </button>
 
-        <!-- Кнопка Особистий кабінет (інтуїтивна іконка з індикатором) -->
         <button 
           id="header-cabinet-btn"
           onclick="openCabinetModal()" 
-          class="relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/10 hover:border-[#f59e0b] bg-[#1e1e24] text-gray-200 hover:text-white transition-all active:scale-95 shadow-sm cursor-pointer"
+          class="relative w-10 h-10 rounded-xl bg-[#222228] border border-white/5 hover:border-white/20 text-gray-200 hover:text-white flex items-center justify-center transition-all cursor-pointer"
           title="Особистий кабінет"
-          aria-label="Особистий кабінет"
         >
-          <span class="material-symbols-outlined text-lg sm:text-xl text-[#f59e0b]">account_circle</span>
-          <span id="cabinet-badge-dot" class="hidden absolute top-0.5 right-0.5 w-2.5 h-2.5 rounded-full bg-[#f59e0b] border-2 border-[#121216]"></span>
+          <span class="material-symbols-outlined text-lg text-amber-500">person</span>
+          <span id="cabinet-badge-dot" class="hidden absolute top-1 right-1 w-2 h-2 rounded-full bg-amber-500"></span>
           <span id="header-cabinet-label" class="sr-only">Кабінет</span>
         </button>
 
-        <!-- Замовити стіл (адаптивна кнопка, доступна від планшета sm, на мобільних доступна в кабінеті) -->
         <button 
           onclick="openTableBookingModal()" 
-          class="hidden sm:flex items-center justify-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-full border border-[#f59e0b]/60 hover:border-[#f59e0b] text-[#f59e0b] hover:bg-[#f59e0b] hover:text-black font-heading text-xs font-bold transition-all active:scale-95 shadow-sm whitespace-nowrap cursor-pointer"
+          class="hidden sm:flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-white/10 hover:border-amber-500 text-gray-200 hover:text-amber-500 text-xs font-semibold transition-all cursor-pointer"
           title="Забронювати стіл"
         >
-          <span class="material-symbols-outlined text-base">restaurant</span>
-          <span class="hidden 2xl:inline">Замовити стіл</span>
+          <span class="material-symbols-outlined text-base">table_restaurant</span>
+          <span>Бронь столу</span>
         </button>
 
-        <!-- Кнопка кошика -->
         <button 
           onclick="openCartDrawer()" 
-          class="relative flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 rounded-full btn-amber text-xs font-bold shadow-lg whitespace-nowrap cursor-pointer"
+          class="btn-amber px-4 py-2.5 text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
           aria-label="Відкрити кошик"
         >
-          <span class="material-symbols-outlined text-base sm:text-lg">shopping_bag</span>
+          <span class="material-symbols-outlined text-base">shopping_bag</span>
           <span>Кошик</span>
-          <span class="cart-badge-count hidden bg-black text-[#f59e0b] text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+          <span class="cart-badge-count hidden bg-black/30 text-white text-xs font-bold px-1.5 py-0.2 rounded-full">0</span>
         </button>
-
       </div>
 
     </div>
@@ -215,70 +193,75 @@
   <!-- ========================================================================= -->
   <main class="flex-1 max-w-container-max mx-auto px-4 sm:px-8 pt-24 pb-32 w-full space-y-10">
 
-    <!-- Бейдж статусу доставки -->
+
+
+    <!-- Інформаційна плашка доставки та пошук -->
     <section class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#161310] border border-amber-900/40 text-xs shadow-md">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span class="text-stone-300 font-medium">Швидка доставка по Запоріжжю:</span>
-        <span class="font-bold text-[#f59e0b]">35–45 хвилин</span>
-        <span class="text-stone-600">•</span>
-        <span class="text-emerald-400 font-bold">Безкоштовно від 400 ₴</span>
+      <div class="inline-flex items-center gap-3 px-4 py-2.5 rounded-xl bg-[#18181c] border border-white/10 text-xs text-gray-300 shadow-sm">
+        <span class="flex items-center gap-1.5 text-emerald-400 font-semibold">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          Доставка 35–45 хв
+        </span>
+        <span class="text-white/20">•</span>
+        <span class="text-white font-medium">Безкоштовно від 400 ₴</span>
+        <span class="text-white/20 hidden md:inline">•</span>
+        <span class="text-gray-400 hidden md:inline">Оплата карткою або готівкою</span>
       </div>
 
       <!-- Мобільний рядок пошуку -->
-      <div class="w-full sm:w-80 lg:hidden relative rounded-full shrink-0">
+      <div class="w-full sm:w-80 lg:hidden relative">
         <input 
           id="mobile-search-input"
           type="text" 
           placeholder="Пошук у меню (шашлик, піца...)" 
           oninput="handleSearch(this.value)"
-          class="w-full pl-9 pr-4 py-2 rounded-full bg-[#161310] border border-amber-900/40 text-xs text-white placeholder-stone-400 focus:outline-none focus:border-[#f59e0b]"
+          class="w-full pl-9 pr-4 py-2.5 rounded-xl bg-[#18181c] border border-white/10 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-amber-500"
         />
-        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-base">search</span>
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-base">search</span>
       </div>
     </section>
 
-    <!-- ПРОМО-БАНЕРИ (ОРИГІНАЛЬНІ ФОТОГРАФІЇ РЕСТОРАНУ АМБАР) -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <!-- ПРОМО-БАНЕРИ РЕСТОРАНУ -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
       
-      <!-- Головний банер: Мангал тиждень -->
-      <div class="md:col-span-2 rounded-3xl overflow-hidden relative group cursor-pointer border border-amber-900/40 min-h-[270px] sm:min-h-[350px] p-6 sm:p-8 flex flex-col justify-end shadow-2xl" onclick="scrollToMenu('mangal')">
-        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('assets/banner_grill_steaks.jpg');"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-[#0c0b09] via-[#0c0b09]/75 to-transparent"></div>
+      <!-- Головний банер: Мангал -->
+      <div class="md:col-span-2 rounded-2xl overflow-hidden relative group cursor-pointer border border-white/10 min-h-[260px] sm:min-h-[320px] p-6 sm:p-8 flex flex-col justify-end bg-[#18181c] shadow-md" onclick="scrollToMenu('mangal')">
+        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('assets/banner_grill_steaks.jpg');"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
         
         <div class="relative z-10">
-          <span class="inline-block px-3 py-1 rounded-full bg-red-700/90 text-white font-heading text-[11px] font-bold uppercase tracking-wider mb-2.5 shadow-lg border border-red-500/30">🪵 СПРАВЖНІЙ МАНГАЛ НА ДУБОВОМУ ВУГІЛЛІ</span>
-          <h2 class="font-heading text-3xl sm:text-5xl font-bold text-white leading-none uppercase tracking-wide">Шашлик, Стейки & Реберця</h2>
-          <p class="text-amber-400 font-heading text-xl sm:text-2xl font-bold mt-2">Знижка -20% за промокодом <span class="bg-black/50 px-2 py-0.5 rounded border border-amber-500/30">GRILL20</span></p>
+          <span class="inline-block px-3 py-1 rounded-lg bg-red-600 text-white text-[11px] font-bold uppercase tracking-wider mb-2">Мангал на деревному вугіллі</span>
+          <h2 class="font-heading text-2xl sm:text-4xl font-extrabold text-white leading-tight">Шашлик, стейки та соковиті реберця</h2>
+          <p class="text-amber-400 text-sm sm:text-base font-semibold mt-1.5">Знижка -20% за промокодом <span class="bg-black/40 px-2 py-0.5 rounded border border-white/15">GRILL20</span></p>
           <div class="mt-4 flex items-center gap-3">
-            <button type="button" onclick="event.stopPropagation(); scrollToMenu('mangal')" class="px-6 py-2.5 btn-amber text-xs font-bold uppercase tracking-wider active:scale-95 transition-all shadow-lg cursor-pointer">Переглянути меню</button>
-            <span class="text-xs text-stone-300 font-medium">Свинячий ошийок, соковиті реберця, люля-кебаб на вогні</span>
+            <button type="button" onclick="event.stopPropagation(); scrollToMenu('mangal')" class="btn-amber px-5 py-2.5 text-xs font-semibold active:scale-95 transition-all cursor-pointer">Переглянути меню мангалу</button>
+            <span class="text-xs text-gray-300 font-medium">Свинячий ошийок, реберця, люля-кебаб</span>
           </div>
         </div>
       </div>
 
-      <!-- Бокові банери: Піца та Крильця / Бургери -->
-      <div class="flex flex-col gap-5">
+      <!-- Бокові банери: Піца та Бургери -->
+      <div class="flex flex-col gap-4">
         
-        <!-- Піца 1+1 -->
-        <div class="flex-1 rounded-3xl overflow-hidden relative group cursor-pointer border border-amber-900/40 p-6 flex flex-col justify-end min-h-[160px]" onclick="scrollToMenu('pizza')">
-          <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('assets/banner_artisan_pizza.jpg');"></div>
-          <div class="absolute inset-0 bg-gradient-to-t from-[#0c0b09] via-[#0c0b09]/80 to-transparent"></div>
+        <!-- Піца -->
+        <div class="flex-1 rounded-2xl overflow-hidden relative group cursor-pointer border border-white/10 p-5 flex flex-col justify-end min-h-[145px] bg-[#18181c] shadow-sm" onclick="scrollToMenu('pizza')">
+          <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('assets/banner_artisan_pizza.jpg');"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"></div>
           <div class="relative z-10">
-            <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-500/20 text-[#f59e0b] border border-amber-500/35 text-[10px] font-bold tracking-wider uppercase mb-1 shadow">🍕 Дров'яна піч</span>
-            <h3 class="font-heading text-2xl font-bold text-white uppercase tracking-wide drop-shadow-md">Артизанська піца</h3>
-            <p class="text-xs text-stone-300 drop-shadow">Класичні та авторські рецепти на живому вогні</p>
+            <span class="text-amber-400 text-[11px] font-bold uppercase tracking-wider block">Дров'яна піч</span>
+            <h3 class="font-heading text-lg sm:text-xl font-bold text-white">Артизанська піца</h3>
+            <p class="text-xs text-gray-300 mt-0.5">Класичні та фірмові рецепти з сиром моцарела</p>
           </div>
         </div>
 
         <!-- Крильця & Бургери -->
-        <div class="flex-1 rounded-3xl overflow-hidden relative group cursor-pointer border border-amber-900/40 p-6 flex flex-col justify-end min-h-[160px]" onclick="scrollToMenu('burgers')">
-          <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('assets/banner_wings_burgers.jpg');"></div>
-          <div class="absolute inset-0 bg-gradient-to-t from-[#0c0b09] via-[#0c0b09]/80 to-transparent"></div>
+        <div class="flex-1 rounded-2xl overflow-hidden relative group cursor-pointer border border-white/10 p-5 flex flex-col justify-end min-h-[145px] bg-[#18181c] shadow-sm" onclick="scrollToMenu('burgers')">
+          <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('assets/banner_wings_burgers.jpg');"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"></div>
           <div class="relative z-10">
-            <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-500/20 text-[#f59e0b] border border-amber-500/35 text-[10px] font-bold tracking-wider uppercase mb-1 shadow">🔥 Фірмовий смокхаус</span>
-            <h3 class="font-heading text-2xl font-bold text-white uppercase tracking-wide drop-shadow-md">Крильця & Бургери</h3>
-            <p class="text-xs text-stone-300 drop-shadow">Соковита яловичина, пікантні соуси та свіжа булочка</p>
+            <span class="text-amber-400 text-[11px] font-bold uppercase tracking-wider block">Гриль & Смокхаус</span>
+            <h3 class="font-heading text-lg sm:text-xl font-bold text-white">Бургери & Крильця</h3>
+            <p class="text-xs text-gray-300 mt-0.5">Соковита яловичина та пікантні соуси</p>
           </div>
         </div>
 
@@ -287,73 +270,73 @@
     </section>
 
     <!-- ======================================================================= -->
-    <!-- 3. ЗАЛИПАЮЧЕ МЕНЮ КАТЕГОРІЙ (ВСІ КАТЕГОРІЇ АМБАР + УЛЮБЛЕНЕ)              -->
+    <!-- 3. ЗАЛИПАЮЧЕ МЕНЮ КАТЕГОРІЙ                                             -->
     <!-- ======================================================================= -->
-    <nav id="menu-categories-nav" class="sticky top-20 z-40 bg-[#0c0b09]/95 backdrop-blur-xl py-3 border-b border-amber-900/30 -mx-4 sm:-mx-8 px-4 sm:px-8">
+    <nav id="menu-categories-nav" class="sticky top-20 z-40 bg-[#121214]/98 backdrop-blur-md py-3 border-b border-white/10 -mx-4 sm:-mx-8 px-4 sm:px-8">
       <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
         
-        <button data-cat="all" onclick="setCategory('all')" class="category-pill active shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+        <button data-cat="all" onclick="setCategory('all')" class="category-pill active shrink-0 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
           <span class="material-symbols-outlined text-base">restaurant_menu</span>
           <span>Всі страви</span>
         </button>
 
-        <button data-cat="favorites" onclick="setCategory('favorites')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5 border border-[#f59e0b]/40 text-white hover:text-[#f59e0b]">
-          <span class="material-symbols-outlined text-base text-[#f59e0b]" style="font-variation-settings: 'FILL' 1;">favorite</span>
-          <span>Улюблені страви</span>
-          <span id="fav-tab-badge" class="hidden text-[10px] bg-[#f59e0b] text-black px-1.5 py-0.2 rounded-full font-bold">0</span>
+        <button data-cat="favorites" onclick="setCategory('favorites')" class="category-pill shrink-0 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
+          <span class="material-symbols-outlined text-base text-amber-500" style="font-variation-settings: 'FILL' 1;">favorite</span>
+          <span>Улюблені</span>
+          <span id="fav-tab-badge" class="hidden text-[10px] bg-amber-500 text-black px-1.5 py-0.2 rounded-full font-bold">0</span>
         </button>
 
-        <button data-cat="mangal" onclick="setCategory('mangal')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+        <button data-cat="mangal" onclick="setCategory('mangal')" class="category-pill shrink-0 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
           <span class="material-symbols-outlined text-base">outdoor_grill</span>
           <span>Мангал & Гриль</span>
         </button>
 
-        <button data-cat="pizza" onclick="setCategory('pizza')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+        <button data-cat="pizza" onclick="setCategory('pizza')" class="category-pill shrink-0 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
           <span class="material-symbols-outlined text-base">local_pizza</span>
           <span>Піца</span>
         </button>
 
-        <button data-cat="sushi" onclick="setCategory('sushi')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+        <button data-cat="sushi" onclick="setCategory('sushi')" class="category-pill shrink-0 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
           <span class="material-symbols-outlined text-base">set_meal</span>
           <span>Суші</span>
         </button>
 
-        <button data-cat="setu" onclick="setCategory('setu')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+        <button data-cat="setu" onclick="setCategory('setu')" class="category-pill shrink-0 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
           <span class="material-symbols-outlined text-base">bento</span>
           <span>Сети</span>
         </button>
 
-        <button data-cat="burgers" onclick="setCategory('burgers')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+        <button data-cat="burgers" onclick="setCategory('burgers')" class="category-pill shrink-0 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
           <span class="material-symbols-outlined text-base">lunch_dining</span>
           <span>Бургери</span>
         </button>
 
-        <button data-cat="wok" onclick="setCategory('wok')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+        <button data-cat="wok" onclick="setCategory('wok')" class="category-pill shrink-0 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
           <span class="material-symbols-outlined text-base">ramen_dining</span>
           <span>WOK & Паста</span>
         </button>
 
-        <button data-cat="supov" onclick="setCategory('supov')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+        <button data-cat="supov" onclick="setCategory('supov')" class="category-pill shrink-0 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
           <span class="material-symbols-outlined text-base">soup_kitchen</span>
           <span>Супи</span>
         </button>
 
-        <button data-cat="salaty" onclick="setCategory('salaty')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+        <button data-cat="salaty" onclick="setCategory('salaty')" class="category-pill shrink-0 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
           <span class="material-symbols-outlined text-base">eco</span>
           <span>Салати</span>
         </button>
 
-        <button data-cat="zakuski" onclick="setCategory('zakuski')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+        <button data-cat="zakuski" onclick="setCategory('zakuski')" class="category-pill shrink-0 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
           <span class="material-symbols-outlined text-base">tapas</span>
           <span>Закуски</span>
         </button>
 
-        <button data-cat="deserty" onclick="setCategory('deserty')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+        <button data-cat="deserty" onclick="setCategory('deserty')" class="category-pill shrink-0 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
           <span class="material-symbols-outlined text-base">icecream</span>
           <span>Десерти</span>
         </button>
 
-        <button data-cat="napitki" onclick="setCategory('napitki')" class="category-pill shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
+        <button data-cat="napitki" onclick="setCategory('napitki')" class="category-pill shrink-0 px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
           <span class="material-symbols-outlined text-base">local_bar</span>
           <span>Напої</span>
         </button>
@@ -367,20 +350,20 @@
     <section>
       <div class="flex items-center justify-between mb-6">
         <div>
-          <h2 class="font-heading text-2xl sm:text-4xl font-bold text-white uppercase tracking-wider flex items-center gap-2">
-            <span>🪵 Каталог страв</span>
+          <h2 class="font-heading text-2xl sm:text-3xl font-bold text-white flex items-center gap-2">
+            <span>Каталог страв</span>
           </h2>
-          <p id="catalog-items-count" class="text-xs text-stone-400 mt-1">Знайдено: 351 страва • Свіже приготування під замовлення</p>
+          <p id="catalog-items-count" class="text-xs text-gray-400 mt-1">Знайдено: 351 страва • Свіже приготування під замовлення</p>
         </div>
       </div>
 
-      <div id="food-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div id="food-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
         <!-- Завантажується динамічно через app.js -->
       </div>
 
       <!-- Кнопка Показати ще -->
       <div id="load-more-container" class="pt-10 flex justify-center">
-        <button onclick="loadMoreItems()" class="px-8 py-3.5 rounded-full bg-[#161310] border border-amber-900/40 hover:border-[#f59e0b] text-white hover:text-[#f59e0b] font-heading text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg active:scale-95">
+        <button onclick="loadMoreItems()" class="px-8 py-3 rounded-xl bg-[#1e1e24] border border-white/10 hover:border-amber-500 text-white font-semibold text-xs flex items-center gap-2 transition-all shadow-sm active:scale-95 cursor-pointer">
           <span class="material-symbols-outlined text-lg">expand_more</span>
           <span id="load-more-btn-text">Показати ще страви</span>
         </button>
@@ -390,37 +373,37 @@
     <!-- ======================================================================= -->
     <!-- 5. ПЕРЕВАГИ КАФЕ АМБАР                                                  -->
     <!-- ======================================================================= -->
-    <section class="rounded-3xl bg-[#151310] border border-amber-900/30 p-6 sm:p-10 shadow-xl">
-      <h3 class="font-heading text-xl sm:text-3xl font-bold text-white mb-6 text-center uppercase tracking-wide">Чому обирають «Амбар» у Запоріжжі</h3>
+    <section class="rounded-2xl bg-[#18181c] border border-white/10 p-6 sm:p-10 shadow-md">
+      <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-6 text-center">Чому замовляють в «Амбар»</h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         <div class="flex items-start gap-4">
-          <div class="w-12 h-12 rounded-2xl bg-[#f59e0b]/10 text-[#f59e0b] flex items-center justify-center shrink-0 border border-amber-500/20">
+          <div class="w-11 h-11 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0 border border-amber-500/20">
             <span class="material-symbols-outlined text-2xl">outdoor_grill</span>
           </div>
           <div>
-            <h4 class="font-heading font-bold text-white text-lg uppercase tracking-wide">Справжній мангал на вугіллі</h4>
-            <p class="text-xs text-stone-400 mt-1 leading-relaxed">Смажимо м'ясо виключно на натуральному дубовому вугіллі без рідкого диму та напівфабрикатів.</p>
+            <h4 class="font-heading font-bold text-white text-base">Мангал на вугіллі</h4>
+            <p class="text-xs text-gray-400 mt-1 leading-relaxed">Смажимо м'ясо на натуральному деревному вугіллі без рідкого диму та напівфабрикатів.</p>
           </div>
         </div>
 
         <div class="flex items-start gap-4">
-          <div class="w-12 h-12 rounded-2xl bg-red-700/15 text-red-400 flex items-center justify-center shrink-0 border border-red-700/30">
+          <div class="w-11 h-11 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center shrink-0 border border-red-500/20">
             <span class="material-symbols-outlined text-2xl">two_wheeler</span>
           </div>
           <div>
-            <h4 class="font-heading font-bold text-white text-lg uppercase tracking-wide">Термосумки та швидкі кур'єри</h4>
-            <p class="text-xs text-stone-400 mt-1 leading-relaxed">Ваша піца приїде з тягучим гарячим сиром, а шашлик — із димком прямо з вогню мангалу.</p>
+            <h4 class="font-heading font-bold text-white text-base">Швидка доставка</h4>
+            <p class="text-xs text-gray-400 mt-1 leading-relaxed">Термосумки зберігають страву гарячою. Доставка по місту за 35–45 хвилин.</p>
           </div>
         </div>
 
         <div class="flex items-start gap-4">
-          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/20">
-            <span class="material-symbols-outlined text-2xl">workspace_premium</span>
+          <div class="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/20">
+            <span class="material-symbols-outlined text-2xl">verified</span>
           </div>
           <div>
-            <h4 class="font-heading font-bold text-white text-lg uppercase tracking-wide">Фермерські інгредієнти</h4>
-            <p class="text-xs text-stone-400 mt-1 leading-relaxed">Охолоджене фермерське м'ясо, свіжий лосось щоденної поставки та авторські соуси власного приготування.</p>
+            <h4 class="font-heading font-bold text-white text-base">Свіжі інгредієнти</h4>
+            <p class="text-xs text-gray-400 mt-1 leading-relaxed">Відбірне охолоджене м'ясо, свіжий лосось щоденних поставок та соуси власного приготування.</p>
           </div>
         </div>
 
@@ -1773,6 +1756,6 @@
   <!-- База даних повного меню з 351 страви -->
   <script src="menu_data.js?v=20260904_final"></script>
   <!-- Основна логіка додатку -->
-  <script src="app.js?v=20260904_ambar_v3"></script>
+  <script src="app.js?v=20260904_ambar_v4"></script>
 </body>
 </html>
