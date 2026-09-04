@@ -2730,16 +2730,40 @@ function renderCabinetBookings() {
   }).join("");
 }
 
-function resetCabinetSession() {
-  if (confirm("Ви впевнені, що бажаєте очистити збережені дані та історію замовлень?")) {
+function clientLogout() {
+  if (confirm("Ви дійсно бажаєте вийти з особистого кабінету?")) {
     CabinetState.user = { name: "", phone: "", address: "", entrance: "", floor: "", apt: "", bonuses: 0 };
     CabinetState.orders = [];
     CabinetState.bookings = [];
     localStorage.removeItem(CABINET_STORAGE_KEY);
     updateCabinetUI();
     closeCabinetModal();
-    showToast("Дані вашої сесії успішно очищено");
+    showToast("🚪 Ви успішно вийшли з акаунта");
   }
+}
+
+async function clientDeleteAccount() {
+  if (confirm("⚠️ УВАГА! Ви дійсно бажаєте повністю видалити свій акаунт клієнта, збережені адреси, історію замовлень та бонуси?\n\nЦю дію неможливо буде скасувати.")) {
+    const phone = CabinetState.user?.phone;
+    CabinetState.user = { name: "", phone: "", address: "", entrance: "", floor: "", apt: "", bonuses: 0 };
+    CabinetState.orders = [];
+    CabinetState.bookings = [];
+    localStorage.removeItem(CABINET_STORAGE_KEY);
+    updateCabinetUI();
+    closeCabinetModal();
+
+    if (phone && typeof AmbarCloudSync !== "undefined") {
+      try {
+        await AmbarCloudSync.request(`/users?phone=${encodeURIComponent(phone)}`, { method: "DELETE" });
+      } catch(e) {}
+    }
+
+    showToast("🗑️ Ваш акаунт було успішно видалено");
+  }
+}
+
+function resetCabinetSession() {
+  clientLogout();
 }
 
 // =========================================================================

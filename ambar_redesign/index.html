@@ -1268,14 +1268,16 @@
 
       </div>
 
-      <!-- Футер кабінету з кнопкою безпечного скидання сесії -->
-      <div class="pt-3 border-t border-white/10 flex items-center justify-between text-xs text-gray-400 shrink-0">
-        <span class="flex items-center gap-1.5 text-gray-500">
-          <span class="material-symbols-outlined text-sm">lock</span>
-          <span>Сесія захищена локально</span>
-        </span>
-        <button onclick="resetCabinetSession()" class="text-red-400 hover:text-red-300 transition-colors font-medium cursor-pointer">
-          Очистити дані сесії
+      <!-- Футер кабінету з кнопками виходу та видалення акаунта -->
+      <div class="pt-3 border-t border-white/10 flex items-center justify-between text-xs text-gray-400 shrink-0 flex-wrap gap-2">
+        <button type="button" onclick="clientLogout()" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer border border-white/5 font-medium">
+          <span class="material-symbols-outlined text-sm">logout</span>
+          <span>Вийти з акаунта</span>
+        </button>
+
+        <button type="button" onclick="clientDeleteAccount()" class="text-rose-400 hover:text-rose-300 transition-colors font-medium flex items-center gap-1 cursor-pointer hover:underline text-[11px]">
+          <span class="material-symbols-outlined text-sm">delete_forever</span>
+          <span>Видалити акаунт</span>
         </button>
       </div>
 
