@@ -1,16 +1,16 @@
 /* ==========================================================================
-   AMBAR GASTRO CAFE & DELIVERY — DESIGN SYSTEM: OBSIDIAN & CRAFT AMBER
-   Visual Movement: Laconic Dark Craft Grill & Smokehouse Gastro-Pub
+   AMBAR GASTRO CAFE & DELIVERY — DESIGN SYSTEM: CRAFT GRILL & SMOKEHOUSE
+   Visual Movement: Authentic Rustic Barn, Oak Embers & Craft Steakhouse
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg-base: #111113;
-  --bg-card: #17171a;
-  --bg-card-hover: #1e1d22;
-  --bg-surface-elevated: #242329;
-  --bg-glass: rgba(20, 20, 24, 0.88);
+  --bg-base: #0c0b09;
+  --bg-card: #151310;
+  --bg-card-hover: #1c1814;
+  --bg-surface-elevated: #221d18;
+  --bg-glass: rgba(16, 14, 12, 0.94);
   
   --primary-amber: #f59e0b;
   --primary-amber-hover: #d97706;
@@ -19,24 +19,29 @@
   --accent-fiery: #dc2626;
   --accent-fiery-hover: #b91c1c;
 
-  --text-primary: #f5f5f7;
-  --text-secondary: #d6d3d1;
-  --text-muted: #a8a29e;
-  --text-dim: #78716c;
+  --text-primary: #f5f4f0;
+  --text-secondary: #d6d1ca;
+  --text-muted: #a39c94;
+  --text-dim: #736c64;
 
   --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-wood: rgba(217, 119, 6, 0.25);
-  --border-amber: rgba(245, 158, 11, 0.35);
+  --border-wood: rgba(180, 83, 9, 0.3);
+  --border-amber: rgba(245, 158, 11, 0.4);
   --border-focus: #f59e0b;
 
-  --radius-card: 20px;
-  --radius-button: 9999px;
-  --radius-input: 16px;
+  --radius-card: 16px;
+  --radius-button: 12px;
+  --radius-input: 12px;
 }
 
 /* Base Body Styles */
 body {
-  background-color: var(--bg-base);
+  background-color: #0c0b09;
+  background-image: 
+    radial-gradient(ellipse 80% 500px at 50% 0px, rgba(217, 119, 6, 0.1) 0%, transparent 80%),
+    radial-gradient(ellipse 60% 600px at 85% 35%, rgba(180, 83, 9, 0.04) 0%, transparent 70%),
+    linear-gradient(to bottom, #110e0b 0%, #0c0b09 100%);
+  background-attachment: fixed;
   color: var(--text-primary);
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
@@ -44,7 +49,8 @@ body {
 }
 
 h1, h2, h3, h4, .font-heading {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Oswald', 'Montserrat', sans-serif;
+  letter-spacing: 0.03em;
 }
 
 /* Glassmorphism Classes */
@@ -52,7 +58,7 @@ h1, h2, h3, h4, .font-heading {
   background: var(--bg-glass);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid rgba(180, 83, 9, 0.25);
 }
 
 .glass-panel {
@@ -63,32 +69,33 @@ h1, h2, h3, h4, .font-heading {
 }
 
 .header-pill {
-  background: rgba(23, 23, 26, 0.92);
+  background: rgba(21, 19, 16, 0.94);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 18px -2px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(180, 83, 9, 0.3);
+  box-shadow: 0 4px 18px -2px rgba(0, 0, 0, 0.6);
   transition: all 0.25s ease;
 }
 
 .header-pill:hover {
-  border-color: rgba(245, 158, 11, 0.35);
-  box-shadow: 0 6px 24px -2px rgba(0, 0, 0, 0.65);
+  border-color: rgba(245, 158, 11, 0.5);
+  box-shadow: 0 6px 24px -2px rgba(0, 0, 0, 0.75);
 }
 
-/* Cards & Surfaces */
+/* Craft Food Cards & Surfaces */
 .food-card {
   background-color: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-top: 1px solid rgba(245, 158, 11, 0.25);
   border-radius: var(--radius-card);
-  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.4);
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 6px 20px -4px rgba(0, 0, 0, 0.6);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .food-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(245, 158, 11, 0.35);
-  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.75);
+  border-color: rgba(245, 158, 11, 0.45);
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.85);
 }
 
 .food-image-wrapper {
@@ -99,7 +106,7 @@ h1, h2, h3, h4, .font-heading {
 }
 
 .food-image-gradient {
-  background: linear-gradient(to top, rgba(23, 23, 26, 0.6) 0%, transparent 25%);
+  background: linear-gradient(to top, rgba(21, 19, 16, 0.85) 0%, rgba(21, 19, 16, 0.2) 30%, transparent 60%);
 }
 
 /* Amber Craft Buttons & Interactive States */
@@ -110,17 +117,20 @@ h1, h2, h3, h4, .font-heading {
 
 .btn-amber {
   background: linear-gradient(135deg, #f59e0b, #d97706);
-  color: #0f0d0a;
+  color: #0c0b08;
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   font-weight: 700;
   border-radius: var(--radius-button);
-  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.5);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-amber:hover {
   background: linear-gradient(135deg, #fbbf24, #f59e0b);
   transform: translateY(-1px);
-  box-shadow: 0 8px 22px -3px rgba(0, 0, 0, 0.65);
+  box-shadow: 0 8px 22px -3px rgba(0, 0, 0, 0.7);
 }
 
 .btn-amber:active {
@@ -130,6 +140,9 @@ h1, h2, h3, h4, .font-heading {
 .btn-fiery {
   background: linear-gradient(135deg, #dc2626, #b91c1c);
   color: #ffffff;
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   font-weight: 700;
   border-radius: var(--radius-button);
   box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.4);
@@ -142,36 +155,42 @@ h1, h2, h3, h4, .font-heading {
   box-shadow: 0 8px 20px -3px rgba(0, 0, 0, 0.6);
 }
 
-/* Category Pills */
+/* Category Tabs (Craft Wooden / Chalkboard Plank) */
 .category-pill {
-  transition: all 0.2s ease;
-  border: 1px solid var(--border-subtle);
-  background-color: var(--bg-card);
-  color: var(--text-muted);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #161310;
+  color: #a39c94;
+  border-radius: 12px;
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 .category-pill:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-  color: var(--text-primary);
-  background-color: var(--bg-surface-elevated);
+  border-color: rgba(245, 158, 11, 0.45);
+  color: #ffffff;
+  background-color: #201a14;
 }
 
 .category-pill.active {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  color: #0f0d0a;
-  border-color: transparent;
+  background: linear-gradient(135deg, #d97706, #b45309);
+  color: #ffffff;
+  border-color: #f59e0b;
   font-weight: 700;
-  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.55);
 }
 
 /* Sauce Chips & Option Selectors */
 .sauce-chip {
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   border: 1px solid var(--border-subtle);
-  background-color: #1e1d22;
-  color: #d6d3d1;
+  background-color: #1a1713;
+  color: #d6d1ca;
   cursor: pointer;
   font-weight: 500;
+  border-radius: 10px;
 }
 
 .sauce-chip:hover {
@@ -182,7 +201,7 @@ h1, h2, h3, h4, .font-heading {
 
 .sauce-chip.active {
   background-color: #f59e0b !important;
-  color: #0f0d0a !important;
+  color: #0c0b08 !important;
   border-color: #f59e0b !important;
   font-weight: 700 !important;
   box-shadow: 0 3px 10px -2px rgba(0, 0, 0, 0.4);
@@ -193,7 +212,7 @@ h1, h2, h3, h4, .font-heading {
 label:has(input[type="radio"]:checked),
 label:has(input[type="checkbox"]:checked) {
   border-color: var(--primary-amber) !important;
-  background-color: rgba(245, 158, 11, 0.08) !important;
+  background-color: rgba(245, 158, 11, 0.1) !important;
   color: #ffffff !important;
 }
 

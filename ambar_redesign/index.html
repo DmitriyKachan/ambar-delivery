@@ -15,10 +15,10 @@
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
   <link rel="apple-touch-icon" href="assets/original_logo_sq.png" />
   
-  <!-- Шрифти Google: Montserrat та Inter -->
+  <!-- Шрифти Google: Oswald, Montserrat та Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
   
   <!-- Іконки Material Symbols -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
@@ -32,14 +32,14 @@
         extend: {
           colors: {
             "primary-amber": "#f59e0b",
-            "accent-fiery": "#e11d48",
-            "surface-base": "#121214",
-            "surface-card": "#18181c",
-            "surface-elevated": "#222228"
+            "accent-fiery": "#dc2626",
+            "surface-base": "#0c0b09",
+            "surface-card": "#151310",
+            "surface-elevated": "#221d18"
           },
           fontFamily: {
             "sans": ["Inter", "sans-serif"],
-            "heading": ["Montserrat", "sans-serif"]
+            "heading": ["Oswald", "Montserrat", "sans-serif"]
           },
           maxWidth: {
             "container-max": "1280px"
@@ -49,10 +49,12 @@
     };
   </script>
 
-  <link rel="stylesheet" href="styles.css?v=20260904_ambar_craft" />
+  <link rel="stylesheet" href="styles.css?v=20260904_ambar_v3" />
 </head>
 
-<body class="bg-[#121214] text-white antialiased min-h-screen flex flex-col selection:bg-[#f59e0b] selection:text-black">
+<body class="text-[#f5f4f0] antialiased min-h-screen flex flex-col selection:bg-[#f59e0b] selection:text-black">
+  <!-- Верхній крафтовий акцент (дубове вугілля та бурштин) -->
+  <div class="fixed top-0 inset-x-0 z-[60] h-1 bg-gradient-to-r from-amber-950 via-amber-500 to-amber-950"></div>
 
   <!-- ========================================================================= -->
   <!-- 1. ШАПКА САЙТУ (GLASS HEADER)                                             -->
@@ -68,9 +70,9 @@
             alt="АМБАР — Кафе та Доставка їжі" 
             class="h-9 sm:h-11 w-auto object-contain brightness-0 invert opacity-95 group-hover:opacity-100 transition-all duration-300"
           />
-          <div class="hidden xl:flex flex-col border-l border-white/15 pl-2.5 sm:pl-3 leading-tight whitespace-nowrap transition-colors duration-300">
-            <span class="text-xs font-bold text-white tracking-wider uppercase">Кафе & Гриль</span>
-            <span class="text-[10px] text-gray-400 group-hover:text-gray-200 font-medium tracking-wider uppercase transition-colors duration-300">Доставка в Запоріжжі</span>
+          <div class="hidden xl:flex flex-col border-l border-amber-500/25 pl-2.5 sm:pl-3 leading-tight whitespace-nowrap transition-colors duration-300">
+            <span class="text-xs font-bold text-amber-400 tracking-widest uppercase font-heading">М'ясо на вугіллі • Смокхаус & Гриль</span>
+            <span class="text-[10px] text-stone-400 group-hover:text-stone-200 font-medium tracking-wider uppercase transition-colors duration-300">Запоріжжя • Доставка їжі</span>
           </div>
         </a>
       </div>
@@ -215,24 +217,24 @@
 
     <!-- Бейдж статусу доставки -->
     <section class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#18181c] border border-white/10 text-xs shadow-md">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#161310] border border-amber-900/40 text-xs shadow-md">
         <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span class="text-gray-300 font-medium">Швидка доставка по Запоріжжю:</span>
+        <span class="text-stone-300 font-medium">Швидка доставка по Запоріжжю:</span>
         <span class="font-bold text-[#f59e0b]">35–45 хвилин</span>
-        <span class="text-gray-600">•</span>
+        <span class="text-stone-600">•</span>
         <span class="text-emerald-400 font-bold">Безкоштовно від 400 ₴</span>
       </div>
 
       <!-- Мобільний рядок пошуку -->
-      <div class="w-full sm:w-80 lg:hidden relative amber-glow rounded-full shrink-0">
+      <div class="w-full sm:w-80 lg:hidden relative rounded-full shrink-0">
         <input 
           id="mobile-search-input"
           type="text" 
           placeholder="Пошук у меню (шашлик, піца...)" 
           oninput="handleSearch(this.value)"
-          class="w-full pl-9 pr-4 py-2 rounded-full bg-[#18181c] border border-white/10 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-[#f59e0b]"
+          class="w-full pl-9 pr-4 py-2 rounded-full bg-[#161310] border border-amber-900/40 text-xs text-white placeholder-stone-400 focus:outline-none focus:border-[#f59e0b]"
         />
-        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-base">search</span>
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-base">search</span>
       </div>
     </section>
 
@@ -240,43 +242,43 @@
     <section class="grid grid-cols-1 md:grid-cols-3 gap-5">
       
       <!-- Головний банер: Мангал тиждень -->
-      <div class="md:col-span-2 rounded-3xl overflow-hidden relative group cursor-pointer border border-white/10 min-h-[260px] sm:min-h-[340px] p-6 sm:p-8 flex flex-col justify-end shadow-2xl" onclick="scrollToMenu('mangal')">
+      <div class="md:col-span-2 rounded-3xl overflow-hidden relative group cursor-pointer border border-amber-900/40 min-h-[270px] sm:min-h-[350px] p-6 sm:p-8 flex flex-col justify-end shadow-2xl" onclick="scrollToMenu('mangal')">
         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('assets/banner_grill_steaks.jpg');"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-[#121214] via-[#121214]/65 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0c0b09] via-[#0c0b09]/75 to-transparent"></div>
         
         <div class="relative z-10">
-          <span class="inline-block px-3 py-1 rounded-full bg-accent-fiery text-white font-heading text-[11px] font-extrabold uppercase tracking-wider mb-3 shadow-lg">СПРАВЖНІЙ МАНГАЛ НА ВУГІЛЛІ</span>
-          <h2 class="font-heading text-2xl sm:text-4xl font-extrabold text-white leading-tight">Шашлик, Стейки & Гриль</h2>
-          <p class="text-[#f59e0b] font-heading text-xl sm:text-2xl font-bold mt-1">Знижка -20% за промокодом GRILL20</p>
+          <span class="inline-block px-3 py-1 rounded-full bg-red-700/90 text-white font-heading text-[11px] font-bold uppercase tracking-wider mb-2.5 shadow-lg border border-red-500/30">🪵 СПРАВЖНІЙ МАНГАЛ НА ДУБОВОМУ ВУГІЛЛІ</span>
+          <h2 class="font-heading text-3xl sm:text-5xl font-bold text-white leading-none uppercase tracking-wide">Шашлик, Стейки & Реберця</h2>
+          <p class="text-amber-400 font-heading text-xl sm:text-2xl font-bold mt-2">Знижка -20% за промокодом <span class="bg-black/50 px-2 py-0.5 rounded border border-amber-500/30">GRILL20</span></p>
           <div class="mt-4 flex items-center gap-3">
             <button type="button" onclick="event.stopPropagation(); scrollToMenu('mangal')" class="px-6 py-2.5 btn-amber text-xs font-bold uppercase tracking-wider active:scale-95 transition-all shadow-lg cursor-pointer">Переглянути меню</button>
-            <span class="text-xs text-gray-300 font-medium">Свинячий ошийок, реберця, люля-кебаб</span>
+            <span class="text-xs text-stone-300 font-medium">Свинячий ошийок, соковиті реберця, люля-кебаб на вогні</span>
           </div>
         </div>
       </div>
 
-      <!-- Бокові банери: Піца 1+1 та Крильця / Бургери -->
+      <!-- Бокові банери: Піца та Крильця / Бургери -->
       <div class="flex flex-col gap-5">
         
         <!-- Піца 1+1 -->
-        <div class="flex-1 rounded-3xl overflow-hidden relative group cursor-pointer border border-white/10 p-6 flex flex-col justify-end min-h-[155px]" onclick="scrollToMenu('pizza')">
+        <div class="flex-1 rounded-3xl overflow-hidden relative group cursor-pointer border border-amber-900/40 p-6 flex flex-col justify-end min-h-[160px]" onclick="scrollToMenu('pizza')">
           <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('assets/banner_artisan_pizza.jpg');"></div>
-          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/20"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-[#0c0b09] via-[#0c0b09]/80 to-transparent"></div>
           <div class="relative z-10">
-            <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-500/20 text-[#f59e0b] border border-amber-500/35 text-[10px] font-extrabold tracking-wider uppercase mb-1 shadow">🍕 Вівторок & Четвер</span>
-            <h3 class="font-heading text-xl font-bold text-white drop-shadow-md">Неаполітанська піца</h3>
-            <p class="text-xs text-gray-300 drop-shadow">Класичні та авторські рецепти на живому вогні</p>
+            <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-500/20 text-[#f59e0b] border border-amber-500/35 text-[10px] font-bold tracking-wider uppercase mb-1 shadow">🍕 Дров'яна піч</span>
+            <h3 class="font-heading text-2xl font-bold text-white uppercase tracking-wide drop-shadow-md">Артизанська піца</h3>
+            <p class="text-xs text-stone-300 drop-shadow">Класичні та авторські рецепти на живому вогні</p>
           </div>
         </div>
 
         <!-- Крильця & Бургери -->
-        <div class="flex-1 rounded-3xl overflow-hidden relative group cursor-pointer border border-white/10 p-6 flex flex-col justify-end min-h-[155px]" onclick="scrollToMenu('burgers')">
+        <div class="flex-1 rounded-3xl overflow-hidden relative group cursor-pointer border border-amber-900/40 p-6 flex flex-col justify-end min-h-[160px]" onclick="scrollToMenu('burgers')">
           <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('assets/banner_wings_burgers.jpg');"></div>
-          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/20"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-[#0c0b09] via-[#0c0b09]/80 to-transparent"></div>
           <div class="relative z-10">
-            <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-500/20 text-[#f59e0b] border border-amber-500/35 text-[10px] font-extrabold tracking-wider uppercase mb-1 shadow">🔥 Фірмові хіти кафе</span>
-            <h3 class="font-heading text-xl font-bold text-white drop-shadow-md">Крильця на углях & Бургери</h3>
-            <p class="text-xs text-gray-300 drop-shadow">Соковита яловичина, пікантні соуси та свіжа булочка</p>
+            <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-500/20 text-[#f59e0b] border border-amber-500/35 text-[10px] font-bold tracking-wider uppercase mb-1 shadow">🔥 Фірмовий смокхаус</span>
+            <h3 class="font-heading text-2xl font-bold text-white uppercase tracking-wide drop-shadow-md">Крильця & Бургери</h3>
+            <p class="text-xs text-stone-300 drop-shadow">Соковита яловичина, пікантні соуси та свіжа булочка</p>
           </div>
         </div>
 
@@ -287,7 +289,7 @@
     <!-- ======================================================================= -->
     <!-- 3. ЗАЛИПАЮЧЕ МЕНЮ КАТЕГОРІЙ (ВСІ КАТЕГОРІЇ АМБАР + УЛЮБЛЕНЕ)              -->
     <!-- ======================================================================= -->
-    <nav id="menu-categories-nav" class="sticky top-20 z-40 bg-[#121214]/95 backdrop-blur-xl py-3 border-b border-white/10 -mx-4 sm:-mx-8 px-4 sm:px-8">
+    <nav id="menu-categories-nav" class="sticky top-20 z-40 bg-[#0c0b09]/95 backdrop-blur-xl py-3 border-b border-amber-900/30 -mx-4 sm:-mx-8 px-4 sm:px-8">
       <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
         
         <button data-cat="all" onclick="setCategory('all')" class="category-pill active shrink-0 px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-1.5">
@@ -365,10 +367,10 @@
     <section>
       <div class="flex items-center justify-between mb-6">
         <div>
-          <h2 class="font-heading text-2xl sm:text-3xl font-bold text-white flex items-center gap-2">
-            <span>Каталог страв</span>
+          <h2 class="font-heading text-2xl sm:text-4xl font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <span>🪵 Каталог страв</span>
           </h2>
-          <p id="catalog-items-count" class="text-xs text-gray-400 mt-1">Знайдено: 351 страва</p>
+          <p id="catalog-items-count" class="text-xs text-stone-400 mt-1">Знайдено: 351 страва • Свіже приготування під замовлення</p>
         </div>
       </div>
 
@@ -378,7 +380,7 @@
 
       <!-- Кнопка Показати ще -->
       <div id="load-more-container" class="pt-10 flex justify-center">
-        <button onclick="loadMoreItems()" class="px-8 py-3.5 rounded-full bg-[#18181c] border border-white/10 hover:border-[#f59e0b] text-white hover:text-[#f59e0b] font-heading text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg active:scale-95">
+        <button onclick="loadMoreItems()" class="px-8 py-3.5 rounded-full bg-[#161310] border border-amber-900/40 hover:border-[#f59e0b] text-white hover:text-[#f59e0b] font-heading text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg active:scale-95">
           <span class="material-symbols-outlined text-lg">expand_more</span>
           <span id="load-more-btn-text">Показати ще страви</span>
         </button>
@@ -388,37 +390,37 @@
     <!-- ======================================================================= -->
     <!-- 5. ПЕРЕВАГИ КАФЕ АМБАР                                                  -->
     <!-- ======================================================================= -->
-    <section class="rounded-3xl bg-[#18181c] border border-white/5 p-6 sm:p-10">
-      <h3 class="font-heading text-xl sm:text-2xl font-bold text-white mb-6 text-center">Чому обирають «Амбар» у Запоріжжі</h3>
+    <section class="rounded-3xl bg-[#151310] border border-amber-900/30 p-6 sm:p-10 shadow-xl">
+      <h3 class="font-heading text-xl sm:text-3xl font-bold text-white mb-6 text-center uppercase tracking-wide">Чому обирають «Амбар» у Запоріжжі</h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         <div class="flex items-start gap-4">
-          <div class="w-12 h-12 rounded-2xl bg-[#f59e0b]/10 text-[#f59e0b] flex items-center justify-center shrink-0">
+          <div class="w-12 h-12 rounded-2xl bg-[#f59e0b]/10 text-[#f59e0b] flex items-center justify-center shrink-0 border border-amber-500/20">
             <span class="material-symbols-outlined text-2xl">outdoor_grill</span>
           </div>
           <div>
-            <h4 class="font-heading font-bold text-white text-base">Справжній мангал на вугіллі</h4>
-            <p class="text-xs text-gray-400 mt-1 leading-relaxed">Смажимо м'ясо виключно на натуральному деревному вугіллі без рідкого диму та напівфабрикатів.</p>
+            <h4 class="font-heading font-bold text-white text-lg uppercase tracking-wide">Справжній мангал на вугіллі</h4>
+            <p class="text-xs text-stone-400 mt-1 leading-relaxed">Смажимо м'ясо виключно на натуральному дубовому вугіллі без рідкого диму та напівфабрикатів.</p>
           </div>
         </div>
 
         <div class="flex items-start gap-4">
-          <div class="w-12 h-12 rounded-2xl bg-[#e11d48]/10 text-[#e11d48] flex items-center justify-center shrink-0">
+          <div class="w-12 h-12 rounded-2xl bg-red-700/15 text-red-400 flex items-center justify-center shrink-0 border border-red-700/30">
             <span class="material-symbols-outlined text-2xl">two_wheeler</span>
           </div>
           <div>
-            <h4 class="font-heading font-bold text-white text-base">Термосумки та швидкі кур'єри</h4>
-            <p class="text-xs text-gray-400 mt-1 leading-relaxed">Ваша піца приїде з тягучим гарячим сиром, а шашлик — із димком прямо з мангалу.</p>
+            <h4 class="font-heading font-bold text-white text-lg uppercase tracking-wide">Термосумки та швидкі кур'єри</h4>
+            <p class="text-xs text-stone-400 mt-1 leading-relaxed">Ваша піца приїде з тягучим гарячим сиром, а шашлик — із димком прямо з вогню мангалу.</p>
           </div>
         </div>
 
         <div class="flex items-start gap-4">
-          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/20">
             <span class="material-symbols-outlined text-2xl">workspace_premium</span>
           </div>
           <div>
-            <h4 class="font-heading font-bold text-white text-base">Фермерські інгредієнти</h4>
-            <p class="text-xs text-gray-400 mt-1 leading-relaxed">Охолоджене м'ясо з українських ферм, свіжий лосось щоденної поставки та авторські соуси.</p>
+            <h4 class="font-heading font-bold text-white text-lg uppercase tracking-wide">Фермерські інгредієнти</h4>
+            <p class="text-xs text-stone-400 mt-1 leading-relaxed">Охолоджене фермерське м'ясо, свіжий лосось щоденної поставки та авторські соуси власного приготування.</p>
           </div>
         </div>
 
@@ -1771,6 +1773,6 @@
   <!-- База даних повного меню з 351 страви -->
   <script src="menu_data.js?v=20260904_final"></script>
   <!-- Основна логіка додатку -->
-  <script src="app.js?v=20260904_ambar_craft"></script>
+  <script src="app.js?v=20260904_ambar_v3"></script>
 </body>
 </html>

@@ -160,7 +160,7 @@ function renderMenuGrid() {
       <div class="food-card flex flex-col justify-between overflow-hidden group">
         <div>
           <!-- Фото страви (Оригінал з ambar.net.ua: точний квадрат 1:1, без стискання та обрізання) -->
-          <div class="food-image-wrapper aspect-square bg-[#141418] cursor-pointer relative overflow-hidden" onclick="openDishConfigurator('${item.id}')">
+          <div class="food-image-wrapper aspect-square bg-[#161310] cursor-pointer relative overflow-hidden" onclick="openDishConfigurator('${item.id}')">
             <img 
               src="${item.image}" 
               alt="${item.name}" 
@@ -187,21 +187,21 @@ function renderMenuGrid() {
             </button>
 
             <!-- Вага -->
-            <div class="absolute bottom-2.5 left-3 text-xs text-gray-300 font-medium">
-              <span class="bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10 font-semibold">${item.weight}</span>
+            <div class="absolute bottom-2.5 left-3 text-xs text-stone-300 font-medium">
+              <span class="bg-[#161310]/85 backdrop-blur-md px-2.5 py-1 rounded-lg border border-amber-900/40 font-semibold text-[11px]">${item.weight}</span>
             </div>
           </div>
 
           <!-- Опис та назва -->
           <div class="p-4 sm:p-5">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-primary-amber block mb-1">${item.categoryName || 'Страва ресторану'}</span>
+            <span class="text-[11px] font-bold uppercase tracking-widest text-amber-400 block mb-1 font-heading">${item.categoryName || 'Страва ресторану'}</span>
             <h3 
-              class="font-heading text-base font-bold text-white group-hover:text-primary-amber transition-colors cursor-pointer leading-snug line-clamp-2"
+              class="font-heading text-lg sm:text-xl font-bold uppercase tracking-wide text-white group-hover:text-amber-400 transition-colors cursor-pointer leading-tight line-clamp-2"
               onclick="openDishConfigurator('${item.id}')"
             >
               ${item.name}
             </h3>
-            <p class="text-xs text-gray-400 mt-2 line-clamp-2 leading-relaxed">
+            <p class="text-xs text-stone-400 mt-2 line-clamp-2 leading-relaxed">
               ${item.description}
             </p>
           </div>
@@ -210,19 +210,19 @@ function renderMenuGrid() {
         <!-- Нижній блок з ціною та кнопкою -->
         <div class="p-4 sm:p-5 pt-0 flex items-center justify-between mt-auto">
           <div>
-            <span class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold block">Вартість</span>
+            <span class="text-[10px] text-stone-500 uppercase tracking-wider font-semibold block">Ціна</span>
             <div class="flex items-baseline gap-1">
-              <span class="font-heading text-xl font-extrabold text-primary-amber">${item.price}</span>
+              <span class="font-heading text-2xl sm:text-3xl font-bold text-amber-400">${item.price}</span>
               <span class="text-sm font-semibold text-white">₴</span>
             </div>
           </div>
 
           <button 
             onclick="${item.category === 'pizza' ? `openDishConfigurator('${item.id}')` : `quickAddToCart('${item.id}')`}"
-            class="px-4 py-2.5 btn-amber text-xs font-bold flex items-center gap-1.5 shadow-md active:scale-95 transition-all cursor-pointer"
+            class="px-4 py-2.5 btn-amber text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 active:scale-95 transition-all cursor-pointer"
           >
             <span class="material-symbols-outlined text-base">${item.category === 'pizza' ? 'local_pizza' : 'add_shopping_cart'}</span>
-            <span>${item.category === 'pizza' ? 'Обрати розмір' : 'В кошик'}</span>
+            <span>${item.category === 'pizza' ? 'Розмір' : 'В кошик'}</span>
           </button>
         </div>
       </div>
