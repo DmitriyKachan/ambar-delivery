@@ -3492,9 +3492,9 @@ function setAdminOrderFilter(filter) {
   currentAdminOrderFilter = filter;
   document.querySelectorAll(".adm-filter-btn").forEach(btn => {
     if (btn.dataset.filter === filter) {
-      btn.className = "adm-filter-btn px-2.5 py-1 rounded-lg bg-white/15 text-[#f59e0b] font-bold cursor-pointer";
+      btn.className = "adm-filter-btn shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-amber-500/20 text-[#f59e0b] border border-amber-500/30 font-bold cursor-pointer transition-colors shadow";
     } else {
-      btn.className = "adm-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer";
+      btn.className = "adm-filter-btn shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-[#1e1e28] hover:bg-white/10 text-gray-300 border border-white/5 cursor-pointer transition-colors";
     }
   });
   renderAdminOrders();
@@ -3506,9 +3506,9 @@ function setAdminBookingFilter(filter) {
   currentAdminBookingFilter = filter;
   document.querySelectorAll(".adm-b-filter-btn").forEach(btn => {
     if (btn.dataset.bfilter === filter) {
-      btn.className = "adm-b-filter-btn px-2.5 py-1 rounded-lg bg-white/15 text-[#f59e0b] font-bold cursor-pointer";
+      btn.className = "adm-b-filter-btn shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-amber-500/20 text-[#f59e0b] border border-amber-500/30 font-bold cursor-pointer transition-colors shadow";
     } else {
-      btn.className = "adm-b-filter-btn px-2.5 py-1 rounded-lg hover:bg-white/5 text-gray-400 cursor-pointer";
+      btn.className = "adm-b-filter-btn shrink-0 whitespace-nowrap px-3 py-1.5 rounded-xl bg-[#1e1e28] hover:bg-white/10 text-gray-300 border border-white/5 cursor-pointer transition-colors";
     }
   });
   renderAdminBookings();
@@ -3587,6 +3587,8 @@ function renderAdminOrders() {
     orders = orders.filter(o => o.status && o.status.includes("дорозі"));
   } else if (currentAdminOrderFilter === "done") {
     orders = orders.filter(o => o.status && (o.status.includes("Доставлено") || o.status.includes("Видано")));
+  } else if (currentAdminOrderFilter === "cancelled") {
+    orders = orders.filter(o => o.status && o.status.includes("Скасовано"));
   }
 
   if (orders.length === 0) {
