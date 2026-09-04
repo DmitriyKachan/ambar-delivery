@@ -2779,19 +2779,32 @@ function closeClientAuthModal() {
 }
 
 function submitInstantAuth(event) {
-  if (event) event.preventDefault();
+  if (event) {
+    try { event.preventDefault(); event.stopPropagation(); } catch(e) {}
+  }
   const phoneInp = document.getElementById("auth-phone-input");
   const nameInp = document.getElementById("auth-name-input");
+  const errorEl = document.getElementById("auth-error-msg");
   const phoneVal = phoneInp ? phoneInp.value.trim() : "";
   const nameVal = nameInp ? nameInp.value.trim() : "";
 
   // Базова перевірка валідності номера
   const digits = phoneVal.replace(/\D/g, "");
   if (digits.length < 9) {
-    showToast("⚠️ Будь ласка, введіть коректний номер телефону");
-    if (phoneInp) phoneInp.focus();
-    return;
+    if (errorEl) {
+      errorEl.textContent = "⚠️ Будь ласка, введіть коректний номер телефону (наприклад: 099 123 45 67)";
+      errorEl.classList.remove("hidden");
+    }
+    if (phoneInp) {
+      phoneInp.classList.add("border-rose-500", "ring-1", "ring-rose-500");
+      phoneInp.focus();
+    }
+    showToast("⚠️ Введіть коректний номер телефону (від 9 цифр)");
+    return false;
   }
+
+  if (errorEl) errorEl.classList.add("hidden");
+  if (phoneInp) phoneInp.classList.remove("border-rose-500", "ring-1", "ring-rose-500");
 
   // 1. Негайний запис у локальний стан
   CabinetState.user.phone = phoneVal;
@@ -2874,6 +2887,7 @@ function submitInstantAuth(event) {
   if (typeof syncUserProfileWithCloud === "function") {
     syncUserProfileWithCloud(phoneVal);
   }
+  return false;
 }
 
 // =========================================================================

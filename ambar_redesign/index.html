@@ -1306,7 +1306,7 @@
       </div>
 
       <!-- Форма миттєвого входу за номером телефону (100% БЕЗКОШТОВНО, БЕЗ SMS) -->
-      <form onsubmit="submitInstantAuth(event)" class="space-y-4">
+      <form onsubmit="submitInstantAuth(event); return false;" class="space-y-4">
         <div>
           <label class="text-xs text-gray-300 block mb-1.5 font-medium">Ваш номер телефону <span class="text-[#f59e0b]">*</span></label>
           <div class="relative">
@@ -1314,11 +1314,11 @@
             <input 
               id="auth-phone-input" 
               type="tel" 
-              required
               placeholder="+38 (0__) ___-__-__" 
               class="w-full pl-11 pr-4 py-3 rounded-2xl bg-[#22222a] border border-white/10 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#f59e0b] tracking-wide"
             />
           </div>
+          <p id="auth-error-msg" class="text-[11px] text-rose-400 mt-1 hidden font-medium"></p>
           <p class="text-[11px] text-gray-400 mt-1">Введіть номер для зв'язку під час доставки або броні</p>
         </div>
 
@@ -1337,6 +1337,7 @@
 
         <button 
           type="submit" 
+          onclick="submitInstantAuth(event)"
           class="w-full py-3.5 btn-amber font-heading font-bold text-xs uppercase tracking-wider shadow-lg active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
         >
           <span>Увійти / Зареєструватися</span>
