@@ -1074,12 +1074,19 @@ function recalculateOrderTotals() {
   }
 
   if (toggleBonusBtn) {
-    if (bonusesUsed > 0) {
-      toggleBonusBtn.innerHTML = `<span>Списано ${bonusesUsed} ₴</span><span class="material-symbols-outlined text-xs">check</span>`;
-      toggleBonusBtn.className = "px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-400 font-heading font-bold text-xs transition-all cursor-pointer border border-emerald-500/30 shadow-sm shrink-0 flex items-center gap-1";
+    if (availableBonuses <= 0) {
+      toggleBonusBtn.classList.add("hidden");
+      const bonusBlock = document.getElementById("checkout-bonus-input-block");
+      if (bonusBlock) bonusBlock.classList.add("hidden");
     } else {
-      toggleBonusBtn.innerHTML = `<span>Списати</span><span class="material-symbols-outlined text-xs">redeem</span>`;
-      toggleBonusBtn.className = "px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500 hover:text-black text-[#f59e0b] font-heading font-bold text-xs transition-all cursor-pointer border border-amber-500/30 shadow-sm shrink-0 flex items-center gap-1";
+      toggleBonusBtn.classList.remove("hidden");
+      if (bonusesUsed > 0) {
+        toggleBonusBtn.innerHTML = `<span>Списано ${bonusesUsed} ₴</span><span class="material-symbols-outlined text-xs">check</span>`;
+        toggleBonusBtn.className = "px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-400 font-heading font-bold text-xs transition-all cursor-pointer border border-emerald-500/30 shadow-sm shrink-0 flex items-center gap-1";
+      } else {
+        toggleBonusBtn.innerHTML = `<span>Списати</span><span class="material-symbols-outlined text-xs">redeem</span>`;
+        toggleBonusBtn.className = "px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500 hover:text-black text-[#f59e0b] font-heading font-bold text-xs transition-all cursor-pointer border border-amber-500/30 shadow-sm shrink-0 flex items-center gap-1";
+      }
     }
   }
 
